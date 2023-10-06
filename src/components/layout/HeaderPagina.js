@@ -2,13 +2,13 @@ import logoNegro from "../../assets/img/Logo_ITNL.png";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const navegacion = [
-  { name: "Pagina principal", to: "/pagina-principal" },
-  { name: "Eventos", to: "/eventos" },
-  { name: "Grupos", to: "/grupos" },
-  { name: "Noticias", to: "/noticias" },
+  { name: "Pagina principal", to: "/itnl/pagina-principal" },
+  { name: "Eventos", to: "/itnl/eventos" },
+  { name: "Grupos", to: "/itnl/grupos" },
+  { name: "Noticias", to: "/itnl/noticias" },
 ];
 const HeaderPagina = () => {
   const [menuHamburguesa, setMenuHamburguesa] = useState(false);
@@ -20,15 +20,15 @@ const HeaderPagina = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1">
+          <NavLink to="/itnl/pagina-principal" className="-m-1.5 p-1">
             <img className="h-9 pl-4 w-auto" alt="" src={logoNegro} />
-          </a>
-          <a
-            href="#"
-            className="pl-7 text-3xl font-bold  text-stone-50 sm:text-3xl "
+          </NavLink>
+          <Link
+            to="/itnl/pagina-principal"
+            className="pl-7 text-3xl font-bold text-stone-50 sm:text-3xl "
           >
             Cuerbook
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -45,7 +45,7 @@ const HeaderPagina = () => {
               key={nav.name}
               to={nav.to}
               className={({ isActive }) =>
-                `text-sm font-semibold ${
+                `text-sm font-semibold  hover:text-red-500 ${
                   isActive ? "active" : ""
                 } leading-6 text-stone-50`
               }
@@ -56,8 +56,8 @@ const HeaderPagina = () => {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <NavLink
-            to="/iniciar-sesion"
-            className="text-sm font-semibold pr-12 leading-6 text-stone-50"
+            to="/itnl/iniciar-sesion"
+            className="text-sm font-semibold pr-12 hover:text-red-500 leading-6 text-stone-50"
           >
             Iniciar Sesion
           </NavLink>
@@ -88,7 +88,7 @@ const HeaderPagina = () => {
                     key={nav.name}
                     to={nav.to}
                     className={({ isActive }) =>
-                      `-mx-3 block rounded-lg px-3 py-2 text-base ${
+                      `-mx-3 block rounded-lg px-3 hover:text-red-500 py-2 text-base ${
                         isActive ? "active" : ""
                       } font-semibold leading-7 text-gray-900 hover:bg-gray-50`
                     }
@@ -99,8 +99,8 @@ const HeaderPagina = () => {
               </div>
               <div className="py-6">
                 <NavLink
-                  to="/iniciar-sesion"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  to="/itnl/iniciar-sesion"
+                  className="-mx-3 block rounded-lg hover:text-red-500 px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Iniciar Sesión{" "}
                 </NavLink>

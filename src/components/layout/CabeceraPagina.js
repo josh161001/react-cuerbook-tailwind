@@ -1,5 +1,6 @@
 import BotonVerNoticias from "../../components/common/BotonVerNoticias";
 import BotonEventosProximos from "../../components/common/BotonEventosProximos";
+
 const CabeceraPagina = () => {
   return (
     <div className="relative isolate px-6  pt-14 lg:px-8">

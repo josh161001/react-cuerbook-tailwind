@@ -1,19 +1,17 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import CuervoItnl from "../../assets/img/cuervo-ITNL.jpg";
 
 const IniciarSesion = () => {
   return (
     <div className="flex min-h-screen items-center p-4  sm:items-center justify-center bg-gray-200">
       <div className="max-w-screen-lg w-full h-full bg-white rounded-md shadow-lg  flex flex-col lg:flex-row">
-        <div className="w-full lg:w-1/2 flex justify-center items-center mb-6 lg:mb-0">
-          <img
-            src="https://www.elfinanciero.com.mx/resizer/EGYKeKSehZAIdfCDhSKdtkUUHsM=/1440x810/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/elfinanciero/IRGKHRI4R5C7HBPFRGVIDUYZCA.jfif"
-            alt="Login Banner"
-            className="w-full h-full "
-          />
+        <div className="w-full lg:w-1/2 flex justify-center items-center  lg:mb-0">
+          <img src={CuervoItnl} alt="Login Banner" className="w-full h-full " />
         </div>
         <div className="w-full lg:w-1/2 p-12 sm:p-20">
           <h1 className="text-xl font-semibold mb-2">
-            Bienvenido a <span className="text-red-700">ITNL</span>{" "}
+            Bienvenido a <span className="text-red-700">CuerBook</span>{" "}
           </h1>
           <small className="text-gray-400">
             Bienvenido de vuelta, inicia sesión con tu cuenta
@@ -38,14 +36,39 @@ const IniciarSesion = () => {
               />
             </div>
             <div className="mb-3 flex flex-wrap content-center">
-              <a href="#" className="text-xs font-semibold text-red-700">
+              <NavLink
+                to="/itnl/recuperar-password"
+                className="text-xs font-semibold text-red-700"
+              >
                 ¿Olvidaste tu contraseña?
-              </a>
+              </NavLink>
             </div>
-            <div className="mb-3">
-              <button className="mb-1.5 block w-full text-center text-white bg-red-700 hover:bg-red-500 px-2 py-1.5 rounded-md">
+            <div className="mb-3 flex gap-2">
+              <button className="mb-1.5 block w-full text-center text-white bg-red-700 hover:bg-red-500 px-3 py-1.5 rounded-md">
                 Iniciar Sesión
               </button>
+              <NavLink
+                to="/itnl/pagina-principal"
+                className="mb-1.5 block w-full text-center text-white bg-red-700 hover:bg-red-500 px-3 py-1.5 rounded-md flex items-center justify-center"
+              >
+                <span className="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-5 mr-2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                    />
+                  </svg>
+                  Volver atrás
+                </span>
+              </NavLink>
             </div>
           </form>
         </div>

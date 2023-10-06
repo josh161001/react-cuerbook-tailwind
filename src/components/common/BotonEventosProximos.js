@@ -1,8 +1,13 @@
+import { Link } from "react-router-dom";
+
 const BotonEventosProximos = () => {
   return (
-    <a href="#" className="text-sm font-semibold leading-6 text-stone-50">
+    <Link
+      to="/itnl/eventos"
+      className="text-sm font-semibold hover:text-red-500 leading-6 text-stone-50"
+    >
       Eventos próximos <span aria-hidden="true">→</span>
-    </a>
+    </Link>
   );
 };
 
