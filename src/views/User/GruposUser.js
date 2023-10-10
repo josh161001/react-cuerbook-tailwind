@@ -4,37 +4,18 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import NavUser from "../../components/layout/NavUser";
 import MenuEventosDrop from "../../components/layout/MenuEventosDrop";
 import MenuGruposDrop from "../../components/layout/MenuGruposDrop";
-import MenuUsuariosDrop from "../../components/layout/MenuUsuariosDrop";
-import MenuNoticasDrop from "../../components/layout/MenuNoticasDrop";
-import MenuCategoriasDrop from "../../components/layout/MenuCategoriasDrop";
-import TableUser from "../../components/layout/TableUser";
-import Cantidad from "../../components/layout/Cantidad";
-import { NavLink } from "react-router-dom";
-import CerrarSesion from "../../components/layout/CerrarSesion";
+import TableGruposUsuario from "../../components/layout/TableGruposUsuario";
 
-const usuariosDrop = [
-  { name: "Ver Usuarios", to: "/admin/usuarios" },
-  { name: "Crear Usuario", to: "/admin/crear-usuario" },
-];
 const eventosDrop = [
-  { name: "Ver Eventos", to: "/admin/eventos" },
-  { name: "Agregar Eventos", to: "/admin/crear-evento" },
+  { name: "Ver Eventos", to: "/usuario/eventos" },
+  { name: "Agregar Eventos", to: "/usuario/crear-evento" },
 ];
 const gruposDrop = [
-  { name: "Ver Grupos", to: "/admin/grupos" },
-  { name: "Crear Grupo", to: "/admin/crear-grupo" },
+  { name: "Ver Grupos", to: "/usuario/grupos" },
+  { name: "Crear Grupo", to: "/usuario/crear-grupo" },
 ];
 
-const noticiasDrop = [
-  { name: "Ver noticias", to: "/admin/noticias" },
-  { name: "Crear noticia", to: "/admin/crear-noticia" },
-];
-
-const categoriasDrop = [
-  { name: "Ver categorias", to: "/admin/categorias" },
-  { name: "Crear categoria", to: "/admin/crear-categoria" },
-];
-const DashboardAdmin = () => {
+const GruposUser = () => {
   const [menuHamburguesa, setMenuHamburguesa] = useState(false);
   const toggleMenuHamburguesa = () => {
     setMenuHamburguesa(!menuHamburguesa);
@@ -79,45 +60,43 @@ const DashboardAdmin = () => {
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
+            <MenuEventosDrop name="Eventos" options={eventosDrop} />
+            <MenuGruposDrop name="Grupos" options={gruposDrop} />
             <li>
-              <NavLink
-                to="/admin/dashboard"
-                className={({ isActive }) =>
-                  `flex items-center p-2 ${
-                    isActive ? "bg-gray-700" : ""
-                  } text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`
-                }
+              <a
+                href="#"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  class="w-5 h-5"
+                  className="w-5 h-5"
                 >
-                  <path d="M2 4.25A2.25 2.25 0 014.25 2h2.5A2.25 2.25 0 019 4.25v2.5A2.25 2.25 0 016.75 9h-2.5A2.25 2.25 0 012 6.75v-2.5zM2 13.25A2.25 2.25 0 014.25 11h2.5A2.25 2.25 0 019 13.25v2.5A2.25 2.25 0 016.75 18h-2.5A2.25 2.25 0 012 15.75v-2.5zM11 4.25A2.25 2.25 0 0113.25 2h2.5A2.25 2.25 0 0118 4.25v2.5A2.25 2.25 0 0115.75 9h-2.5A2.25 2.25 0 0111 6.75v-2.5zM15.25 11.75a.75.75 0 00-1.5 0v2h-2a.75.75 0 000 1.5h2v2a.75.75 0 001.5 0v-2h2a.75.75 0 000-1.5h-2v-2z" />
+                  <path
+                    fillRule="evenodd"
+                    d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z"
+                    clipRule="evenodd"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    d="M19 10a.75.75 0 00-.75-.75H8.704l1.048-.943a.75.75 0 10-1.004-1.114l-2.5 2.25a.75.75 0 000 1.114l2.5 2.25a.75.75 0 101.004-1.114l-1.048-.943h9.546A.75.75 0 0019 10z"
+                    clipRule="evenodd"
+                  />
                 </svg>
 
                 <span className="flex-1 ml-3 whitespace-nowrap">
-                  Dashboard{" "}
+                  Cerrar Sesion
                 </span>
-              </NavLink>
+              </a>
             </li>
-            <MenuUsuariosDrop name="Usuarios" options={usuariosDrop} />
-            <MenuEventosDrop name="Eventos" options={eventosDrop} />
-            <MenuGruposDrop name="Grupos" options={gruposDrop} />
-            <MenuNoticasDrop name="Noticias" options={noticiasDrop} />
-            <MenuCategoriasDrop name="Categorias" options={categoriasDrop} />
-            <CerrarSesion />
           </ul>
         </div>
       </aside>{" "}
       <div className="sm:ml-64">
         <div className="p-4  rounded-lg  mt-14">
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-4">
-            <Cantidad />
-          </div>
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <TableUser />
+            <TableGruposUsuario />
           </div>
         </div>
       </div>
@@ -125,4 +104,4 @@ const DashboardAdmin = () => {
   );
 };
 
-export default DashboardAdmin;
+export default GruposUser;

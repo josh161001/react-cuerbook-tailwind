@@ -1,6 +1,5 @@
 import { useState } from "react";
-import LogoItnl from "../../assets/img/Logo_ITNL.png";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+
 const NavUser = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -20,7 +19,7 @@ const NavUser = () => {
           >
             <img
               className="w-8 h-8 rounded-full"
-              src="https://scontent.fntr10-1.fna.fbcdn.net/v/t39.30808-6/374559773_1468198440690997_1648860052519703067_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=a2f6c7&_nc_eui2=AeH9u7WATzRAqVUylM2wS1QmGHLOZHooqjgYcs5keiiqOBMGrGoeTpQHvQ7smat3X2-gf3FJyVib7pz-Rkxmmy6D&_nc_ohc=pi_u-m0RJtoAX9lw4ZV&_nc_ht=scontent.fntr10-1.fna&oh=00_AfCqy0w3joPNrTgYbHPIkx0dXz-3IVQDZqixAtxPZJRw1g&oe=6523366A"
+              src="https://scontent.fntr5-1.fna.fbcdn.net/v/t39.30808-6/374559773_1468198440690997_1648860052519703067_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=a2f6c7&_nc_eui2=AeH9u7WATzRAqVUylM2wS1QmGHLOZHooqjgYcs5keiiqOBMGrGoeTpQHvQ7smat3X2-gf3FJyVib7pz-Rkxmmy6D&_nc_ohc=NRRIja9viycAX_XY9xJ&_nc_ht=scontent.fntr5-1.fna&oh=00_AfDKFfIGa8xeDLDCl5okq6Z3y4FBXy9pf6VReOiH5R1wbA&oe=6529252A"
               alt="user photo"
             />
           </button>

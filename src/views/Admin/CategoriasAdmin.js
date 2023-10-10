@@ -7,9 +7,9 @@ import MenuGruposDrop from "../../components/layout/MenuGruposDrop";
 import MenuUsuariosDrop from "../../components/layout/MenuUsuariosDrop";
 import MenuNoticasDrop from "../../components/layout/MenuNoticasDrop";
 import MenuCategoriasDrop from "../../components/layout/MenuCategoriasDrop";
-import TableUser from "../../components/layout/TableUser";
-import Cantidad from "../../components/layout/Cantidad";
+
 import { NavLink } from "react-router-dom";
+import TableCategorias from "../../components/layout/TableCategorias";
 import CerrarSesion from "../../components/layout/CerrarSesion";
 
 const usuariosDrop = [
@@ -34,7 +34,7 @@ const categoriasDrop = [
   { name: "Ver categorias", to: "/admin/categorias" },
   { name: "Crear categoria", to: "/admin/crear-categoria" },
 ];
-const DashboardAdmin = () => {
+const CategoriasAdmin = () => {
   const [menuHamburguesa, setMenuHamburguesa] = useState(false);
   const toggleMenuHamburguesa = () => {
     setMenuHamburguesa(!menuHamburguesa);
@@ -113,11 +113,8 @@ const DashboardAdmin = () => {
       </aside>{" "}
       <div className="sm:ml-64">
         <div className="p-4  rounded-lg  mt-14">
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-4">
-            <Cantidad />
-          </div>
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <TableUser />
+            <TableCategorias />
           </div>
         </div>
       </div>
@@ -125,4 +122,4 @@ const DashboardAdmin = () => {
   );
 };
 
-export default DashboardAdmin;
+export default CategoriasAdmin;
