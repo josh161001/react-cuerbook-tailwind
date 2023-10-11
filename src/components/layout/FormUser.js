@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import urlAxios from "../../config/axios";
 import Swal from "sweetalert2";
 import { CuerbookContext } from "../../context/CuerbookContext";
-
 const FormUser = () => {
+  const [auth, guardarAuth] = useContext(CuerbookContext);
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -12,7 +13,6 @@ const FormUser = () => {
     roles: [0], // Cambiado a null inicialmente
   });
 
-  const [auth, setAuth] = useContext(CuerbookContext);
   const guardarUsuarioState = (e) => {
     const { name, value, type } = e.target;
 
@@ -47,10 +47,11 @@ const FormUser = () => {
       formData.append("roles[]", role);
     });
 
+    const accessToken = JSON.parse(localStorage.getItem("access_token"));
     urlAxios
       .post("/users", formData, {
         headers: {
-          Authorization: `Bearer ${auth.access_token}`,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "multipart/form-data",
         },
       })

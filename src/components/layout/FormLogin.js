@@ -4,27 +4,26 @@ import Swal from "sweetalert2";
 import urlAxios from "../../config/axios";
 import { CuerbookContext } from "../../context/CuerbookContext";
 
-const FormLogin = () => {
-  const [auth, setAuth] = useContext(CuerbookContext);
+const FormLogin = (props) => {
+  const [auth, guardarAuth] = useContext(CuerbookContext);
+  const navigate = useNavigate();
 
   const [credencialesUsuario, setCredencialesUsuario] = useState({
     email: "",
     password: "",
   });
+
   const credencialesUsuarioState = (e) => {
     setCredencialesUsuario({
       ...credencialesUsuario,
       [e.target.name]: e.target.value,
     });
   };
+
   const validarCredencialesUsuario = () => {
     const { email, password } = credencialesUsuario;
-    let validar = !email.length || !password.length;
-
-    return validar;
+    return !email.length || !password.length;
   };
-
-  const navigate = useNavigate();
 
   const guardarCredencialesUsuario = (e) => {
     e.preventDefault();
@@ -35,14 +34,14 @@ const FormLogin = () => {
 
         localStorage.setItem("access_token", access_token);
 
-        setAuth({
+        guardarAuth({
           access_token,
           auth: true,
         });
 
         Swal.fire(
-          "Inicion de sesion Exitoso",
-          "Ha iniciado sesion correctamente",
+          "Inicio de sesión exitoso",
+          "Has iniciado sesión correctamente",
           "success"
         );
 
@@ -55,9 +54,9 @@ const FormLogin = () => {
       .catch((error) => {
         if (error.response && error.response.status === 401) {
           const errorMessage = "Las credenciales no coinciden";
-          Swal.fire("Inicio de sesion fallido", errorMessage, "error");
+          Swal.fire("Inicio de sesión fallido", errorMessage, "error");
         } else {
-          Swal.fire("error", "error en el servidor", "error");
+          Swal.fire("Error", "Error en el servidor", "error");
         }
       });
   };

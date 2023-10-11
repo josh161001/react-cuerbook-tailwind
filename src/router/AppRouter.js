@@ -31,11 +31,11 @@ import GruposUser from "../views/User/GruposUser";
 import CrearGrupoUsuario from "../views/User/CrearGrupoUsuario";
 
 export const AppRouter = () => {
-  const [auth, setAuth] = useContext(CuerbookContext);
+  const [auth, guardarAuth] = useContext(CuerbookContext);
   return (
     <>
       {" "}
-      <CuerbookProvider value={[auth, setAuth]}>
+      <CuerbookProvider value={[auth, guardarAuth]}>
         <Routes>
           {/* {        //views home */}
           <Route path="/itnl/pagina-principal" element={<PaginaPrincipal />} />

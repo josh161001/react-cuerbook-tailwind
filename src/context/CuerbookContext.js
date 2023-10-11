@@ -2,16 +2,15 @@ import React, { useState } from "react";
 
 const CuerbookContext = React.createContext([{}, () => {}]);
 
-const accessToken = localStorage.getItem("access_token") || "";
-
 const CuerbookProvider = (props) => {
-  const [auth, setAuth] = useState({
-    acces_token: accessToken,
-    auth: accessToken !== "",
+  // definir el state inicial
+  const [auth, guardarAuth] = useState({
+    access_token: "",
+    auth: false,
   });
 
   return (
-    <CuerbookContext.Provider value={[auth, setAuth]}>
+    <CuerbookContext.Provider value={[auth, guardarAuth]}>
       {props.children}
     </CuerbookContext.Provider>
   );

@@ -1,16 +1,34 @@
 import { useContext, useEffect, useState } from "react";
 import urlAxios from "../../config/axios";
-import { CuerbookContext } from "../../context/CuerbookContext";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
+import { CuerbookContext } from "../../context/CuerbookContext";
+
 const TableUser = (props) => {
   const [clientes, guardarClientes] = useState([]);
-  const [auth, setAuth] = useContext(CuerbookContext);
+  const [tokenCargando, setTokenCargando] = useState(false);
 
+  const [auth, guardarAuth] = useContext(CuerbookContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (auth.access_token !== "") {
+    const token = localStorage.getItem("access_token");
+
+    if (token) {
+      guardarAuth({
+        access_token: token,
+        auth: true,
+      });
+
+      setTokenCargando(true);
+    } else {
+      navigate("/itnl/iniciar-sesion");
+    }
+  }, [navigate, guardarAuth]);
+
+  useEffect(() => {
+    if (tokenCargando) {
+      // Ahora que el token se ha cargado, puedes hacer la solicitud al servidor
       const getUsers = async () => {
         try {
           const dataConsulta = await urlAxios.get("/users", {
@@ -18,28 +36,21 @@ const TableUser = (props) => {
               Authorization: `Bearer ${auth.access_token}`,
             },
           });
-
           guardarClientes(dataConsulta.data.data);
         } catch (error) {
-          // Error con authorizacion
-          if ((error.response.status = 500)) {
+          if (error.response && error.response.status === 500) {
             navigate("/itnl/iniciar-sesion");
           }
         }
       };
       getUsers();
-    } else {
-      navigate("/itnl/iniciar-sesion  ");
     }
-  }, [auth, navigate]);
+  }, [tokenCargando, auth.access_token, navigate]);
 
-  if (!auth.auth) {
-    navigate("/itnl/iniciar-sesion");
+  if (!tokenCargando) {
+    // Mientras se carga el token, muestra un spinner o un componente de carga
+    return <Spinner />;
   }
-
-  console.log(auth.access_token);
-
-  if (!clientes.length) return <Spinner />;
   return (
     <div>
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
