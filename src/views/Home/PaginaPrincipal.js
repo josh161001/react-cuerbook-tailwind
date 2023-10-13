@@ -1,6 +1,7 @@
 import CabeceraPagina from "../../components/layout/CabeceraPagina";
 import EventosPagina from "../../components/layout/EventosPagina";
 import EventosProximosPagina from "../../components/layout/EventosProximosPagina";
+import GruposPaginaPrincipal from "../../components/layout/GruposPaginaPrincipal";
 import HeaderPagina from "../../components/layout/HeaderPagina";
 
 const PaginaPrincipal = () => {
@@ -32,8 +33,10 @@ const PaginaPrincipal = () => {
             <section className=" p-2 bg-gradient-to-r from-red-600 to-red-600 flex flex-col justify-center items-center text-center">
               <EventosProximosPagina />
             </section>
-
             {/* finaliza ver mas eventos */}
+            <section>
+              <GruposPaginaPrincipal />
+            </section>
           </div>
         </main>
       </div>
