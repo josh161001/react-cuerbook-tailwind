@@ -1,35 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CuervoItnl from "../../assets/img/cuervo-ITNL.jpg";
 import urlAxios from "../../config/axios";
 import Swal from "sweetalert2";
-import { useNavigate, useParams } from "react-router-dom";
-const ActualizarPassword = () => {
-  const { token } = useParams();
+import { useNavigate } from "react-router-dom";
+const EnviarInstrucciones = () => {
   const navigate = useNavigate();
-
-  const [tokenValido, setTokenValido] = useState(null);
-
-  useEffect(() => {
-    const verificarToken = async () => {
-      try {
-        const response = await urlAxios.get(`/mailer/verificar-token/${token}`);
-        setTokenValido(true);
-      } catch (error) {
-        setTokenValido(false);
-      }
-    };
-
-    verificarToken();
-  }, [token]);
-
-  useEffect(() => {
-    if (tokenValido === false) {
-      navigate("/itnl/pagina-principal");
-    }
-  }, [tokenValido, navigate]);
-
   const [credencialesUsuario, setCredencialesUsuario] = useState({
-    password: "",
+    email: "",
   });
 
   const credencialesUsuarioState = (e) => {
@@ -40,32 +17,38 @@ const ActualizarPassword = () => {
   };
 
   const validarCredencialesUsuario = () => {
-    const { password } = credencialesUsuario;
-    return !password.length;
+    const { email } = credencialesUsuario;
+    return !email.length;
   };
 
   const guardarCredencialesUsuario = (e) => {
     e.preventDefault();
 
     urlAxios
-      .patch(`/mailer/actualizar-password/${token}`, credencialesUsuario)
+      .post("/mailer/enviar-instrucciones", credencialesUsuario)
       .then((res) => {
         Swal.fire(
-          "Contraseña actualizada exitosamente",
-          "Se ha actualizado la contraseña",
+          "Correo enviado",
+          "Se ha enviado un correo con las instrucciones para recuperar tu cuenta",
           "success"
         );
-        navigate("/itnl/pagina-principal");
+
+        navigate("/pagina-principal");
       })
       .catch((error) => {
-        if (error.response && error.response.status === 401) {
-          const errorMessage = "Error al actualizar la contraseña";
-          Swal.fire("Inicio de sesión fallido", errorMessage, "error");
+        if (error.response && error.response.status === 404) {
+          const errorMessage = error.response.data.message;
+          Swal.fire("El correo no se ha enviado", errorMessage, "error");
         } else {
-          Swal.fire("Error", "Error en el servidor", "error");
+          Swal.fire(
+            "El correo no se ha enviado",
+            "Error en el servidor",
+            "error"
+          );
         }
       });
   };
+
   return (
     <div className="flex min-h-screen items-center p-4  sm:items-center justify-center bg-gray-200">
       <div className="max-w-screen-lg w-full h-full bg-white rounded-md shadow-lg  flex flex-col lg:flex-row">
@@ -75,21 +58,19 @@ const ActualizarPassword = () => {
         <div className="w-full lg:w-1/2 p-12 sm:p-20">
           <h1 className="text-xl font-semibold mb-2">
             Sigue las instrucciones para recuperar tu cuenta en{" "}
-            <span className="text-red-700"></span>
+            <span className="text-red-700">CuerBook</span>{" "}
           </h1>
           <small className="text-gray-400">
-            Escribe tu nueva contraseña a continuacion{" "}
+            Escribe tu correo a continuacion{" "}
           </small>
           <form className="mt-4" onSubmit={guardarCredencialesUsuario}>
             <div className="mb-3">
-              <label className="mb-2 block text-xs font-semibold">
-                contraseña
-              </label>
+              <label className="mb-2 block text-xs font-semibold">Correo</label>
               <input
+                name="email"
+                type="email"
+                placeholder="correo@tecnm.mx"
                 onChange={credencialesUsuarioState}
-                name="password"
-                type="password"
-                placeholder="*********"
                 className="block w-full rounded-md border border-gray-300 focus:border-red-700 focus:outline-none focus:ring-1 focus:ring-red-700 py-1 px-1.5 text-gray-500"
               />
             </div>
@@ -99,7 +80,7 @@ const ActualizarPassword = () => {
                 disabled={validarCredencialesUsuario()}
                 className="mb-1.5 block w-full text-center text-white bg-red-700 hover:bg-red-500 px-3 py-1.5 rounded-md"
               >
-                Actualizar Contraseña{" "}
+                Enviar Instrucciones{" "}
               </button>
             </div>
           </form>
@@ -109,4 +90,4 @@ const ActualizarPassword = () => {
   );
 };
 
-export default ActualizarPassword;
+export default EnviarInstrucciones;

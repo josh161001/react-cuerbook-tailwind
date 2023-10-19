@@ -85,7 +85,7 @@ const FormLogin = (props) => {
       </div>
       <div className="mb-3 flex flex-wrap content-center">
         <NavLink
-          to="/itnl/recuperar-password"
+          to="/itnl/enviar-instrucciones"
           className="text-xs font-semibold text-red-700"
         >
           ¿Olvidaste tu contraseña?

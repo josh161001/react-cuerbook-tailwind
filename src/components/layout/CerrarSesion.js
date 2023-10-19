@@ -4,16 +4,15 @@ const CerrarSesion = () => {
   const navigate = useNavigate();
 
   const cerrarSesion = () => {
-    localStorage.removeItem("access_token"); // Corregido el nombre del token
+    localStorage.removeItem("access_token");
 
-    // Redirige al usuario a la página de inicio de sesión
     navigate("/itnl/iniciar-sesion");
   };
 
   return (
     <li>
       <a
-        onClick={cerrarSesion} // Llama a la función al hacer clic en el enlace
+        onClick={cerrarSesion}
         className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
       >
         <svg
@@ -34,7 +33,9 @@ const CerrarSesion = () => {
           />
         </svg>
 
-        <span className="flex-1 ml-3 whitespace-nowrap">Cerrar Sesion</span>
+        <button className="flex-1 pr-20 whitespace-nowrap">
+          Cerrar Sesion
+        </button>
       </a>
     </li>
   );

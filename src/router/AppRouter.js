@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { Route, Navigate, Routes } from "react-router-dom";
+import { Route, Navigate, Routes, useParams } from "react-router-dom";
 //views home
 import PaginaPrincipal from "../views/Home/PaginaPrincipal";
 import Eventos from "../views/Home/Eventos";
@@ -9,7 +9,7 @@ import Noticias from "../views/Home/Noticias";
 
 //views login
 import IniciarSesion from "../views/login/IniciarSesion";
-import RecuperarPassword from "../views/login/RecuperarPassword";
+import EnviarInstrucciones from "../views/login/EnviarInstrucciones";
 
 //views admin
 import DashboardAdmin from "../views/Admin/DashboardAdmin";
@@ -29,9 +29,12 @@ import EventosUsuario from "../views/User/EventosUser";
 import CrearEventoUsuario from "../views/User/CrearEvento";
 import GruposUser from "../views/User/GruposUser";
 import CrearGrupoUsuario from "../views/User/CrearGrupoUsuario";
+import ActualizarPassword from "../views/login/ActualizarPassword";
+import urlAxios from "../config/axios";
 
 export const AppRouter = () => {
   const [auth, guardarAuth] = useContext(CuerbookContext);
+
   return (
     <>
       {" "}
@@ -42,11 +45,17 @@ export const AppRouter = () => {
           <Route path="/itnl/eventos" element={<Eventos />} />
           <Route path="/itnl/grupos" element={<Grupos />} />
           <Route path="/itnl/noticias" element={<Noticias />} />
+
           {/* //views login */}
           <Route path="/itnl/iniciar-sesion" element={<IniciarSesion />} />
           <Route
-            path="/itnl/recuperar-password"
-            element={<RecuperarPassword />}
+            path="/itnl/enviar-instrucciones"
+            element={<EnviarInstrucciones />}
+          />
+
+          <Route
+            path="/itnl/recuperar-password/:token"
+            element={<ActualizarPassword />}
           />
           {/* //views user */}
           <Route path="/usuario/eventos" element={<EventosUsuario />} />
@@ -80,6 +89,7 @@ export const AppRouter = () => {
             path="/itnl/pagina-principal"
             element={<Navigate to="/itnl/pagina-principal" />}
           />
+
           <Route path="*" element={<Navigate to="/itnl/pagina-principal" />} />
         </Routes>
       </CuerbookProvider>

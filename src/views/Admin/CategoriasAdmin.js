@@ -16,10 +16,7 @@ const usuariosDrop = [
   { name: "Ver Usuarios", to: "/admin/usuarios" },
   { name: "Crear Usuario", to: "/admin/crear-usuario" },
 ];
-const eventosDrop = [
-  { name: "Ver Eventos", to: "/admin/eventos" },
-  { name: "Agregar Eventos", to: "/admin/crear-evento" },
-];
+const eventosDrop = [{ name: "Ver Eventos", to: "/admin/eventos" }];
 const gruposDrop = [
   { name: "Ver Grupos", to: "/admin/grupos" },
   { name: "Crear Grupo", to: "/admin/crear-grupo" },
@@ -53,15 +50,12 @@ const CategoriasAdmin = () => {
               >
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
-              <a
-                href="https://flowbite.com"
-                className="flex pl-16 sm:pl-8 md:mr-24"
-              >
-                <img src={LogoItnl} className="h-8 mr-3" alt="FlowBite Logo" />
+              <div className="flex pl-16 sm:pl-8 md:mr-24">
+                <img src={LogoItnl} className="h-8 mr-3" alt="ITNL Logo" />
                 <span className="self-center text-xl pl-2 font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                   CuerBook
                 </span>
-              </a>
+              </div>
             </div>
 
             <NavUser />

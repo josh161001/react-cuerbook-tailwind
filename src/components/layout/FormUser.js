@@ -1,85 +1,111 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import urlAxios from "../../config/axios";
 import Swal from "sweetalert2";
 import { CuerbookContext } from "../../context/CuerbookContext";
+import { useNavigate } from "react-router-dom";
+import Spinner from "./Spinner";
+
 const FormUser = () => {
   const [auth, guardarAuth] = useContext(CuerbookContext);
+  const [tokenCargando, setTokenCargando] = useState(false);
 
-  const [user, setUser] = useState({
-    name: "",
+  const navigate = useNavigate();
+
+  const roles = ["admin", "user"];
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+
+    if (token) {
+      guardarAuth({
+        access_token: token,
+        auth: true,
+      });
+
+      setTokenCargando(true);
+    } else {
+      navigate("/itnl/iniciar-sesion");
+    }
+  }, [navigate, guardarAuth]);
+
+  const [usuario, setUsuario] = useState({
     email: "",
+    name: "",
     password: "",
     imagen: null,
-    roles: [0], // Cambiado a null inicialmente
+    roles: [],
   });
 
-  const guardarUsuarioState = (e) => {
-    const { name, value, type } = e.target;
-
-    // Verifica si el campo es de tipo archivo (para la imagen)
-    const newValue = type === "file" ? e.target.files[0] : value;
-
-    if (name === "roles") {
-      // Si es el campo de roles, divide la cadena por comas para obtener un array de roles
-      setUser({
-        ...user,
-        roles: value.split(",").map((role) => role.trim()),
+  const usuarioState = (e) => {
+    if (e.target.name === "imagen") {
+      // Manejar la carga de la imagen
+      setUsuario({
+        ...usuario,
+        imagen: e.target.files[0],
       });
     } else {
-      setUser({
-        ...user,
-        [name]: name === "name" ? newValue.toLowerCase() : newValue,
+      const roles = e.target.value.split(",");
+      setUsuario({
+        ...usuario,
+        [e.target.name]: e.target.value,
+        roles,
       });
     }
   };
 
-  const guardarUsuarioRest = (e) => {
+  const validarUsuario = () => {
+    const { email, name, password, imagen, roles } = usuario;
+
+    return (
+      !email.length ||
+      !name.length ||
+      !password.length ||
+      !imagen ||
+      !roles.length
+    );
+  };
+
+  const guardarUsuario = (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("access_token");
 
-    const formData = new FormData();
-    formData.append("name", user.name);
-    formData.append("email", user.email);
-    formData.append("password", user.password);
-    formData.append("imagen", user.imagen);
+    if (token) {
+      const formData = new FormData();
+      formData.append("email", usuario.email);
+      formData.append("name", usuario.name);
+      formData.append("password", usuario.password);
+      formData.append("roles", usuario.roles.join(","));
+      formData.append("imagen", usuario.imagen);
 
-    // Agrega los roles al FormData
-    user.roles.forEach((role) => {
-      formData.append("roles[]", role);
-    });
-
-    const accessToken = JSON.parse(localStorage.getItem("access_token"));
-    urlAxios
-      .post("/users", formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(() => {
-        Swal.fire(
-          "Usuario registrado",
-          "Usuario registrado exitosamente",
-          "success"
-        );
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          const errorMessage =
-            "El email tiene el formato incorrecto o ya está registrado";
-          Swal.fire("Registro de usuario fallido", errorMessage, "error");
-        } else {
-          Swal.fire("Error", "Error en el servidor", "error");
-        }
-      });
+      urlAxios
+        .post("/users", formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          Swal.fire(
+            "Usuario registrado",
+            "El usuario se ha registrado correctamente",
+            "success"
+          );
+        })
+        .catch((error) => {
+          const errorMessage = error.response.data.message;
+          Swal.fire("Error", errorMessage, "error");
+        });
+    } else {
+      navigate("/itnl/iniciar-sesion");
+    }
   };
 
-  const validateUser = () => {
-    const { name, email, password } = user;
-    return !name.length || !email.length || !password.length;
-  };
+  if (!tokenCargando) {
+    return <Spinner />;
+  }
 
   return (
-    <form className="dark:bg-gray-800 p-4" onSubmit={guardarUsuarioRest}>
+    <form className="dark:bg-gray-800 p-4" onSubmit={guardarUsuario}>
       <div>
         <label
           for="email-address-icon"
@@ -101,12 +127,12 @@ const FormUser = () => {
             </svg>
           </div>
           <input
+            onChange={usuarioState}
             name="email"
             type="text"
             id="email-address-icon"
             class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="nombre@nuevoleon.tecnm.mx"
-            onChange={guardarUsuarioState}
           />
         </div>
       </div>
@@ -129,12 +155,12 @@ const FormUser = () => {
           </svg>
         </span>
         <input
+          onChange={usuarioState}
           name="name"
           type="text"
           id="website-admin"
           class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Departamento..."
-          onChange={guardarUsuarioState}
         />
       </div>
 
@@ -146,13 +172,13 @@ const FormUser = () => {
           Contrasena del usuario{" "}
         </label>
         <input
+          onChange={usuarioState}
           name="password"
           type="password"
           id="password"
           placeholder="**********"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required
-          onChange={guardarUsuarioState}
         />
       </div>
 
@@ -168,10 +194,10 @@ const FormUser = () => {
         id="user_avatar"
         type="file"
         name="imagen"
-        onChange={guardarUsuarioState}
+        onChange={usuarioState}
       />
       <div
-        class="mt-3 text-sm text-gray-500 pt-1 dark:text-gray-300"
+        class="mt-3 mb-2 text-sm text-gray-500 pt-1 dark:text-gray-300"
         id="user_avatar_help"
       >
         Solo se permiten imagenes tipo jpg, png, jpeg, gif{" "}
@@ -180,18 +206,25 @@ const FormUser = () => {
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         htmlFor="roles"
       >
-        Roles (separados por comas)
+        Selecciona un rol:{" "}
       </label>
-      <input
+      <select
         name="roles"
-        type="text"
         id="roles"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="Role1, Role2, Role3"
-        onChange={guardarUsuarioState}
-      />
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onChange={usuarioState}
+      >
+        <option disabled selected>
+          ---selecciona un rol---
+        </option>
+        {roles.slice(0).map((role) => (
+          <option key={role} value={role}>
+            {role}
+          </option>
+        ))}
+      </select>
       <button
-        disabled={validateUser()}
+        disabled={validarUsuario()}
         type="submit"
         class="text-white bg-blue-700 mb-4 mt-6 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >

@@ -15,10 +15,7 @@ const usuariosDrop = [
   { name: "Ver Usuarios", to: "/admin/usuarios" },
   { name: "Crear Usuario", to: "/admin/crear-usuario" },
 ];
-const eventosDrop = [
-  { name: "Ver Eventos", to: "/admin/eventos" },
-  { name: "Agregar Eventos", to: "/admin/crear-evento" },
-];
+const eventosDrop = [{ name: "Ver Eventos", to: "/admin/eventos" }];
 const gruposDrop = [
   { name: "Ver Grupos", to: "/admin/grupos" },
   { name: "Crear Grupo", to: "/admin/crear-grupo" },
