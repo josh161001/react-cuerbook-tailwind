@@ -4,25 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
 
 const FormCrearGrupo = () => {
-  const [auth, guardarAuth] = useContext(CuerbookContext);
-  const [tokenCargando, setTokenCargando] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-
-    if (token) {
-      guardarAuth({
-        access_token: token,
-        auth: true,
-      });
-
-      setTokenCargando(true);
-    } else {
-      navigate("/itnl/iniciar-sesion");
-    }
-  }, [navigate, guardarAuth]);
-
   const [grupo, setGrupo] = useState({
     name: "",
     imagen: null,

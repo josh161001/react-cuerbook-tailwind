@@ -10,30 +10,18 @@ import MenuCategoriasDrop from "../../components/layout/MenuCategoriasDrop";
 import { NavLink } from "react-router-dom";
 import CerrarSesion from "../../components/layout/CerrarSesion";
 
-const usuariosDrop = [
-  { name: "Ver Usuarios", to: "/admin/usuarios" },
-  { name: "Crear Usuario", to: "/admin/crear-usuario" },
-];
-const eventosDrop = [{ name: "Ver Eventos", to: "/admin/eventos" }];
-const gruposDrop = [
-  { name: "Ver Grupos", to: "/admin/grupos" },
-  { name: "Crear Grupo", to: "/admin/crear-grupo" },
-];
+const MenuHamburguesaAdmin = () => {
+  const usuariosDrop = [{ name: "Ver Usuarios", to: "/admin/usuarios" }];
+  const eventosDrop = [{ name: "Ver Eventos", to: "/admin/eventos" }];
+  const gruposDrop = [{ name: "Ver Grupos", to: "/admin/grupos" }];
+  const noticiasDrop = [{ name: "Ver noticias", to: "/admin/noticias" }];
+  const categoriasDrop = [{ name: "Ver categorias", to: "/admin/categorias" }];
 
-const noticiasDrop = [
-  { name: "Ver noticias", to: "/admin/noticias" },
-  { name: "Crear noticia", to: "/admin/crear-noticia" },
-];
-
-const categoriasDrop = [
-  { name: "Ver categorias", to: "/admin/categorias" },
-  { name: "Crear categoria", to: "/admin/crear-categoria" },
-];
-const CrearCategorias = () => {
   const [menuHamburguesa, setMenuHamburguesa] = useState(false);
   const toggleMenuHamburguesa = () => {
     setMenuHamburguesa(!menuHamburguesa);
   };
+
   return (
     <>
       <nav className="fixed top-0 z-50 w-full bg-dark border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -48,13 +36,15 @@ const CrearCategorias = () => {
               >
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
-
-              <div className="flex pl-16 sm:pl-8 md:mr-24">
-                <img src={LogoItnl} className="h-8 mr-3" alt="ITNL Logo" />
+              <a
+                href="https://flowbite.com"
+                className="flex pl-16 sm:pl-8 md:mr-24"
+              >
+                <img src={LogoItnl} className="h-8 mr-3" alt="FlowBite Logo" />
                 <span className="self-center text-xl pl-2 font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                   CuerBook
                 </span>
-              </div>
+              </a>
             </div>
 
             <NavUser />
@@ -104,37 +94,8 @@ const CrearCategorias = () => {
           </ul>
         </div>
       </aside>{" "}
-      <div className="p-2 sm:ml-64">
-        <div className=" rounded-lg mt-14 sm:mt-16">
-          <div class="relative overflow-x-auto shadow-md rounded-lg sm:rounded-lg">
-            <form className="bg-white dark:bg-gray-800 p-4">
-              <label
-                for="email-address-icon"
-                class="block mb-2 text-sm font-medium pt-4 text-gray-900 dark:text-white"
-              >
-                Nombre de la categoria{" "}
-              </label>
-              <div class="relative">
-                <input
-                  type="text"
-                  id="email-address-icon"
-                  class="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Nombre del grupo..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                class="text-white bg-blue-700 mb-4 mt-6 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Registrar categoria
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
 
-export default CrearCategorias;
+export default MenuHamburguesaAdmin;
