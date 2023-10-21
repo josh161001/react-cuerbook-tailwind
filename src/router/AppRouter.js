@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { Route, Navigate, Routes } from "react-router-dom";
 
-import { Route, Navigate, Routes, useParams } from "react-router-dom";
 //views home
 import PaginaPrincipal from "../views/Home/PaginaPrincipal";
 import Eventos from "../views/Home/Eventos";
@@ -30,7 +30,6 @@ import CrearEventoUsuario from "../views/User/CrearEvento";
 import GruposUser from "../views/User/GruposUser";
 import CrearGrupoUsuario from "../views/User/CrearGrupoUsuario";
 import ActualizarPassword from "../views/login/ActualizarPassword";
-import urlAxios from "../config/axios";
 
 export const AppRouter = () => {
   const [auth, guardarAuth] = useContext(CuerbookContext);

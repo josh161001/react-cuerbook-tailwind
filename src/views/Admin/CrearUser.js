@@ -1,15 +1,17 @@
 import { useState } from "react";
 import LogoItnl from "../../assets/img/Logo_ITNL.png";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { NavLink } from "react-router-dom";
+
+// layout
 import NavUser from "../../components/layout/NavUser";
 import MenuEventosDrop from "../../components/layout/MenuEventosDrop";
 import MenuGruposDrop from "../../components/layout/MenuGruposDrop";
 import MenuUsuariosDrop from "../../components/layout/MenuUsuariosDrop";
 import MenuNoticasDrop from "../../components/layout/MenuNoticasDrop";
 import MenuCategoriasDrop from "../../components/layout/MenuCategoriasDrop";
-import { NavLink } from "react-router-dom";
-import FormUser from "../../components/layout/FormUser";
 import CerrarSesion from "../../components/layout/CerrarSesion";
+import FormCrearUsuario from "../../components/layout/FormCrearUsuario";
 const usuariosDrop = [
   { name: "Ver Usuarios", to: "/admin/usuarios" },
   { name: "Crear Usuario", to: "/admin/crear-usuario" },
@@ -106,7 +108,7 @@ const CrearUser = () => {
       <div className="p-2 sm:ml-64">
         <div className=" rounded-lg mt-28 sm:mt-14">
           <div class="relative overflow-x-auto shadow-md rounded-lg sm:rounded-lg">
-            <FormUser />
+            <FormCrearUsuario />
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { CuerbookContext } from "../../context/CuerbookContext";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
 
-const FormUser = () => {
+const FormCrearUsuario = () => {
   const [auth, guardarAuth] = useContext(CuerbookContext);
   const [tokenCargando, setTokenCargando] = useState(false);
 
@@ -43,12 +43,15 @@ const FormUser = () => {
         ...usuario,
         imagen: e.target.files[0],
       });
+    } else if (e.target.name === "roles") {
+      setUsuario({
+        ...usuario,
+        roles: [e.target.value], // Coloca el valor del campo roles en un array
+      });
     } else {
-      const roles = e.target.value.split(",");
       setUsuario({
         ...usuario,
         [e.target.name]: e.target.value,
-        roles,
       });
     }
   };
@@ -202,12 +205,6 @@ const FormUser = () => {
       >
         Solo se permiten imagenes tipo jpg, png, jpeg, gif{" "}
       </div>
-      <label
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        htmlFor="roles"
-      >
-        Selecciona un rol:{" "}
-      </label>
       <select
         name="roles"
         id="roles"
@@ -217,7 +214,7 @@ const FormUser = () => {
         <option disabled selected>
           ---selecciona un rol---
         </option>
-        {roles.slice(0).map((role) => (
+        {roles.map((role) => (
           <option key={role} value={role}>
             {role}
           </option>
@@ -234,4 +231,4 @@ const FormUser = () => {
   );
 };
 
-export default FormUser;
+export default FormCrearUsuario;
