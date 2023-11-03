@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import urlAxios from "../../config/axios";
-import { CuerbookContext } from "../../context/CuerbookContext";
+import urlAxios from "../../../config/axios";
+import { CuerbookContext } from "../../../context/CuerbookContext";
 
 const FormLogin = (props) => {
   const [auth, guardarAuth] = useContext(CuerbookContext);
@@ -30,7 +30,7 @@ const FormLogin = (props) => {
     urlAxios
       .post("/auth/login", credencialesUsuario)
       .then((res) => {
-        const { access_token, roles } = res.data.data;
+        const { access_token, roles, status } = res.data.data;
 
         localStorage.setItem("access_token", access_token);
 
@@ -45,15 +45,17 @@ const FormLogin = (props) => {
           "success"
         );
 
-        if (roles.includes("admin")) {
-          navigate("/admin/dashboard");
-        } else {
-          navigate("/usuario/eventos");
-        }
+        status === true
+          ? roles.includes("admin")
+            ? navigate("/admin/dashboard")
+            : roles.includes("user")
+            ? navigate("/usuario/eventos")
+            : navigate("/itnl/pagina-principal")
+          : Swal.fire("Inicio de sesión fallido", "Usuario inactivo", "error");
       })
       .catch((error) => {
         if (error.response && error.response.status === 401) {
-          const errorMessage = "Las credenciales no coinciden";
+          const errorMessage = error.response.data.message;
           Swal.fire("Inicio de sesión fallido", errorMessage, "error");
         } else {
           Swal.fire("Error", "Error en el servidor", "error");
@@ -109,11 +111,11 @@ const FormLogin = (props) => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              class="w-6 h-5 mr-2"
+              className="w-6 h-5 mr-2"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
               />
             </svg>

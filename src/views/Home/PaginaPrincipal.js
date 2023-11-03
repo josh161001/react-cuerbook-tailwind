@@ -1,8 +1,10 @@
-import CabeceraPagina from "../../components/layout/CabeceraPagina";
+import CabeceraPagina from "../../components/layout/home/CabeceraPagina";
 import EventosPagina from "../../components/layout/EventosPagina";
-import EventosProximosPagina from "../../components/layout/EventosProximosPagina";
-import GruposPaginaPrincipal from "../../components/layout/GruposPaginaPrincipal";
-import HeaderPagina from "../../components/layout/HeaderPagina";
+import EventosProximosPagina from "../../components/layout/home/EventosProximosPagina";
+import GruposPaginaPrincipal from "../../components/layout/home/GruposPaginaPrincipal";
+import HeaderPagina from "../../components/layout/home/HeaderPagina";
+import NoticiasPaginaPrincipal from "../../components/layout/home/NoticiasPaginaPrincipal";
+import Footer from "../../components/layout/home/Footer";
 
 const PaginaPrincipal = () => {
   return (
@@ -24,10 +26,9 @@ const PaginaPrincipal = () => {
               </p>
             </div>
             {/* Eventos inicia */}
-            <div className="flex sm:grid grid-cols-3 flex-col gap-2 p-4 sm:p-10  md:flex-row">
-              <EventosPagina />
-              {/* finaliza evento */}
-            </div>
+            <EventosPagina />
+            {/* finaliza evento */}
+
             {/* eventos finaliza */}
             {/* inicia ver mas eventos  */}
             <section className=" p-2 bg-gradient-to-r from-red-600 to-red-600 flex flex-col justify-center items-center text-center">
@@ -37,8 +38,14 @@ const PaginaPrincipal = () => {
             <section>
               <GruposPaginaPrincipal />
             </section>
+
+            <section>
+              <NoticiasPaginaPrincipal />
+            </section>
           </div>
         </main>
+
+        <Footer />
       </div>
     </>
   );

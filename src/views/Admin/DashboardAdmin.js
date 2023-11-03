@@ -1,6 +1,7 @@
-import TableUser from "../../components/layout/TableUser";
-import Cantidad from "../../components/layout/Cantidad";
-import MenuHamburguesaAdmin from "../../components/layout/MenuHamburguesaAdmin";
+import React from "react";
+import MenuHamburguesaAdmin from "../../components//layout/admin/MenuHamburguesaAdmin";
+import TableUser from "../../components/layout/admin/TableUser";
+import Cantidad from "../../components//layout/Cantidad";
 
 const DashboardAdmin = () => {
   return (
@@ -11,7 +12,7 @@ const DashboardAdmin = () => {
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-4">
             <Cantidad />
           </div>
-          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <TableUser />
           </div>
         </div>

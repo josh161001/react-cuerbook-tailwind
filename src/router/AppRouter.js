@@ -24,6 +24,10 @@ import EventosUsuario from "../views/User/EventosUser";
 import CrearEventoUsuario from "../views/User/CrearEvento";
 import GruposUser from "../views/User/GruposUser";
 import ActualizarPassword from "../views/login/ActualizarPassword";
+import EditarUsuarioAdmin from "../views/Admin/EditarUsuarioAdmin";
+import EditarGrupoAdmin from "../views/Admin/EditarGrupoAdmin";
+
+import EditarNoticiaAdmin from "../views/Admin/EditarNoticiaAdmin";
 
 export const AppRouter = () => {
   const [auth, guardarAuth] = useContext(CuerbookContext);
@@ -62,12 +66,17 @@ export const AppRouter = () => {
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
           {/* //views admin/user */}
           <Route path="/admin/usuarios" element={<UserAdmin />} />
+          <Route path="/admin/usuario/:id" element={<EditarUsuarioAdmin />} />
+
           {/* //views admin/eventos */}
           <Route path="/admin/eventos" element={<EventosAdmin />} />
           {/* //views admin/grupos */}
           <Route path="/admin/grupos" element={<GruposAdmin />} />
+          <Route path="/admin/grupo/:id" element={<EditarGrupoAdmin />} />
+
           {/* //views admin/noticias */}
           <Route path="/admin/noticias" element={<NoticiasAdmin />} />
+          <Route path="/admin/noticia/:id" element={<EditarNoticiaAdmin />} />
           {/* //views admin/categorias */}
           <Route path="/admin/categorias" element={<CategoriasAdmin />} />
 

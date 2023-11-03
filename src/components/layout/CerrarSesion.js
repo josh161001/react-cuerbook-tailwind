@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 const CerrarSesion = () => {
   const navigate = useNavigate();
-
   const cerrarSesion = () => {
     localStorage.removeItem("access_token");
 
@@ -33,7 +32,7 @@ const CerrarSesion = () => {
           />
         </svg>
 
-        <button className="flex-1 pr-20 whitespace-nowrap">
+        <button className="flex-1 pr-20  whitespace-nowrap">
           Cerrar Sesion
         </button>
       </a>

@@ -1,5 +1,5 @@
-import BotonVerNoticias from "../../components/common/BotonVerNoticias";
-import BotonEventosProximos from "../../components/common/BotonEventosProximos";
+import BotonVerNoticias from "../../../components/common/BotonVerNoticias";
+import BotonEventosProximos from "../../../components/common/BotonEventosProximos";
 
 const CabeceraPagina = () => {
   return (

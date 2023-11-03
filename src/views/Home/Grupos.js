@@ -1,7 +1,23 @@
-import CabeceraPagina from "../../components/layout/CabeceraPagina";
-import HeaderPagina from "../../components/layout/HeaderPagina";
+import { useEffect, useState } from "react";
+import CabeceraPagina from "../../components/layout/home/CabeceraPagina";
+import Footer from "../../components/layout/home/Footer";
+import HeaderPagina from "../../components/layout/home/HeaderPagina";
+import urlAxios from "../../config/axios";
+import { Link } from "react-router-dom";
 
 const Grupos = () => {
+  const [grupos, datoGrupo] = useState([]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const consultarGrupos = async () => {
+    const gruposConsulta = await urlAxios.get(`/groups`);
+    console.log(gruposConsulta.data.data);
+    datoGrupo(gruposConsulta.data.data);
+  };
+  useEffect(() => {
+    consultarGrupos();
+  }, []);
   return (
     <>
       <div className="bg-black">
@@ -10,137 +26,50 @@ const Grupos = () => {
       </div>
 
       <div className="w-full h-full">
-        <h2 className="text-3xl text-center p-2 font-bold  text-black-50 sm:text-4xl">
-          Explora los grupos y sus eventos
+        <h2 className="lg:text-3xl md:text-3xl  text-2xl font-bold text-center pt-4 italic">
+          <span className="bg-red-400 pl-2 pt-2 pb-2 pr-2">
+            Explora los grupos y sus eventos
+          </span>
         </h2>
-        <div className="flex sm:grid grid-cols-3 flex-col gap-4 p-4 sm:p-10  md:flex-row">
-          {/* inicia grupo */}
-          <div className="max-w-sm border rounded-lg shadow dark:bg-black">
-            <img
-              className="rounded-t-lg w-full"
-              src="https://previews.123rf.com/images/rawpixel/rawpixel1602/rawpixel160204909/51892582-grupo-de-personas-concepto-reuni%C3%B3n-informal-social.jpg"
-              alt=""
-            />
-            <div className="p-5">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Noteworthy technology acquisitions 2021
-              </h5>
-
-              <p className="mb-8 font-normal text-gray-700 dark:text-gray-400">
-                Here are the biggest enterprise technology acquisitions of 2021
-                so far, in reverse chronological order.
-              </p>
-
-              <div className="flex flex-col sm:flex-row justify-between items-start mt-2 sm:mt-2">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-4 h-4 mt-1 mr-2 bg-white rounded-full"
-                  >
-                    <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
-                  </svg>
-                  <p className="text-gray-900 dark:text-white">
-                    Jorge Martinez
-                  </p>
-                </div>
-                <a
-                  href="#"
-                  className="mt-4 sm:mt-0 text-center  items-center px-3 py-2 text-sm font-medium sm:text-center text-white bg-blue-700 rounded-lg hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-500 dark:focus:ring-blue-800
-              w-full sm:w-auto"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 sm:p-10">
+          {/* inicia grupos */}
+          {grupos.map((grupo) => (
+            <Link to={`/admin/grupo/${grupo.id}`}>
+              <div class="relative grid h-[30rem] w-full max-w-[28rem] flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-center text-gray-700">
+                <div
+                  class="absolute inset-0 m-0 h-full w-full overflow-hidden rounded-none"
+                  style={{
+                    backgroundImage: `url(${grupo.imagen})`,
+                  }}
                 >
-                  Explorar →
-                </a>
-              </div>
-            </div>
-          </div>
-          {/* finaliza grupo */}
-          {/* inicia grupo */}
-          <div className="max-w-sm border rounded-lg shadow dark:bg-black">
-            <img
-              className="rounded-t-lg w-full"
-              src="https://previews.123rf.com/images/rawpixel/rawpixel1602/rawpixel160204909/51892582-grupo-de-personas-concepto-reuni%C3%B3n-informal-social.jpg"
-              alt=""
-            />
-            <div className="p-5">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Noteworthy technology acquisitions 2021
-              </h5>
-
-              <p className="mb-8 font-normal text-gray-700 dark:text-gray-400">
-                Here are the biggest enterprise technology acquisitions of 2021
-                so far, in reverse chronological order.
-              </p>
-
-              <div className="flex flex-col sm:flex-row justify-between items-start mt-2 sm:mt-2">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-4 h-4 mt-1 mr-2 bg-white rounded-full"
-                  >
-                    <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
-                  </svg>
-                  <p className="text-gray-900 dark:text-white">
-                    Jorge Martinez
-                  </p>
+                  {" "}
+                  <div class="absolute inset-0 w-full h-full to-bg-black-30 bg-gradient-to-t from-black/70 via-black/80"></div>
                 </div>
-                <a
-                  href="#"
-                  className="mt-4 sm:mt-0 text-center  items-center px-3 py-2 text-sm font-medium sm:text-center text-white bg-blue-700 rounded-lg hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-500 dark:focus:ring-blue-800
-              w-full sm:w-auto"
-                >
-                  Explorar →
-                </a>
-              </div>
-            </div>
-          </div>
-          {/* finaliza grupo */}
-          {/* inicia grupo */}
-          <div className="max-w-sm border rounded-lg shadow dark:bg-black">
-            <img
-              className="rounded-t-lg w-full"
-              src="https://previews.123rf.com/images/rawpixel/rawpixel1602/rawpixel160204909/51892582-grupo-de-personas-concepto-reuni%C3%B3n-informal-social.jpg"
-              alt=""
-            />
-            <div className="p-5">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Noteworthy technology acquisitions 2021
-              </h5>
+                <div class="relative p-10 px-6 py-14 md:px-10">
+                  <h2 class="mb-6 block font-sans text-4xl font-medium leading-[1.5] tracking-normal text-white ">
+                    {grupo.name}
+                  </h2>
+                  {grupo && grupo.user && (
+                    <h5 class="block mb-4 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-gray-400">
+                      {grupo.user.name}
+                    </h5>
+                  )}
 
-              <p className="mb-8 font-normal text-gray-700 dark:text-gray-400">
-                Here are the biggest enterprise technology acquisitions of 2021
-                so far, in reverse chronological order.
-              </p>
-
-              <div className="flex flex-col sm:flex-row justify-between items-start mt-2 sm:mt-2">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-4 h-4 mt-1 mr-2 bg-white rounded-full"
-                  >
-                    <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
-                  </svg>
-                  <p className="text-gray-900 dark:text-white">
-                    Jorge Martinez
-                  </p>
+                  {grupo && grupo.user && (
+                    <img
+                      alt="Perfil de usuario"
+                      src={grupo.user.imagen}
+                      class="relative inline-block  w-20 rounded-full border-2 border-gray-600 object-cover object-center"
+                    />
+                  )}
                 </div>
-                <a
-                  href="#"
-                  className="mt-4 sm:mt-0 text-center  items-center px-3 py-2 text-sm font-medium sm:text-center text-white bg-blue-700 rounded-lg hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-500 dark:focus:ring-blue-800
-              w-full sm:w-auto"
-                >
-                  Explorar →
-                </a>
               </div>
-            </div>
-          </div>
+            </Link>
+          ))}
+
           {/* finaliza grupo */}
         </div>
+        <Footer />
       </div>
     </>
   );

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import LogoItnl from "../../assets/img/Logo_ITNL.png";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import NavUser from "../../components/layout/NavUser";
-import MenuEventosDrop from "../../components/layout/MenuEventosDrop";
-import MenuGruposDrop from "../../components/layout/MenuGruposDrop";
+import NavUser from "../../components/layout//admin/NavUser";
+import MenuEventosDrop from "../../components/layout/admin/MenuEventosDrop";
+import MenuGruposDrop from "../../components/layout/admin/MenuGruposDrop";
 
 const eventosDrop = [
   { name: "Ver Eventos", to: "/usuario/eventos" },

@@ -1,4 +1,4 @@
-import logoNegro from "../../assets/img/Logo_ITNL.png";
+import logoNegro from "../../../assets/img/Logo_ITNL.png";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";

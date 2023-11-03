@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~trix/dist/trix.css";
 
 .active {
     color: rgb(239 68 68); 
@@ -22,7 +23,7 @@
     display: inline-block;
     position: absolute;
     top: 0;
-    background-color: #333;
+    background-color: #1a202c;
     border-radius: 100%;
     
     -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
@@ -53,3 +54,31 @@
       -webkit-transform: scale(1.0);
     }
   }
+
+
+.trix-button-group {
+  background-color: #f5f5f5; /* Fondo similar a otros botones en tu aplicación */
+  border: 1px solid #ccc; /* Borde similar a otros botones en tu aplicación */
+}
+
+trix-editor{
+  background: white;
+  overflow-wrap: break-word;
+
+  word-wrap: break-word;
+  overflow: auto;
+  max-height: 150px;
+  max-width: 700px;
+}
+
+#trix {
+  display: none;
+}
+
+
+
+div{
+  word-wrap: break-word;
+}
+
+

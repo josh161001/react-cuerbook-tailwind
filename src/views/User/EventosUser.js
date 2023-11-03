@@ -1,11 +1,11 @@
 import { useState } from "react";
 import LogoItnl from "../../assets/img/Logo_ITNL.png";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import NavUser from "../../components/layout/NavUser";
-import MenuEventosDrop from "../../components/layout/MenuEventosDrop";
-import MenuGruposDrop from "../../components/layout/MenuGruposDrop";
+import NavUser from "../../components/layout/admin/NavUser";
+import MenuEventosDrop from "../../components/layout/admin/MenuEventosDrop";
+import MenuGruposDrop from "../../components/layout/admin/MenuGruposDrop";
 
-import TableEventosUsuario from "../../components/layout/TableEventosUser";
+// import TableEventosUsuario from "../../components/layout/admin/";
 
 const eventosDrop = [
   { name: "Ver Eventos", to: "/usuario/eventos" },
@@ -98,7 +98,7 @@ const EventosUsuario = () => {
       <div className="sm:ml-64">
         <div className="p-4  rounded-lg  mt-14">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <TableEventosUsuario />
+            {/* <TableEventosUsuario /> */}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import CuervoItnl from "../../assets/img/cuervo-ITNL.jpg";
-import FormLogin from "../../components/layout/FormLogin";
+import FormLogin from "../../components/layout/login/FormLogin";
 
 const IniciarSesion = () => {
   return (

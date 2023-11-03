@@ -1,302 +1,110 @@
-import { useState } from "react";
-import CabeceraPagina from "../../components/layout/CabeceraPagina";
-import HeaderPagina from "../../components/layout/HeaderPagina";
+import { useEffect, useState } from "react";
+import CabeceraPagina from "../../components/layout/home/CabeceraPagina";
+import HeaderPagina from "../../components/layout/home/HeaderPagina";
+import Footer from "../../components/layout/home/Footer";
+import Spinner from "../../components/layout/Spinner";
+import urlAxios from "../../config/axios";
+import moment from "moment";
 
 const Eventos = () => {
-  const [categoriaAbierto, setCategoriaAbierto] = useState(false);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const [eventos, guardarEventos] = useState([]);
 
-  const toggleCategorias = () => {
-    setCategoriaAbierto(!categoriaAbierto);
+  const limpiarTrix = (input) => {
+    let doc = new DOMParser().parseFromString(input, "text/html");
+    Array.from(doc.body.getElementsByTagName("strong")).forEach((strong) => {
+      strong.outerHTML = strong.innerHTML;
+    });
+    return doc.body.innerHTML;
   };
 
+  const consultarEventosProximos = async () => {
+    const evento = await urlAxios.get("/events");
+    const eventosPorCategoria = evento.data.data.reduce(
+      (categorias, evento) => {
+        const categoria = evento.Categories.name;
+        if (!categorias[categoria]) {
+          categorias[categoria] = [];
+        }
+        categorias[categoria].push(evento);
+        return categorias;
+      },
+      {}
+    );
+    guardarEventos(eventosPorCategoria);
+  };
+
+  useEffect(() => {
+    consultarEventosProximos();
+  }, []);
+
+  if (!eventos) {
+    return <Spinner />;
+  }
   return (
     <>
       <div className="bg-black">
         <HeaderPagina />
         <CabeceraPagina />
       </div>
-      <div className="w-full h-full">
-        <h2 className="text-3xl text-center p-2 font-bold  text-black-50 sm:text-4xl">
-          Eventos Proximos
-        </h2>
-        <form>
-          <div class="flex p-2 pr-2 pl-2 sm:p-2 sm:pr-20 sm:pl-20 ">
-            <label
-              for="search-dropdown"
-              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-            >
-              Your Email
-            </label>
-            <button
-              id="dropdown-button"
-              data-dropdown-toggle="dropdown"
-              class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-              type="button"
-              aria-expanded={categoriaAbierto}
-              onClick={toggleCategorias}
-            >
-              Categorias
-              <svg
-                class="w-2.5 h-2.5 ml-2.5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
+      {Object.keys(eventos).map((categoria, index) => (
+        <div key={index}>
+          <h2 className="text-3xl font-bold text-center pt-4 italic">
+            <span className="bg-red-400 pl-2 pr-2 pt-2 pb-2">{categoria}</span>
+          </h2>
+
+          <div className="flex lg:grid lg:grid-cols-3 flex-col lg:gap-0 gap-2 p-4 sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
+            {eventos[categoria].map((evento, index) => (
+              <div
+                key={index}
+                className="max-w-md mx-auto relative rounded-lg overflow-hidden shadow-lg"
               >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m1 1 4 4 4-4"
+                <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
+                <img
+                  src={evento.imagen}
+                  className="object-cover bg-no-repeat w-full h-94 lg:h-80"
                 />
-              </svg>
-            </button>
-            <div
-              id="dropdown"
-              className={`${
-                categoriaAbierto ? "block" : "hidden"
-              } z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
-            >
-              <ul
-                class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdown-button"
-              >
-                <li>
-                  <button
-                    type="button"
-                    class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Mockups
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Templates
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Design
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Logos
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <div class="relative w-full">
-              <input
-                type="search"
-                id="search-dropdown"
-                class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-                placeholder="Busca el nombre del evento"
-                required
-              />
-              <button
-                type="submit"
-                class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                <svg
-                  class="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-                <span class="sr-only">Buscar</span>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div className="flex sm:grid grid-cols-3 flex-col gap-4 p-4 sm:p-10  md:flex-row">
-        {/* inicia evento */}
-        <div className="max-w-md mx-auto relative rounded-lg overflow-hidden shadow-lg">
-          <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
-          <img
-            src="https://picsum.photos/seed/1840/1000/600"
-            className="object-cover w-full h-full"
-            alt="Card Image"
-          />
-          <div className="absolute inset-0 flex flex-col justify-end p-6">
-            <h2 className="text-white text-2xl font-bold mb-1">
-              Título del evento
-            </h2>
-            <p className="text-gray-400 text-sm mb-2">by Nombre del Autor</p>
-            <p className="text-white text-base mb-2">
-              lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            </p>
-            <div className="flex justify-between pt-2">
-              <a
-                href="#"
-                className="hover:bg-red-500 px-4 rounded rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white"
-              >
-                Ver más
-              </a>
-              <p className="text-white pt-4 text-sm">hace 7 horas</p>
-            </div>
+
+                <div className="absolute inset-0 flex flex-col justify-end m-4">
+                  <h6 className="text-red-700 uppercase font-bold mb-1">
+                    {evento.Categories.name}
+                  </h6>
+                  <h2 className="text-white text-2xl font-bold mb-1">
+                    {evento.name}
+                  </h2>
+                  <p className="text-gray-400 text-sm italic mb-1">
+                    Por {evento.user.name}
+                  </p>
+                  <p
+                    className="text-white text-base mb-2"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        evento.description.length > 90
+                          ? limpiarTrix(evento.description.slice(0, 90) + "...")
+                          : limpiarTrix(evento.description),
+                    }}
+                  ></p>
+
+                  <div className="flex justify-between pt-1">
+                    <a
+                      href="#"
+                      className="hover:bg-red-500 px-4 rounded rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white"
+                    >
+                      Ver más
+                    </a>
+                    <p className="text-white pt-4 text-sm">
+                      {moment(evento.createdAt).fromNow()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        {/* finaliza evento */}
-        {/* inicia evento */}
-        <div className="max-w-md mx-auto relative rounded-lg overflow-hidden shadow-lg">
-          <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
-          <img
-            src="https://picsum.photos/seed/1840/1000/600"
-            className="object-cover w-full h-full"
-            alt="Card Image"
-          />
-          <div className="absolute inset-0 flex flex-col justify-end p-6">
-            <h2 className="text-white text-2xl font-bold mb-1">
-              Título del evento
-            </h2>
-            <p className="text-gray-400 text-sm mb-2">By Nombre del Autor</p>
-            <p className="text-white text-base mb-2">
-              lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            </p>
-            <div className="flex justify-between pt-2">
-              <a
-                href="#"
-                className="hover:bg-red-500 px-4 rounded rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white"
-              >
-                Ver más
-              </a>
-              <p className="text-white pt-4 text-sm">hace 7 horas</p>
-            </div>
-          </div>
-        </div>
-        {/* finaliza evento */}
-        {/* inicia evento */}
-        <div className="max-w-md mx-auto relative rounded-lg overflow-hidden shadow-lg">
-          <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
-          <img
-            src="https://picsum.photos/seed/1840/1000/600"
-            className="object-cover w-full h-full"
-            alt="Card Image"
-          />
-          <div className="absolute inset-0 flex flex-col justify-end p-6">
-            <h2 className="text-white text-2xl font-bold mb-1">
-              Título del evento
-            </h2>
-            <p className="text-gray-400 text-sm mb-2">By Nombre del Autor</p>
-            <p className="text-white text-base mb-2">
-              lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            </p>
-            <div className="flex justify-between pt-2">
-              <a
-                href="#"
-                className="hover:bg-red-500 px-4 rounded rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white"
-              >
-                Ver más
-              </a>
-              <p className="text-white pt-4 text-sm">hace 7 horas</p>
-            </div>
-          </div>
-        </div>
-        {/* inicia evento */}
-        <div className="max-w-md mx-auto relative rounded-lg overflow-hidden shadow-lg">
-          <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
-          <img
-            src="https://picsum.photos/seed/1840/1000/600"
-            className="object-cover w-full h-full"
-            alt="Card Image"
-          />
-          <div className="absolute inset-0 flex flex-col justify-end p-6">
-            <h2 className="text-white text-2xl font-bold mb-1">
-              Título del evento
-            </h2>
-            <p className="text-gray-400 text-sm mb-2">by Nombre del Autor</p>
-            <p className="text-white text-base mb-2">
-              lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            </p>
-            <div className="flex justify-between pt-2">
-              <a
-                href="#"
-                className="hover:bg-red-500 px-4 rounded rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white"
-              >
-                Ver más
-              </a>
-              <p className="text-white pt-4 text-sm">hace 7 horas</p>
-            </div>
-          </div>
-        </div>
-        {/* finaliza evento */}
-        {/* inicia evento */}
-        <div className="max-w-md mx-auto relative rounded-lg overflow-hidden shadow-lg">
-          <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
-          <img
-            src="https://picsum.photos/seed/1840/1000/600"
-            className="object-cover w-full h-full"
-            alt="Card Image"
-          />
-          <div className="absolute inset-0 flex flex-col justify-end p-6">
-            <h2 className="text-white text-2xl font-bold mb-1">
-              Título del evento
-            </h2>
-            <p className="text-gray-400 text-sm mb-2">By Nombre del Autor</p>
-            <p className="text-white text-base mb-2">
-              lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            </p>
-            <div className="flex justify-between pt-2">
-              <a
-                href="#"
-                className="hover:bg-red-500 px-4 rounded rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white"
-              >
-                Ver más
-              </a>
-              <p className="text-white pt-4 text-sm">hace 7 horas</p>
-            </div>
-          </div>
-        </div>
-        {/* finaliza evento */}
-        {/* inicia evento */}
-        <div className="max-w-md mx-auto relative rounded-lg overflow-hidden shadow-lg">
-          <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
-          <img
-            src="https://picsum.photos/seed/1840/1000/600"
-            className="object-cover w-full h-full"
-            alt="Card Image"
-          />
-          <div className="absolute inset-0 flex flex-col justify-end p-6">
-            <h2 className="text-white text-2xl font-bold mb-1">
-              Título del evento
-            </h2>
-            <p className="text-gray-400 text-sm mb-2">By Nombre del Autor</p>
-            <p className="text-white text-base mb-2">
-              lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            </p>
-            <div className="flex justify-between pt-2">
-              <a
-                href="#"
-                className="hover:bg-red-500 px-4 rounded rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white"
-              >
-                Ver más
-              </a>
-              <p className="text-white pt-4 text-sm">hace 7 horas</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
+      <Footer />
     </>
   );
 };

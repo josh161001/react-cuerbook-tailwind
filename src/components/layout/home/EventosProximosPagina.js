@@ -1,4 +1,5 @@
-import eventosImagen from "../../assets/img/eventos.png";
+import { Link } from "react-router-dom";
+import eventosImagen from "../../../assets/img/eventos.png";
 
 const EventosProximosPagina = () => {
   return (
@@ -10,12 +11,12 @@ const EventosProximosPagina = () => {
               ¿Te gustaría ver más eventos próximos?
             </h3>
             <p className="text-white">Da clic en el siguiente botón</p>
-            <a
-              href="#"
+            <Link
+              to="/itnl/eventos"
               className="hover:bg-violet-900 rounded rounded-md bg-violet-600 px-3.5 py-2.5 text-sm font-semibold text-violet inline-block mt-4"
             >
               Ver más
-            </a>
+            </Link>
           </div>
           <div className="flex items-center justify-center">
             <img
