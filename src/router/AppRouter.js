@@ -28,6 +28,7 @@ import EditarUsuarioAdmin from "../views/Admin/EditarUsuarioAdmin";
 import EditarGrupoAdmin from "../views/Admin/EditarGrupoAdmin";
 
 import EditarNoticiaAdmin from "../views/Admin/EditarNoticiaAdmin";
+import EventoPaginaHome from "../views/Home/EventoPaginaHome";
 
 export const AppRouter = () => {
   const [auth, guardarAuth] = useContext(CuerbookContext);
@@ -40,6 +41,8 @@ export const AppRouter = () => {
           {/* {        //views home */}
           <Route path="/itnl/pagina-principal" element={<PaginaPrincipal />} />
           <Route path="/itnl/eventos" element={<Eventos />} />
+          {/* view intl eventos */}
+          <Route path="/itnl/evento/:id" element={<EventoPaginaHome />} />
           <Route path="/itnl/grupos" element={<Grupos />} />
           <Route path="/itnl/noticias" element={<Noticias />} />
 

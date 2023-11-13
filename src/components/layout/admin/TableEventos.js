@@ -88,6 +88,13 @@ const TableEventos = (props) => {
       setPaginaActual(numeroDePagina);
     }
   };
+  const limpiarTrix = (input) => {
+    let doc = new DOMParser().parseFromString(input, "text/html");
+    Array.from(doc.body.getElementsByTagName("strong")).forEach((strong) => {
+      strong.outerHTML = strong.innerHTML;
+    });
+    return doc.body.innerHTML;
+  };
 
   if (!tokenCargando || !eventos.length) {
     return <Spinner />;
@@ -160,9 +167,9 @@ const TableEventos = (props) => {
                   className="px-6 py-4  whitespace-nowrap"
                   dangerouslySetInnerHTML={{
                     __html:
-                      evento.description.length > 90
-                        ? evento.description.slice(0, 90) + "..."
-                        : evento.description,
+                      evento.description.length > 40
+                        ? limpiarTrix(evento.description.slice(0, 60) + "...")
+                        : limpiarTrix(evento.description),
                   }}
                 ></td>
                 <td className="px-6 py-4"> {evento.Categories.name}</td>

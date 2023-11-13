@@ -12,7 +12,7 @@ const GruposPaginaPrincipal = () => {
 
   return (
     <>
-      <div className="grid lg:grid-cols-2 bg-red-950">
+      <div className="grid lg:grid-cols-2 bg-azul">
         {/* galeria */}
         <div className="">
           <div className="grid lg:grid-cols-2 lg:w-full lg:grid-cols-4 md:grid-cols-2 md:p-2 md:gap-2  sm:grid lg:gap-2 lg:m-4 lg:ml-48">
@@ -52,7 +52,7 @@ const GruposPaginaPrincipal = () => {
         </div>
 
         {/* grupos informacion */}
-        <div className="bg-claro mt-10 lg:rounded-lg mb-10">
+        <div className="bg-grayTec mt-10 lg:rounded-lg mb-10">
           <div className="m-8">
             <h3 className="uppercase font-bold text-2xl">Ingresa a un grupo</h3>
             <p>
@@ -65,7 +65,7 @@ const GruposPaginaPrincipal = () => {
             <p>Para todo estudiante</p>
             <Link
               to="/itnl/grupos"
-              className="hover:bg-red-900 rounded rounded-md bg-red-700 px-3.5 py-2.5 text-sm font-semibold text-white inline-block mt-4"
+              className="hover:bg-blue-700 rounded rounded-md bg-azul px-3.5 py-2.5 text-sm font-semibold text-white inline-block mt-4"
             >
               Saber más
             </Link>

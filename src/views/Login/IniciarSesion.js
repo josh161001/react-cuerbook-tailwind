@@ -11,7 +11,7 @@ const IniciarSesion = () => {
         </div>
         <div className="w-full lg:w-1/2 p-12 sm:p-20">
           <h1 className="text-xl font-semibold mb-2">
-            Bienvenido a <span className="text-red-700">CuerBook</span>{" "}
+            Bienvenido a <span className="text-azul">CuerBook</span>{" "}
           </h1>
           <small className="text-gray-400">
             Bienvenido de vuelta, inicia sesión con tu cuenta

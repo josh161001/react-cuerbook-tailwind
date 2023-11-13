@@ -4,7 +4,7 @@ const BotonEventosProximos = () => {
   return (
     <Link
       to="/itnl/eventos"
-      className="text-sm font-semibold hover:text-red-500 leading-6 text-stone-50"
+      className="text-sm font-semibold hover:text-azul leading-6 text-stone-50"
     >
       Eventos próximos <span aria-hidden="true">→</span>
     </Link>

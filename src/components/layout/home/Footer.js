@@ -2,11 +2,11 @@ import MenuFooter from "./MenuFooter";
 
 const Footer = () => {
   return (
-    <footer className="footer px-10 py-4 border-t bg-gray-800 text-gray-300">
-      <div className="px-0 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-0 lg:px-8">
+    <footer className="footer px-10 py-4 border-t bg-azul text-black-300">
+      <div className="px-0 pt-16 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-0 lg:px-8">
         <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-2">
           <div className="space-y-2 text-sm">
-            <p className="text-base font-bold tracking-wide">Dirección</p>
+            <p className="text-white font-bold tracking-wide">Dirección</p>
             <div style={{ maxWidth: "100%", height: "400px" }}>
               <iframe
                 title="Google Map"
@@ -19,7 +19,7 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <span className="text-base font-bold tracking-wide">
+            <span className="text-white font-bold tracking-wide">
               Redes sociales y sitio de interes
             </span>
             <section>
@@ -46,17 +46,17 @@ const Footer = () => {
                 </a>
               </div>
             </section>
-            <p className="mt-4 text-sm">
+            <p className="mt-4 text-white text-sm">
               Si tienes alguna duda o sugerencia, puedes contactarnos a través
               de nuestras redes sociales y tambien puedes visitar otros sitios
               de interes
             </p>
-            <p className="mt-4 text-2xl pb-4 ">Menu </p>
+            <p className="mt-4 text-2xl text-white pb-4 ">Menu </p>
             <MenuFooter />
           </div>
         </div>
         <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
-          <p className="text-sm">
+          <p className="text-sm text-white">
             © Copyright {new Date().getFullYear()} Intituto Tecnologico de Nuevo
             Leon, todos los derechos reservados.
           </p>

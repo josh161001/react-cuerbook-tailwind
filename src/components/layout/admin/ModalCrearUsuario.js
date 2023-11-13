@@ -7,14 +7,12 @@ import Spinner from "../../../components/layout/Spinner";
 import Trix from "trix";
 
 const ModalCrearUsuario = ({ isOpen, onClose }) => {
-  const roles = ["admin", "user"];
-
-  const [auth, guardarAuth] = useContext(CuerbookContext);
-  const [tokenCargando, setTokenCargando] = useState(false);
   const trixEditor = useRef(null);
 
+  const roles = ["admin", "user"];
+  const [auth, guardarAuth] = useContext(CuerbookContext);
+  const [tokenCargando, setTokenCargando] = useState(false);
   const navigate = useNavigate();
-
   const [usuario, setUsuario] = useState({
     email: "",
     name: "",
@@ -24,6 +22,28 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
     status: false, // Campo para controlar el estado del usuario
     roles: [],
   });
+
+  const [seleccionarRol, setSeleccionarRol] = useState("");
+
+  // Funciones y Efectos Secundarios
+  const handleRolChange = (e) => {
+    setSeleccionarRol(e.target.value);
+
+    setUsuario({
+      ...usuario,
+      roles: [e.target.value],
+    });
+  };
+
+  const handleTrixChange = () => {
+    if (trixEditor.current) {
+      const value = trixEditor.current.innerHTML;
+      setUsuario({
+        ...usuario,
+        description: value,
+      });
+    }
+  };
 
   useEffect(() => {
     if (trixEditor.current) {
@@ -42,16 +62,6 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
     usuario.imagen,
     usuario.status,
   ]);
-
-  const handleTrixChange = () => {
-    if (trixEditor.current) {
-      const value = trixEditor.current.innerHTML;
-      setUsuario({
-        ...usuario,
-        description: value,
-      });
-    }
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -93,12 +103,13 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
   };
 
   const validarUsuario = () => {
-    const { email, name, password, imagen, roles } = usuario;
+    const { email, name, password, description, imagen, roles } = usuario;
 
     return (
       !email.length ||
       !name.length ||
       !password.length ||
+      !description.length ||
       !imagen ||
       !roles.length
     );
@@ -113,7 +124,7 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
       formData.append("email", usuario.email);
       formData.append("name", usuario.name);
       formData.append("password", usuario.password);
-      formData.append("roles", usuario.roles.join(","));
+      formData.append("roles", usuario.roles[0]);
       formData.append("imagen", usuario.imagen);
       formData.append("description", usuario.description);
       formData.append("status", usuario.status); // Enviar el estado del usuario
@@ -224,16 +235,11 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
                   </label>
                   <input
                     className="w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    aria-describedby="user_avatar_help"
-                    id="user_avatar"
                     type="file"
                     name="imagen"
                     onChange={usuarioState}
                   />
-                  <div
-                    className="mt-2 text-sm text-gray-500 pt-1 dark:text-gray-300"
-                    id="user_avatar_help"
-                  >
+                  <div className="mt-2 text-sm text-gray-500 pt-1 dark:text-gray-300">
                     Solo se permiten imágenes tipo jpg, png, jpeg, gif
                   </div>
                 </div>
@@ -244,10 +250,11 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
                   <select
                     name="roles"
                     id="roles"
+                    value={seleccionarRol}
                     className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    onChange={usuarioState}
+                    onChange={handleRolChange}
                   >
-                    <option disabled selected>
+                    <option disabled value="">
                       --- Selecciona un rol ---
                     </option>
                     {roles.map((role) => (
@@ -286,16 +293,16 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
                   </label>
                 </div>
               </div>
-              <div className="">
-                <label
-                  htmlFor="message"
-                  className="block mb-2 pt-1 text-sm font-medium text-gray-900 dark:text-white"
-                >
+              <div>
+                <label className="block mb-2 pt-1 text-sm font-medium text-gray-900 dark:text-white">
                   Descripcion del usuario
                 </label>
 
-                <input id="trix" value={usuario.description} type="" />
-                <trix-editor ref={trixEditor} input="trix" />
+                <trix-editor
+                  ref={trixEditor}
+                  value={usuario.description}
+                  input="trix"
+                />
               </div>
               <button
                 disabled={validarUsuario()}

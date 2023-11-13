@@ -1,4 +1,4 @@
-import logoNegro from "../../../assets/img/Logo_ITNL.png";
+import logoNegro from "../../../assets/img/cuerbook_img.jpg";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -15,13 +15,14 @@ const HeaderPagina = () => {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <nav
-        className="flex items-center justify-between p-6 lg:px-8"
-        aria-label="Global"
-      >
+      <nav className="flex items-center justify-between p-6 lg:px-8">
         <div className="flex lg:flex-1">
           <NavLink to="/itnl/pagina-principal" className="-m-1.5 p-1">
-            <img className="h-9 pl-4 w-auto" alt="" src={logoNegro} />
+            <img
+              className="h-10 pl-4 w-auto rounded-full"
+              alt=""
+              src={logoNegro}
+            />
           </NavLink>
           <Link
             to="/itnl/pagina-principal"
@@ -45,7 +46,7 @@ const HeaderPagina = () => {
               key={nav.name}
               to={nav.to}
               className={({ isActive }) =>
-                `text-sm font-semibold  hover:text-red-500 ${
+                `text-sm font-semibold  hover:text-azul ${
                   isActive ? "active" : ""
                 } leading-6 text-stone-50`
               }
@@ -57,7 +58,7 @@ const HeaderPagina = () => {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <NavLink
             to="/itnl/iniciar-sesion"
-            className="text-sm font-semibold pr-12 hover:text-red-500 leading-6 text-stone-50"
+            className="text-sm font-semibold pr-12 hover:text-azul leading-6 text-stone-50"
           >
             Iniciar Sesion
           </NavLink>
@@ -88,7 +89,7 @@ const HeaderPagina = () => {
                     key={nav.name}
                     to={nav.to}
                     className={({ isActive }) =>
-                      `-mx-3 block rounded-lg px-3 hover:text-red-500 py-2 text-base ${
+                      `-mx-3 block rounded-lg px-3 hover:text-red-500 py-2  ${
                         isActive ? "active" : ""
                       } font-semibold leading-7 text-gray-900 hover:bg-gray-50`
                     }
@@ -100,7 +101,7 @@ const HeaderPagina = () => {
               <div className="py-6">
                 <NavLink
                   to="/itnl/iniciar-sesion"
-                  className="-mx-3 block rounded-lg hover:text-red-500 px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg hover:text-azul px-3 py-2.5  font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Iniciar Sesión{" "}
                 </NavLink>

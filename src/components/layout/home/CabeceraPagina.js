@@ -3,7 +3,7 @@ import BotonEventosProximos from "../../../components/common/BotonEventosProximo
 
 const CabeceraPagina = () => {
   return (
-    <div className="relative isolate px-6 pt-28 lg:px-8">
+    <div className="relative isolate px-6 pt-26 lg:pt-36 lg:px-8">
       <div className="mx-auto max-w-2xl py-36 sm:py-42 lg:py-16">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-stone-50 sm:text-6xl">

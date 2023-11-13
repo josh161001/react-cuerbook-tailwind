@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import urlAxios from "../../config/axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
-const EventosPagina = () => {
+const EventosPasadosPagina = () => {
   const [eventos, guardarEventos] = useState([]);
 
-  const consultarEventosProximos = async () => {
-    const evento = await urlAxios.get("/events/proximos");
+  const consultarEventosPasados = async () => {
+    const evento = await urlAxios.get("/events/pasados");
     guardarEventos(evento.data.data);
   };
 
   useEffect(() => {
-    consultarEventosProximos();
+    consultarEventosPasados();
   }, [eventos]);
   // console.log(eventos);
 
@@ -22,11 +22,11 @@ const EventosPagina = () => {
     });
     return doc.body.innerHTML;
   };
-
   if (!eventos.length) {
-    return <h1 className="text-center text-3xl">No hay eventos proximos</h1>;
+    return (
+      <h1 className="text-center text-3xl pb-4">No hay eventos pasados</h1>
+    );
   }
-
   return (
     <div className="flex lg:grid lg:grid-cols-3 flex-col lg:gap-4 gap-4 p-4  sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
       {eventos.map((evento, index) => (
@@ -38,7 +38,6 @@ const EventosPagina = () => {
           <img
             src={evento.imagen}
             className="object-cover bg-no-repeat w-full h-96 lg:h-80"
-            alt="imagen de evento"
           />
 
           <div className="absolute inset-0 flex flex-col justify-end m-4">
@@ -79,4 +78,4 @@ const EventosPagina = () => {
   );
 };
 
-export default EventosPagina;
+export default EventosPasadosPagina;

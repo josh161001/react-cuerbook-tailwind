@@ -29,7 +29,7 @@ const MenuCategoriasDrop = ({ name, options }) => {
           />
         </svg>
 
-        <span className="flex-1 pr-24 whitespace-nowrap">{name}</span>
+        <span className="flex-1 pr-20 whitespace-nowrap">{name}</span>
         <svg
           className={`w-3 h-3 transition-transform transform ${
             isOpen ? "rotate-180" : ""

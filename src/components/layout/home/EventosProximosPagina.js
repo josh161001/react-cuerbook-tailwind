@@ -5,7 +5,7 @@ const EventosProximosPagina = () => {
   return (
     <>
       <div className="container mx-auto p-4">
-        <div className="grid grid-cols-2 bg-gradient-to-r from-red-900  to-red-700 ">
+        <div className="grid grid-cols-2 bg-gradient-to-r from-blue-800  to-azul ">
           <div className="p-6 flex flex-col justify-center items-center">
             <h3 className="text-white">
               ¿Te gustaría ver más eventos próximos?
@@ -13,7 +13,7 @@ const EventosProximosPagina = () => {
             <p className="text-white">Da clic en el siguiente botón</p>
             <Link
               to="/itnl/eventos"
-              className="hover:bg-violet-900 rounded rounded-md bg-violet-600 px-3.5 py-2.5 text-sm font-semibold text-violet inline-block mt-4"
+              className="hover:bg-gray-600 rounded rounded-md bg-grayTec px-3.5 py-2.5 text-sm font-semibold text-black inline-block mt-4"
             >
               Ver más
             </Link>

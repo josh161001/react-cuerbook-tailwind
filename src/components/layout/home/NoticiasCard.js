@@ -25,6 +25,10 @@ const NoticiasCard = () => {
     consultarNoticias();
   }, []);
 
+  if (!noticias.length) {
+    return <h1 className="text-center text-3xl">No hay noticias</h1>;
+  }
+
   return (
     <div className="grid gap-2 sm:grid-cols-1 sm:w-full md:grid-cols-2  lg:grid-cols-3">
       {noticias.map((noticia) => (

@@ -88,7 +88,7 @@ const FormLogin = (props) => {
       <div className="mb-3 flex flex-wrap content-center">
         <NavLink
           to="/itnl/enviar-instrucciones"
-          className="text-xs font-semibold text-red-700"
+          className="text-xs font-semibold text-azul"
         >
           ¿Olvidaste tu contraseña?
         </NavLink>
@@ -96,13 +96,13 @@ const FormLogin = (props) => {
       <div className="mb-3 flex gap-2">
         <button
           disabled={validarCredencialesUsuario()}
-          className="mb-1.5 block w-full text-center text-white bg-red-700 hover:bg-red-500 px-3 py-1.5 rounded-md"
+          className="mb-1.5 block w-full text-center text-white bg-azul hover:bg-blue-700 px-3 py-1.5 rounded-md"
         >
           Iniciar Sesión
         </button>
         <NavLink
           to="/itnl/pagina-principal"
-          className="mb-1.5 block w-full text-center text-white bg-red-700 hover:bg-red-500 px-3 py-1.5 rounded-md flex items-center justify-center"
+          className="mb-1.5 block w-full text-center text-white bg-azul hover:bg-blue-700 px-3 py-1.5 rounded-md flex items-center justify-center"
         >
           <span className="flex items-center">
             <svg

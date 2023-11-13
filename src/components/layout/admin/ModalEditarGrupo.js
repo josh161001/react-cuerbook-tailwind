@@ -30,19 +30,27 @@ const ModalEditarGrupo = ({ isOpen, onClose }) => {
 
   const [grupo, datoGrupo] = useState({
     name: "",
-    imagen: "",
     description: "",
     status: false,
   });
 
-  const consultarUsuario = async () => {
-    const usuarioConsulta = await urlAxios.get(`/groups/${id}`);
-    console.log(usuarioConsulta.data.data);
-    datoGrupo(usuarioConsulta.data.data);
+  const consultarGrupoEditar = async () => {
+    const token = localStorage.getItem("access_token");
+
+    if (token) {
+      const grupoConsultaEditar = await urlAxios.get(`/groups/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      datoGrupo(grupoConsultaEditar.data.data);
+    } else {
+      navigate("/itnl/iniciar-sesion");
+    }
   };
 
   useEffect(() => {
-    consultarUsuario();
+    consultarGrupoEditar();
   }, []);
 
   const usuarioState = (e) => {

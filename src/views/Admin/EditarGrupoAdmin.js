@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import urlAxios from "../../config/axios";
 
-import cuervoItnl from "../../assets/img/cuervo-ITNL.jpg";
+import tecnl from "../../assets/img/tecnologico.jpg";
 
 import ModalEditarGrupo from "../../components/layout/admin/ModalEditarGrupo";
 import ModalCrearEvento from "../../components/layout/admin/ModalCrearEvento";
@@ -18,7 +18,7 @@ const EditarGrupoAdmin = () => {
   const { id } = useParams();
   const [grupo, datoGrupo] = useState({
     name: "",
-    imagen: "",
+    imagen: null,
     description: "",
     status: true,
   });
@@ -39,6 +39,8 @@ const EditarGrupoAdmin = () => {
           navigate("/itnl/iniciar-sesion");
         }
       }
+    } else {
+      navigate("/itnl/iniciar-sesion");
     }
   };
 
@@ -60,19 +62,27 @@ const EditarGrupoAdmin = () => {
     setModalAbiertoGrupoEvento(false);
   };
 
+  const limpiarTrix = (input) => {
+    let doc = new DOMParser().parseFromString(input, "text/html");
+    Array.from(doc.body.getElementsByTagName("strong")).forEach((strong) => {
+      strong.outerHTML = strong.innerHTML;
+    });
+    return doc.body.innerHTML;
+  };
+
   return (
     <div>
       <section className="relative block h-96">
         <div
-          className="absolute top-0 w-full h-full bg-center bg-cover"
+          className="absolute top-0 w-full h-full bg-center "
           style={{
-            backgroundImage: `url(${cuervoItnl})`,
+            backgroundImage: `url(${tecnl})`,
           }}
         >
           <div className="w-full h-full absolute opacity-50 bg-black" />
         </div>
       </section>
-      <section className="relative py-12 ">
+      <section className="relative lg:py-48 ">
         <div className="container mx-auto px-4">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
             <div className="px-6  rounded">
@@ -90,7 +100,22 @@ const EditarGrupoAdmin = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-center mt-2">
+              <div className="text-center ">
+                <h3 className="text-3xl mb-2 text-gray-700 mb-2">
+                  {grupo.name}
+                </h3>
+
+                <div className="flex justify-center items-center gap-4 ">
+                  <div>
+                    <span
+                      className={`inline-block px-2 py-1 rounded-lg text-white ${
+                        grupo.status ? "bg-green-500" : "bg-red-500"
+                      }`}
+                    >
+                      {grupo.status ? "Activo" : "Inactivo"}
+                    </span>
+                  </div>
+                </div>
                 <div className="py-6 px-3 flex justify-center items-center gap-2  sm:mt-0">
                   <button
                     className="bg-blue-700 active:bg-blue-900 hover:bg-blue-900 uppercase text-white font-bold  text-xs px-4 py-2 rounded"
@@ -107,21 +132,6 @@ const EditarGrupoAdmin = () => {
                     Agregar Evento{" "}
                   </button>
                 </div>
-                <h3 className="text-3xl mb-2 text-gray-700 mb-2">
-                  {grupo.name}
-                </h3>
-
-                <div className="flex justify-center items-center gap-4 pt-4">
-                  <div>
-                    <span
-                      className={`inline-block px-2 py-1 rounded-lg text-white ${
-                        grupo.status ? "bg-green-500" : "bg-red-500"
-                      }`}
-                    >
-                      {grupo.status ? "Activo" : "Inactivo"}
-                    </span>
-                  </div>
-                </div>
               </div>
               <div className="mt-10 py-10 border-t border-gray-300 ">
                 <div className="mt-0 mb-2 text-gray-400  ">
@@ -132,7 +142,7 @@ const EditarGrupoAdmin = () => {
                 <h2 className="pb-4 text-2xl pt-2 text-center mb-2 text-gray-700 mb-2">
                   Eventos
                 </h2>{" "}
-                <div className="flex lg:grid lg:grid-cols-3 flex-col lg:gap-0 gap-2 p-4 sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
+                <div className="flex lg:grid lg:grid-cols-3 flex-col lg:gap-4 gap-4 p-4 sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
                   {grupo.events &&
                     grupo.events.map((evento) => (
                       // console.log(evento),
@@ -143,11 +153,11 @@ const EditarGrupoAdmin = () => {
                         <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
                         <img
                           src={evento.imagen}
-                          className="object-cover bg-no-repeat w-full h-94 lg:h-80"
+                          className="object-cover bg-no-repeat w-full h-96 lg:h-80"
                         />
 
                         <div className="absolute inset-0 flex flex-col justify-end m-4">
-                          <h6 className="text-red-700 uppercase font-bold mb-1">
+                          <h6 className="text-azul uppercase font-bold mb-1">
                             {evento.Categories.name}
                           </h6>
                           <h2 className="text-white text-2xl font-bold mb-1">
@@ -161,15 +171,17 @@ const EditarGrupoAdmin = () => {
                             dangerouslySetInnerHTML={{
                               __html:
                                 evento.description.length > 90
-                                  ? evento.description.slice(0, 90) + "..."
-                                  : evento.description,
+                                  ? limpiarTrix(
+                                      evento.description.slice(0, 90) + "..."
+                                    )
+                                  : limpiarTrix(evento.description),
                             }}
                           ></p>
 
                           <div className="flex justify-between pt-1">
                             <a
                               href="#"
-                              className="hover:bg-red-500 px-4 rounded rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white"
+                              className="hover:bg-blue-700 px-4 rounded rounded-md bg-azul px-3.5 py-2.5 text-sm font-semibold text-white"
                             >
                               Ver más
                             </a>

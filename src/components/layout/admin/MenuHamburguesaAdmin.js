@@ -37,9 +37,9 @@ const MenuHamburguesaAdmin = () => {
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
               <div className="flex pl-10 sm:pl-8 md:mr-24">
-                <img src={LogoItnl} className="h-8 mr-3" alt="FlowBite Logo" />
+                <img src={LogoItnl} className="h-8 mr-3" alt="TECNL LOGO" />
                 <span className="self-center text-xl  font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                  CuerBook ITNL
+                  CuerBook TECNL
                 </span>
               </div>
             </div>

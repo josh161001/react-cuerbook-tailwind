@@ -49,7 +49,7 @@ const ActualizarPassword = () => {
 
     urlAxios
       .patch(`/mailer/actualizar-password/${token}`, credencialesUsuario)
-      .then((res) => {
+      .then((response) => {
         Swal.fire(
           "Contraseña actualizada exitosamente",
           "Se ha actualizado la contraseña",
@@ -97,7 +97,7 @@ const ActualizarPassword = () => {
             <div className="mb-3 flex gap-2">
               <button
                 disabled={validarCredencialesUsuario()}
-                className="mb-1.5 block w-full text-center text-white bg-red-700 hover:bg-red-500 px-3 py-1.5 rounded-md"
+                className="mb-1.5 block w-full text-center text-white bg-azul hover:bg-blue-700 px-3 py-1.5 rounded-md"
               >
                 Actualizar Contraseña{" "}
               </button>

@@ -9,28 +9,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import Trix from "trix";
 const ModalCrearEvento = ({ isOpen, onClose }) => {
+  const trixEditor = useRef(null);
+  const { id } = useParams();
+
   const [auth, guardarAuth] = useContext(CuerbookContext);
   const [tokenCargando, setTokenCargando] = useState(false);
   const [categorias, datoCategorias] = useState([]);
   const navigate = useNavigate();
-  const { id } = useParams();
-  const trixEditor = useRef(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-
-    if (token) {
-      guardarAuth({
-        access_token: token,
-        auth: true,
-      });
-
-      setTokenCargando(true);
-    } else {
-      navigate("/itnl/iniciar-sesion");
-    }
-  }, [navigate, guardarAuth]);
-
   const [evento, setEvento] = useState({
     name: "",
     imagen: "",
@@ -41,7 +26,17 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
     categoryId: [],
     status: false,
   });
-  console.log(evento);
+
+  const handleTrixChange = () => {
+    if (trixEditor.current) {
+      const value = trixEditor.current.innerHTML;
+      setEvento({
+        ...evento,
+        description: value,
+      });
+    }
+  };
+
   useEffect(() => {
     if (trixEditor.current) {
       trixEditor.current.addEventListener("trix-change", handleTrixChange);
@@ -61,15 +56,22 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
     evento.imagen,
   ]);
 
-  const handleTrixChange = () => {
-    if (trixEditor.current) {
-      const value = trixEditor.current.innerHTML;
-      setEvento({
-        ...evento,
-        description: value,
+  console.log(evento);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+
+    if (token) {
+      guardarAuth({
+        access_token: token,
+        auth: true,
       });
+
+      setTokenCargando(true);
+    } else {
+      navigate("/itnl/iniciar-sesion");
     }
-  };
+  }, [navigate, guardarAuth]);
 
   const eventoState = (e) => {
     if (e.target.name === "imagen") {
@@ -95,7 +97,7 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
     }
   };
 
-  console.log(evento);
+  // console.log(evento);
 
   const validarEvento = () => {
     const { name, imagen, cupo, fecha, lugar, categoryId, description } =
@@ -120,9 +122,10 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
       const formData = new FormData();
       formData.append("name", evento.name);
       formData.append("imagen", evento.imagen);
-      formData.append("cupo", evento.cupo);
+      const cupoFormato = parseInt(evento.cupo, 10);
+      formData.append("cupo", cupoFormato);
       const formatoFecha = evento.fecha.toISOString();
-      formData.append("fecha", formatoFecha); // Aquí también debes usar evento.fecha
+      formData.append("fecha", formatoFecha);
       formData.append("lugar", evento.lugar);
       formData.append("categoryId", evento.categoryId);
       formData.append("description", evento.description);
@@ -337,9 +340,11 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                   >
                     Descripcion del evento
                   </label>
-
-                  <input id="trix" value={evento.description} type="" />
-                  <trix-editor ref={trixEditor} input="trix" />
+                  <trix-editor
+                    ref={trixEditor}
+                    value={evento.description}
+                    input="trix"
+                  />
                 </div>
               </div>
 

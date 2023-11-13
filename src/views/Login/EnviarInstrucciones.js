@@ -58,7 +58,7 @@ const EnviarInstrucciones = () => {
         <div className="w-full lg:w-1/2 p-12 sm:p-20">
           <h1 className="text-xl font-semibold mb-2">
             Sigue las instrucciones para recuperar tu cuenta en{" "}
-            <span className="text-red-700">CuerBook</span>{" "}
+            <span className="text-azul">CuerBook</span>{" "}
           </h1>
           <small className="text-gray-400">
             Escribe tu correo a continuacion{" "}
@@ -71,14 +71,14 @@ const EnviarInstrucciones = () => {
                 type="email"
                 placeholder="correo@tecnm.mx"
                 onChange={credencialesUsuarioState}
-                className="block w-full rounded-md border border-gray-300 focus:border-red-700 focus:outline-none focus:ring-1 focus:ring-red-700 py-1 px-1.5 text-gray-500"
+                className="block w-full rounded-md border border-gray-300 focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700 py-1 px-1.5 text-gray-500"
               />
             </div>
 
             <div className="mb-3 flex gap-2">
               <button
                 disabled={validarCredencialesUsuario()}
-                className="mb-1.5 block w-full text-center text-white bg-red-700 hover:bg-red-500 px-3 py-1.5 rounded-md"
+                className="mb-1.5 block w-full text-center text-white bg-azul hover:bg-blue-700 px-3 py-1.5 rounded-md"
               >
                 Enviar Instrucciones{" "}
               </button>

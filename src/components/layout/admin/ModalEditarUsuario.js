@@ -1,19 +1,70 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { CuerbookContext } from "../../../context/CuerbookContext";
 import { useNavigate, useParams } from "react-router-dom";
 import urlAxios from "../../../config/axios";
 import Spinner from "../../../components/layout/Spinner";
+import Trix from "trix";
 
 const ModalEditarUsuario = ({ isOpen, onClose }) => {
   const { id } = useParams();
+  const trixEditor = useRef(null);
 
+  // Constantes y Variables de Estado
   const roles = ["admin", "user"];
-
   const [auth, guardarAuth] = useContext(CuerbookContext);
   const [tokenCargando, setTokenCargando] = useState(false);
-
   const navigate = useNavigate();
+  const [usuario, datoUsuario] = useState({
+    email: "",
+    name: "",
+    description: "",
+    status: false,
+    roles: [],
+  });
+  const [seleccionarRol, setSeleccionarRol] = useState(usuario.roles[0]);
+
+  // Funciones y Efectos Secundarios
+  const handleRolChange = (e) => {
+    setSeleccionarRol(e.target.value);
+
+    datoUsuario({
+      ...usuario,
+      roles: [e.target.value],
+    });
+  };
+
+  const handleTrixChange = () => {
+    if (trixEditor.current) {
+      const value = trixEditor.current.innerHTML;
+      datoUsuario({
+        ...usuario,
+        description: value,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (trixEditor.current) {
+      trixEditor.current.innerHTML = usuario.description;
+      trixEditor.current.addEventListener("trix-change", handleTrixChange);
+    }
+    return () => {
+      if (trixEditor.current) {
+        trixEditor.current.removeEventListener("trix-change", handleTrixChange);
+      }
+    };
+  }, [
+    usuario.email,
+    usuario.name,
+    usuario.roles,
+    usuario.imagen,
+    usuario.status,
+  ]);
+
+  useEffect(() => {
+    setSeleccionarRol(usuario.roles[0]);
+  }, [usuario.roles]);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -30,16 +81,8 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
     }
   }, [navigate, guardarAuth]);
 
-  const [usuario, datoUsuario] = useState({
-    email: "",
-    name: "",
-    status: false,
-    roles: [],
-  });
-
   const consultarUsuario = async () => {
     const usuarioConsulta = await urlAxios.get(`/users/${id}`);
-    console.log(usuarioConsulta.data.data);
     datoUsuario(usuarioConsulta.data.data);
   };
 
@@ -53,10 +96,10 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
         ...usuario,
         imagen: e.target.files[0],
       });
-    } else if (e.target.name === "roles") {
+    } else if (e.target.name !== "roles") {
       datoUsuario({
         ...usuario,
-        roles: [e.target.value],
+        [e.target.name]: e.target.value,
       });
     } else if (e.target.name === "status") {
       datoUsuario({
@@ -72,9 +115,11 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
   };
 
   const validarUsuario = () => {
-    const { email, name, roles } = usuario;
+    const { email, name, roles, description } = usuario;
 
-    return !email.length || !name.length || !roles.length;
+    return (
+      !email.length || !name.length || !roles.length || !description.length
+    );
   };
 
   const guardarUsuario = (e) => {
@@ -85,9 +130,10 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
       const formData = new FormData();
       formData.append("email", usuario.email);
       formData.append("name", usuario.name);
-      formData.append("roles", usuario.roles.join(","));
+      formData.append("roles", usuario.roles[0]);
+      formData.append("description", usuario.description);
       formData.append("imagen", usuario.imagen);
-      formData.append("status", usuario.status); // Enviar el estado del usuario
+      formData.append("status", usuario.status);
 
       urlAxios
         .patch(`/users/${id} `, formData, {
@@ -122,16 +168,15 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
   };
 
   const cambiarStatus = () => {
-    // Cambia el estado de usuario.status al contrario
     datoUsuario((statusPrevio) => ({
       ...statusPrevio,
       status: !statusPrevio.status,
     }));
   };
+
   if (!tokenCargando) {
     return <Spinner />;
   }
-
   return (
     <>
       {isOpen && (
@@ -158,7 +203,6 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-                <span className="sr-only">Close form</span>
               </button>
             </div>
 
@@ -172,8 +216,7 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
                     onChange={usuarioState}
                     name="email"
                     type="text"
-                    id="email-address-icon"
-                    className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     disabled
                     value={usuario.email}
                   />
@@ -198,7 +241,6 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
                   </label>
                   <input
                     className="w-full  text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    aria-describedby="user_avatar_help"
                     id="user_avatar"
                     type="file"
                     name="imagen"
@@ -220,11 +262,13 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
                   <select
                     name="roles"
                     id="roles"
-                    value={usuario.roles}
+                    value={seleccionarRol}
                     className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    onChange={usuarioState}
+                    onChange={handleRolChange}
                   >
-                    <option disabled>--- Selecciona un rol ---</option>
+                    <option disabled value="">
+                      --- Selecciona un rol ---
+                    </option>
                     {roles.map((role) => (
                       <option key={role} value={role}>
                         {role}
@@ -263,7 +307,17 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
                   </label>
                 </div>
               </div>
+              <div>
+                <label className="block mb-2 pt-1 text-sm font-medium text-gray-900 dark:text-white">
+                  Descripcion del usuario
+                </label>
 
+                <trix-editor
+                  value={usuario.description}
+                  ref={trixEditor}
+                  input="trix"
+                />
+              </div>
               <button
                 disabled={validarUsuario()}
                 type="submit"

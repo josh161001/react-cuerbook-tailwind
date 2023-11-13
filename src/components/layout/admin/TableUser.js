@@ -46,6 +46,8 @@ const TableUser = (props) => {
             navigate("/itnl/iniciar-sesion");
           }
         }
+      } else {
+        navigate("/itnl/iniciar-sesion");
       }
     };
     getUsers();
@@ -87,6 +89,15 @@ const TableUser = (props) => {
       setPaginaActual(numeroDePagina);
     }
   };
+
+  const limpiarTrix = (input) => {
+    let doc = new DOMParser().parseFromString(input, "text/html");
+    Array.from(doc.body.getElementsByTagName("strong")).forEach((strong) => {
+      strong.outerHTML = strong.innerHTML;
+    });
+    return doc.body.innerHTML;
+  };
+
   if (!tokenCargando || !usuarios.length) {
     return <Spinner />;
   }
@@ -135,7 +146,7 @@ const TableUser = (props) => {
                   {usuario.name}
                 </th>
                 <td className="px-6 py-4">{usuario.email}</td>
-                <td className="px-6 py-4">
+                <td className="px-4 py-4">
                   <img
                     src={usuario.imagen}
                     alt="Imagen de perfil"
@@ -146,9 +157,9 @@ const TableUser = (props) => {
                   className="px-6 py-4  whitespace-nowrap"
                   dangerouslySetInnerHTML={{
                     __html:
-                      usuario.description.length > 90
-                        ? usuario.description.slice(0, 90) + "..."
-                        : usuario.description,
+                      usuario.description.length > 40
+                        ? limpiarTrix(usuario.description.slice(0, 40) + "...")
+                        : limpiarTrix(usuario.description),
                   }}
                 ></td>
                 <td className="px-6 py-4">
