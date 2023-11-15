@@ -13,18 +13,14 @@ const EventoPaginaHome = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const consultarEvento = async () => {
-    try {
+  useEffect(() => {
+    const consultarEvento = async () => {
       const eventoConsulta = await urlAxios.get(`/events/${id}`);
       guardarEvento(eventoConsulta.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    };
 
-  useEffect(() => {
     consultarEvento();
-  }, []);
+  }, [id]);
 
   const backgroundStyle = {
     backgroundImage: `url(${evento.imagen})`,
@@ -101,7 +97,7 @@ const EventoPaginaHome = () => {
 
                 <p className="leading-8">{evento.lugar}</p>
               </div>
-              <div className="mt-32 flex items-center justify-center">
+              <div className="mt-40 flex items-center justify-center">
                 <a
                   href="#evento"
                   className="bg-transparent text-white border border-white py-2 px-4 rounded hover:bg-grayTec hover:text-white hover:border-stone-500 transition duration-300"

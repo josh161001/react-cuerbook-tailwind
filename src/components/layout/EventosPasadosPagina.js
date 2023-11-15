@@ -7,13 +7,12 @@ const EventosPasadosPagina = () => {
 
   const consultarEventosPasados = async () => {
     const evento = await urlAxios.get("/events/pasados");
-    guardarEventos(evento.data.data);
-  };
 
-  useEffect(() => {
-    consultarEventosPasados();
-  }, [eventos]);
-  // console.log(eventos);
+    const eventosPasado = evento.data.data.filter(
+      (evento) => evento.status === true
+    );
+    guardarEventos(eventosPasado);
+  };
 
   const limpiarTrix = (input) => {
     let doc = new DOMParser().parseFromString(input, "text/html");
@@ -22,11 +21,17 @@ const EventosPasadosPagina = () => {
     });
     return doc.body.innerHTML;
   };
+
+  useEffect(() => {
+    consultarEventosPasados();
+  }, [eventos]);
+
   if (!eventos.length) {
     return (
       <h1 className="text-center text-3xl pb-4">No hay eventos pasados</h1>
     );
   }
+
   return (
     <div className="flex lg:grid lg:grid-cols-3 flex-col lg:gap-4 gap-4 p-4  sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
       {eventos.map((evento, index) => (
@@ -36,6 +41,7 @@ const EventosPasadosPagina = () => {
         >
           <div className="bg-gradient-to-r from-stone-950 to-black absolute inset-0 rounded-lg opacity-60"></div>
           <img
+            alt="imagen de evento"
             src={evento.imagen}
             className="object-cover bg-no-repeat w-full h-96 lg:h-80"
           />

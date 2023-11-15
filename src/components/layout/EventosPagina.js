@@ -7,13 +7,15 @@ const EventosPagina = () => {
 
   const consultarEventosProximos = async () => {
     const evento = await urlAxios.get("/events/proximos");
-    guardarEventos(evento.data.data);
+    const eventosProximosActivos = evento.data.data.filter(
+      (evento) => evento.status === true
+    );
+    guardarEventos(eventosProximosActivos);
   };
 
   useEffect(() => {
     consultarEventosProximos();
   }, [eventos]);
-  // console.log(eventos);
 
   const limpiarTrix = (input) => {
     let doc = new DOMParser().parseFromString(input, "text/html");

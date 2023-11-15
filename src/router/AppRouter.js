@@ -39,22 +39,22 @@ export const AppRouter = () => {
       <CuerbookProvider value={[auth, guardarAuth]}>
         <Routes>
           {/* {        //views home */}
-          <Route path="/itnl/pagina-principal" element={<PaginaPrincipal />} />
-          <Route path="/itnl/eventos" element={<Eventos />} />
+          <Route path="/tecnl/pagina-principal" element={<PaginaPrincipal />} />
+          <Route path="/tecnl/eventos" element={<Eventos />} />
           {/* view intl eventos */}
-          <Route path="/itnl/evento/:id" element={<EventoPaginaHome />} />
-          <Route path="/itnl/grupos" element={<Grupos />} />
-          <Route path="/itnl/noticias" element={<Noticias />} />
+          <Route path="/tecnl/evento/:id" element={<EventoPaginaHome />} />
+          <Route path="/tecnl/grupos" element={<Grupos />} />
+          <Route path="/tecnl/noticias" element={<Noticias />} />
 
           {/* //views login */}
-          <Route path="/itnl/iniciar-sesion" element={<IniciarSesion />} />
+          <Route path="/tecnl/iniciar-sesion" element={<IniciarSesion />} />
           <Route
-            path="/itnl/enviar-instrucciones"
+            path="/tecnl/enviar-instrucciones"
             element={<EnviarInstrucciones />}
           />
 
           <Route
-            path="/itnl/recuperar-password/:token"
+            path="/tecnl/recuperar-password/:token"
             element={<ActualizarPassword />}
           />
           {/* //views user */}
@@ -85,11 +85,11 @@ export const AppRouter = () => {
 
           {/* //redirect */}
           <Route
-            path="/itnl/pagina-principal"
-            element={<Navigate to="/itnl/pagina-principal" />}
+            path="/tecnl/pagina-principal"
+            element={<Navigate to="/tecnl/pagina-principal" />}
           />
 
-          <Route path="*" element={<Navigate to="/itnl/pagina-principal" />} />
+          <Route path="*" element={<Navigate to="/tecnl/pagina-principal" />} />
         </Routes>
       </CuerbookProvider>
     </>
