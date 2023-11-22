@@ -40,7 +40,6 @@ const TableGrupos = (props) => {
               Authorization: `Bearer ${token}`,
             },
           });
-
           guardarGrupos(dataConsulta.data.data);
         } catch (error) {
           if (error.response && error.response.status === 401) {
@@ -86,7 +85,7 @@ const TableGrupos = (props) => {
     }
   };
 
-  if (!tokenCargando || !grupos.length) {
+  if (!tokenCargando || !grupos.length || !auth.auth) {
     return <Spinner />;
   }
   return (

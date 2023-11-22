@@ -49,7 +49,7 @@ const FormLogin = (props) => {
           ? roles.includes("admin")
             ? navigate("/admin/dashboard")
             : roles.includes("user")
-            ? navigate("/usuario/eventos")
+            ? navigate("/usuario/grupos")
             : navigate("/itnl/pagina-principal")
           : Swal.fire("Inicio de sesión fallido", "Usuario inactivo", "error");
       })

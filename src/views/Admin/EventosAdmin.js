@@ -1,7 +1,7 @@
 import MenuHamburguesaAdmin from "../../components/layout/admin/MenuHamburguesaAdmin";
 import TableEventos from "../../components/layout/admin/TableEventos";
 
-const GruposAdmin = () => {
+const EventosAdmin = () => {
   return (
     <>
       <MenuHamburguesaAdmin />
@@ -21,4 +21,4 @@ const GruposAdmin = () => {
   );
 };
 
-export default GruposAdmin;
+export default EventosAdmin;

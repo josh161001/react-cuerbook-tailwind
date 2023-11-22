@@ -40,6 +40,7 @@ const TableUser = (props) => {
               Authorization: `Bearer ${token}`,
             },
           });
+          // console.log(dataConsulta.data.data);
           guardarUsuarios(dataConsulta.data.data);
         } catch (error) {
           if (error.response && error.response.status === 401) {
@@ -98,7 +99,7 @@ const TableUser = (props) => {
     return doc.body.innerHTML;
   };
 
-  if (!tokenCargando || !usuarios.length) {
+  if (!tokenCargando || !usuarios.length || !auth.auth) {
     return <Spinner />;
   }
 
@@ -110,7 +111,10 @@ const TableUser = (props) => {
             <tr>
               <th scope="col" className="p-4"></th>
               <th scope="col" className="px-6 py-3">
-                Usuario
+                Jefe de departamento
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Nombre del departamento
               </th>
               <th scope="col" className="px-6 py-3">
                 Correo
@@ -144,6 +148,12 @@ const TableUser = (props) => {
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
                   {usuario.name}
+                </th>
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {usuario.department}
                 </th>
                 <td className="px-6 py-4">{usuario.email}</td>
                 <td className="px-4 py-4">

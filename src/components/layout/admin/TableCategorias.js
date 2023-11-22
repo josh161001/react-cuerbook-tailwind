@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import urlAxios from "../../../config/axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner";
 import { CuerbookContext } from "../../../context/CuerbookContext";
 import Swal from "sweetalert2";
@@ -90,7 +90,7 @@ const TableCategorias = (props) => {
     }
   };
 
-  if (!tokenCargando || !categorias.length) {
+  if (!tokenCargando || !categorias.length || !auth.auth) {
     return <Spinner />;
   }
   return (

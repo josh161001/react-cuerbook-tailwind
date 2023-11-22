@@ -94,7 +94,7 @@ const ModalCrearGrupo = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!tokenCargando) {
+  if (!tokenCargando || !auth.auth) {
     return <Spinner />;
   }
 

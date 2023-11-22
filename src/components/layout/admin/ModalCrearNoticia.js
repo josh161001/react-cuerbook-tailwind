@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { CuerbookContext } from "../../../context/CuerbookContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import urlAxios from "../../../config/axios";
 import Spinner from "../../../components/layout/Spinner";
 import "react-datepicker/dist/react-datepicker.css";
@@ -35,6 +35,16 @@ const ModalCrearNoticia = ({ isOpen, onClose }) => {
     status: false,
   });
 
+  const handleTrixChange = () => {
+    if (trixEditor.current) {
+      const value = trixEditor.current.innerHTML;
+      setNoticia({
+        ...noticia,
+        description: value,
+      });
+    }
+  };
+
   useEffect(() => {
     if (trixEditor.current) {
       trixEditor.current.addEventListener("trix-change", handleTrixChange);
@@ -45,16 +55,6 @@ const ModalCrearNoticia = ({ isOpen, onClose }) => {
       }
     };
   }, [noticia.name, noticia.status, noticia.imagen]);
-
-  const handleTrixChange = () => {
-    if (trixEditor.current) {
-      const value = trixEditor.current.innerHTML;
-      setNoticia({
-        ...noticia,
-        description: value,
-      });
-    }
-  };
 
   const noticiaState = (e) => {
     if (e.target.name === "imagen") {
@@ -117,19 +117,17 @@ const ModalCrearNoticia = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!tokenCargando) {
+  if (!tokenCargando || !auth.auth) {
     return <Spinner />;
   }
 
   return (
     <>
       {isOpen && (
-        <div className=" fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center w-full bg-gray-800 bg-opacity-80  z-50">
-          <div className="p-4 dark:bg-gray-800 rounded-lg">
-            <div className="flex border-b dark:border-gray-700">
-              <h2 className="text-2xl text-gray-900 dark:text-white mb-4">
-                Agregar Noticia
-              </h2>
+        <div className="fixed mt-0 top-0 right-0 bottom-0 left-0 flex justify-center items-center w-full bg-gray-800 bg-opacity-80  z-50">
+          <div className="p-4 bg-gray-800 rounded-lg max-w-sm md:max-w-2xl lg:max-w-4xl">
+            <div className="flex border-b border-gray-700">
+              <h2 className="text-2xl text-white mb-4">Agregar Noticia</h2>
               <button
                 onClick={onClose}
                 className="text-gray-400 bg-transparent hover:text-gray-500 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover-bg-gray-600 dark:hover-text-white"
@@ -150,17 +148,17 @@ const ModalCrearNoticia = ({ isOpen, onClose }) => {
               </button>
             </div>
 
-            <form className="dark:bg-gray-800 " onSubmit={guardarNoticia}>
-              <div className="grid grid-cols-2 gap-2 ">
-                <div className="">
-                  <label className="block mb-2 text-sm font-medium pt-4 text-gray-900 dark:text-white">
+            <form className="bg-gray-800 " onSubmit={guardarNoticia}>
+              <div className="grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 gap-2 ">
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-4 lg:pt-4  text-sm font-medium text-white">
                     Titulo de la noticia
                   </label>
                   <input
                     onChange={noticiaState}
                     name="name"
                     type="text"
-                    className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50  border text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Evento de..."
                   />
                 </div>
@@ -183,7 +181,7 @@ const ModalCrearNoticia = ({ isOpen, onClose }) => {
                   </div>
                 </div>
                 <div>
-                  <label className="block ml-2 pt-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block ml-2 mt-1 lg:mt-5 text-sm font-medium text-white">
                     Estatus del noticia
                   </label>
                   <input
@@ -219,8 +217,11 @@ const ModalCrearNoticia = ({ isOpen, onClose }) => {
                   >
                     Descripcion del noticia
                   </label>
-                  <input id="trix" value={noticia.description} type="" />
-                  <trix-editor ref={trixEditor} input="trix" />
+                  <trix-editor
+                    ref={trixEditor}
+                    value={noticia.description}
+                    input="trix"
+                  />
                 </div>
               </div>
 

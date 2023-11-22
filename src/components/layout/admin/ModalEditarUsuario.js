@@ -9,7 +9,6 @@ import Trix from "trix";
 const ModalEditarUsuario = ({ isOpen, onClose }) => {
   const { id } = useParams();
   const trixEditor = useRef(null);
-
   // Constantes y Variables de Estado
   const roles = ["admin", "user"];
   const [auth, guardarAuth] = useContext(CuerbookContext);
@@ -18,12 +17,12 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
   const [usuario, datoUsuario] = useState({
     email: "",
     name: "",
+    department: "",
     description: "",
     status: false,
     roles: [],
   });
   const [seleccionarRol, setSeleccionarRol] = useState(usuario.roles[0]);
-
   // Funciones y Efectos Secundarios
   const handleRolChange = (e) => {
     setSeleccionarRol(e.target.value);
@@ -54,13 +53,7 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
         trixEditor.current.removeEventListener("trix-change", handleTrixChange);
       }
     };
-  }, [
-    usuario.email,
-    usuario.name,
-    usuario.roles,
-    usuario.imagen,
-    usuario.status,
-  ]);
+  }, [usuario.imagen]);
 
   useEffect(() => {
     setSeleccionarRol(usuario.roles[0]);
@@ -83,6 +76,8 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
 
   const consultarUsuario = async () => {
     const usuarioConsulta = await urlAxios.get(`/users/${id}`);
+    console.log(usuarioConsulta.data.data);
+
     datoUsuario(usuarioConsulta.data.data);
   };
 
@@ -115,10 +110,14 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
   };
 
   const validarUsuario = () => {
-    const { email, name, roles, description } = usuario;
+    const { email, name, roles, description, department } = usuario;
 
     return (
-      !email.length || !name.length || !roles.length || !description.length
+      !email.length ||
+      !name.length ||
+      !roles.length ||
+      !description.length ||
+      !department.length
     );
   };
 
@@ -130,6 +129,7 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
       const formData = new FormData();
       formData.append("email", usuario.email);
       formData.append("name", usuario.name);
+      formData.append("department", usuario.department);
       formData.append("roles", usuario.roles[0]);
       formData.append("description", usuario.description);
       formData.append("imagen", usuario.imagen);
@@ -174,18 +174,16 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
     }));
   };
 
-  if (!tokenCargando) {
+  if (!tokenCargando || !auth.auth) {
     return <Spinner />;
   }
   return (
     <>
       {isOpen && (
         <div className="fixed mt-0 top-0 right-0 bottom-0 left-0 flex justify-center items-center w-full bg-gray-800 bg-opacity-80  z-50">
-          <div className="p-4 dark:bg-gray-800 rounded-lg">
-            <div className="flex border-b dark:border-gray-700">
-              <h2 className="text-2xl text-gray-900 dark:text-white mb-4">
-                Editar usuario{" "}
-              </h2>
+          <div className="p-4 bg-gray-800 rounded-lg max-w-sm md:max-w-2xl lg:max-w-4xl">
+            <div className="flex border-b border-gray-700">
+              <h2 className="text-2xl text-white mb-4">Editar usuario </h2>
               <button
                 onClick={onClose}
                 className="text-gray-400 bg-transparent hover:text-gray-500 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover-bg-gray-600 dark:hover-text-white"
@@ -206,67 +204,75 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
               </button>
             </div>
 
-            <form className="dark:bg-gray-800 " onSubmit={guardarUsuario}>
-              <div className="grid grid-cols-2 gap-2 ">
-                <div className="mb-4">
-                  <label className="block mb-2 text-sm font-medium pt-4 text-gray-900 dark:text-white">
-                    Email de usuario
+            <form className="bg-gray-800 " onSubmit={guardarUsuario}>
+              <div className="grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 gap-2 ">
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
+                    Correo
                   </label>
                   <input
                     onChange={usuarioState}
                     name="email"
-                    type="text"
-                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="email"
+                    className="bg-gray-50  border text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-900 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     disabled
                     value={usuario.email}
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block mb-2 pt-4  text-sm font-medium text-gray-900 dark:text-white">
-                    Nombre de usuario
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
+                    Jefe de departamento
                   </label>
                   <input
                     onChange={usuarioState}
                     name="name"
                     type="text"
-                    className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="border  text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Departamento..."
                     value={usuario.name}
                   />
                 </div>
+                <div className="lg:mb-2">
+                  <label className="block mb-2 lg:pt-4 pt-1  text-sm font-medium text-gray-900 dark:text-white">
+                    Nombre departamento
+                  </label>
+                  <input
+                    onChange={usuarioState}
+                    name="department"
+                    type="text"
+                    className="border text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Departamento..."
+                    value={usuario.department}
+                  />
+                </div>
 
-                <div className="mb-4">
-                  <label className="block mb-2  text-sm font-medium text-gray-900 dark:text-white">
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-1 lg:pt-4 text-sm font-medium text-white">
                     Imagen de perfil
                   </label>
                   <input
                     className="w-full  text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    id="user_avatar"
                     type="file"
                     name="imagen"
                     onChange={usuarioState}
                   />
 
-                  <div
-                    className="mt-2 text-sm text-gray-500 pt-1 dark:text-gray-300"
-                    id="user_avatar_help"
-                  >
+                  <div className="mt-1 text-sm text-gray-300">
                     Solo se permiten imágenes tipo jpg, png, jpeg, gif
                   </div>
                 </div>
                 <div>
-                  {" "}
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block mb-2 pt-1 lg:pt-4 text-sm font-medium text-white">
                     Rol del usuario
                   </label>
                   <select
                     name="roles"
                     id="roles"
                     value={seleccionarRol}
-                    className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="border text-sm rounded-lg  block w-full p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     onChange={handleRolChange}
                   >
-                    <option disabled value="">
+                    <option disabled selected>
                       --- Selecciona un rol ---
                     </option>
                     {roles.map((role) => (
@@ -277,7 +283,7 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
                   </select>
                 </div>
                 <div>
-                  <label className="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block ml-2 mt-1 lg:mt-5 text-sm font-medium text-white">
                     Estatus del usuario
                   </label>
                   <input
@@ -297,18 +303,16 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
                   />
                   <label
                     className={`inline-block pl-[0.15rem]  hover:cursor-pointer ${
-                      usuario.status
-                        ? "text-blue-700  dark:text-blue-400"
-                        : "text-gray-900 dark:text-white"
+                      usuario.status ? "text-blue-400" : "text-red-400"
                     }`}
                   >
                     {" "}
-                    {usuario.status ? "Activado" : "Desactivado"}
+                    {usuario.status ? "Activo" : "Inactivo"}
                   </label>
                 </div>
               </div>
               <div>
-                <label className="block mb-2 pt-1 text-sm font-medium text-gray-900 dark:text-white">
+                <label className="block mb-4 pt-2 text-sm font-medium text-white">
                   Descripcion del usuario
                 </label>
 
@@ -321,7 +325,7 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
               <button
                 disabled={validarUsuario()}
                 type="submit"
-                className="text-white bg-blue-700 mb-4 mt-6 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2 dark:bg-blue-600 dark:hover-bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white mb-4 mt-6  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2 bg-blue-600 hover-bg-blue-700 focus:ring-blue-800"
               >
                 Actualizar usuario
               </button>

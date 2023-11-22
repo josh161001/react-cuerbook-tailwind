@@ -22,8 +22,9 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
     cupo: "",
     fecha: new Date(), // Inicializa con la fecha actual
     lugar: "",
+    detalles: "",
     description: "",
-    categoryId: [],
+    categoryId: "",
     status: false,
   });
 
@@ -55,9 +56,6 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
     evento.status,
     evento.imagen,
   ]);
-
-  console.log(evento);
-
   useEffect(() => {
     const token = localStorage.getItem("access_token");
 
@@ -87,7 +85,7 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
     } else if (e.target.name === "categoryId") {
       setEvento({
         ...evento,
-        categoryId: [e.target.value],
+        categoryId: e.target.value,
       });
     } else {
       setEvento({
@@ -97,11 +95,17 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
     }
   };
 
-  // console.log(evento);
-
   const validarEvento = () => {
-    const { name, imagen, cupo, fecha, lugar, categoryId, description } =
-      evento;
+    const {
+      name,
+      imagen,
+      cupo,
+      fecha,
+      lugar,
+      categoryId,
+      description,
+      detalles,
+    } = evento;
 
     return (
       !name.length ||
@@ -110,7 +114,8 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
       !cupo ||
       !categoryId ||
       !fecha ||
-      !lugar
+      !lugar ||
+      !detalles.length
     );
   };
 
@@ -129,8 +134,8 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
       formData.append("lugar", evento.lugar);
       formData.append("categoryId", evento.categoryId);
       formData.append("description", evento.description);
+      formData.append("detalles", evento.detalles);
       formData.append("status", evento.status);
-
       urlAxios
         .post(`/events/${id}`, formData, {
           headers: {
@@ -144,7 +149,6 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
             "El evento se ha registrado correctamente",
             "success"
           );
-
           onClose();
         })
         .catch((error) => {
@@ -168,10 +172,12 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
         });
         datoCategorias(categoriasConsulta.data.data);
       } catch (error) {
-        if (error.response && error.response.status === 401) {
+        if (error.response || error.response.status === 401) {
           navigate("/itnl/iniciar-sesion");
         }
       }
+    } else {
+      navigate("/itnl/iniciar-sesion");
     }
   };
 
@@ -179,16 +185,16 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
     consultarCategorias();
   }, [categorias]);
 
-  if (!tokenCargando) {
+  if (!tokenCargando || !auth.auth) {
     return <Spinner />;
   }
 
   return (
     <>
       {isOpen && (
-        <div className="fixed  top-0 right-0 bottom-0 left-0 flex justify-center items-center w-full bg-gray-800 bg-opacity-80  z-50">
-          <div className="p-4 dark:bg-gray-800 rounded-lg">
-            <div className="flex border-b dark:border-gray-700">
+        <div className="fixed mt-0 top-0 right-0 bottom-0 left-0 flex justify-center items-center w-full bg-gray-800 bg-opacity-80  z-50">
+          <div className="p-4 bg-gray-800 rounded-lg max-w-sm md:max-w-2xl lg:max-w-4xl">
+            <div className="flex border-b border-gray-700">
               <h2 className="text-2xl text-gray-900 dark:text-white mb-4">
                 Agregar Evento
               </h2>
@@ -212,35 +218,36 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
               </button>
             </div>
 
-            <form className="dark:bg-gray-800 " onSubmit={guardarUsuario}>
-              <div className="grid grid-cols-2 gap-2 ">
-                <div className="">
-                  <label className="block mb-2 text-sm font-medium pt-4 text-gray-900 dark:text-white">
+            <form className="bg-gray-800 " onSubmit={guardarUsuario}>
+              <div className="grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 gap-2 ">
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
                     Nombre del evento
                   </label>
                   <input
                     onChange={eventoState}
                     name="name"
                     type="text"
-                    className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Evento de..."
-                  />
-                </div>
-                <div className="">
-                  <label className="block mb-2 text-sm font-medium pt-4 text-gray-900 dark:text-white">
-                    Cupo del evento
-                  </label>
-                  <input
-                    onChange={eventoState}
-                    name="cupo"
-                    type="number"
-                    className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="border text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Evento de..."
                   />
                 </div>
 
-                <div className="">
-                  <label className="block mb-2 text-sm font-medium pt-1 text-gray-900 dark:text-white">
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
+                    Detalles del evento
+                  </label>
+                  <input
+                    onChange={eventoState}
+                    name="detalles"
+                    type="text"
+                    className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Agregar tambien servicios con (...)"
+                  />
+                </div>
+
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
                     Lugar del evento
                   </label>
                   <input
@@ -251,16 +258,29 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                     placeholder="Evento de..."
                   />
                 </div>
-                <div>
-                  <label className="block mb-2 pt-1 text-sm font-medium text-gray-900 dark:text-white">
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
+                    Cupo del evento
+                  </label>
+                  <input
+                    onChange={eventoState}
+                    name="cupo"
+                    type="number"
+                    className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Evento de..."
+                  />
+                </div>
+                <div className="lg:mb-2">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
                     Categoria del evento
                   </label>
                   <select
                     name="categoryId"
-                    className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={eventoState}
+                    value={evento.categoryId}
                   >
-                    <option disabled selected>
+                    <option disabled value="">
                       Selecciona una categoria
                     </option>
                     {categorias.map((categoria) => (
@@ -271,8 +291,8 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                   </select>
                 </div>
 
-                <div className="">
-                  <label className="block mb-2 pt-1 text-sm font-medium text-gray-900 dark:text-white">
+                <div className="lg:mb-2">
+                  <label className="block mb-2 lg:pt-4 pt-1  text-sm font-medium text-gray-900 dark:text-white">
                     Imagen del evento
                   </label>
                   <input
@@ -281,15 +301,13 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                     name="imagen"
                     onChange={eventoState}
                   />
-                  <div
-                    className=" text-sm text-gray-500 pt-1 dark:text-gray-300"
-                    id="user_avatar_help"
-                  >
+                  <div className=" text-sm text-gray-500 pt-1 dark:text-gray-300">
                     Solo se permiten imágenes tipo jpg, png, jpeg, gif
                   </div>
                 </div>
-                <div>
-                  <label className="block ml-2 pt-2 text-sm font-medium text-gray-900 dark:text-white">
+                <div className="lg:mb-2">
+                  {" "}
+                  <label className="block ml-2 lg:mt-4  text-sm font-medium text-white">
                     Estatus del evento
                   </label>
                   <input
@@ -307,18 +325,14 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                   />
                   <label
                     className={`inline-block pl-[0.15rem]  hover:cursor-pointer ${
-                      evento.status
-                        ? "text-blue-700  dark:text-blue-400"
-                        : "text-gray-900 dark:text-white"
+                      evento.status ? "text-blue-400" : "text-red-400"
                     }`}
                   >
-                    {" "}
                     {evento.status ? "Activo" : "Inactivo"}
                   </label>
                 </div>
-              </div>
-              <div>
-                <div className="">
+                <div className="lg:mb-2">
+                  {" "}
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-2">
                     Fecha del evento
                   </label>
@@ -333,7 +347,9 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-2.5 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 </div>
-                <div className="">
+              </div>
+              <div>
+                <div>
                   <label
                     htmlFor="message"
                     className="block mb-2 pt-1 text-sm font-medium text-gray-900 dark:text-white"

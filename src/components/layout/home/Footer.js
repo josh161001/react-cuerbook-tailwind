@@ -23,19 +23,68 @@ const Footer = () => {
               Redes sociales y sitio de interes
             </span>
             <section>
-              <div className="flex items-center mt-1 text-2xl space-x-3">
+              <div className="grid pt-4 grid-cols-2 gap-4 lg:grid-cols-4 align-center text-center">
                 <a
-                  href="https://itnleon.mindbox.app/login/alumno"
-                  className="text-violet-700 text-center transition-colors duration-300 hover:text-deep-purple-accent-400"
+                  href="https://www.facebook.com/institutotecnologicodenuevoleon/?locale=es_LA"
+                  className="text-indigo-700 font-semibold text-center transition-colors duration-300 hover:text-deep-purple-accent-400"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  mindbox
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    width="48"
+                    height="38"
+                    viewBox="0 0 48 48"
+                  >
+                    <path
+                      fill="#3f51b5"
+                      d="M24 4A20 20 0 1 0 24 44A20 20 0 1 0 24 4Z"
+                    ></path>
+                    <path
+                      fill="#fff"
+                      d="M29.368,24H26v12h-5V24h-3v-4h3v-2.41c0.002-3.508,1.459-5.59,5.592-5.59H30v4h-2.287 C26.104,16,26,16.6,26,17.723V20h4L29.368,24z"
+                    ></path>
+                  </svg>
+                  Facebook
+                </a>
+                <a
+                  href="https://www.linkedin.com/school/itnl---instituto-tecnol%C3%B3gico-de-nuevo-le%C3%B3n/?originalSubdomain=mx"
+                  className="text-blue-600 font-semibold text-center transition-colors duration-300 hover:text-deep-purple-accent-400"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    width="48"
+                    height="38"
+                    viewBox="0 0 48 48"
+                  >
+                    <path
+                      fill="#0288d1"
+                      d="M24 4A20 20 0 1 0 24 44A20 20 0 1 0 24 4Z"
+                    ></path>
+                    <path
+                      fill="#fff"
+                      d="M14 19H18V34H14zM15.988 17h-.022C14.772 17 14 16.11 14 14.999 14 13.864 14.796 13 16.011 13c1.217 0 1.966.864 1.989 1.999C18 16.11 17.228 17 15.988 17zM35 24.5c0-3.038-2.462-5.5-5.5-5.5-1.862 0-3.505.928-4.5 2.344V19h-4v15h4v-8c0-1.657 1.343-3 3-3s3 1.343 3 3v8h4C35 34 35 24.921 35 24.5z"
+                    ></path>
+                  </svg>
+                  Linkedln
+                </a>
+                <a
+                  href="https://itnleon.mindbox.app/login/alumno"
+                  className="text-violet-700 font-semibold text-center transition-colors duration-300 hover:text-deep-purple-accent-400"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
-                    class="w-20 text-center h-10"
+                    className="w-20 text-center h-10"
                   >
                     <path
                       fillRule="evenodd"
@@ -43,13 +92,45 @@ const Footer = () => {
                       clipRule="evenodd"
                     />
                   </svg>
+                  mindbox
+                </a>
+                <a
+                  href="https://campus.itnuevoleon.com/"
+                  className="text-amber-500 font-semibold text-center transition-colors duration-300 hover:text-deep-purple-accent-400"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    width="48"
+                    height="38"
+                    viewBox="0 0 48 48"
+                  >
+                    <path
+                      fill="#ffab40"
+                      d="M33.5,16c-2.5,0-4.8,1-6.5,2.6C25.3,17,23,16,20.5,16c-5.2,0-9.5,4.3-9.5,9.5V37h6V24.5 c0-1.9,1.6-3.5,3.5-3.5s3.5,1.6,3.5,3.5V37h6V24.5c0-1.9,1.6-3.5,3.5-3.5s3.5,1.6,3.5,3.5V37h6V25.5C43,20.3,38.7,16,33.5,16z"
+                    ></path>
+                    <path d="M5.5 16.2H6.5V32H5.5z"></path>
+                    <path
+                      fill="#424242"
+                      d="M22,13c1.1,0.4,2.6,2,3,3c-1.8,1.7-2.6,2.9-3,6c-0.1,1.1-0.9,1.7-2,1c-3.1-1.9-6-2-8-2 c-1-1-0.5-3.7,0-5l6,1L22,13z"
+                    ></path>
+                    <path fill="#616161" d="M18,17H4l11-7h14L18,17z"></path>
+                    <path
+                      fill="#424242"
+                      d="M7.5,30c0-2.2-0.7-4-1.5-4s-1.5,1.8-1.5,4s0.7,4,1.5,4S7.5,32.2,7.5,30z"
+                    ></path>
+                  </svg>
+                  Moddle
                 </a>
               </div>
             </section>
             <p className="mt-4 text-white text-sm">
               Si tienes alguna duda o sugerencia, puedes contactarnos a través
-              de nuestras redes sociales y tambien puedes visitar otros sitios
-              de interes
+              de nuestras redes sociales y tambien visitar otros sitios de
+              intereses dentro de la institución.
             </p>
             <p className="mt-4 text-2xl text-white pb-4 ">Menu </p>
             <MenuFooter />

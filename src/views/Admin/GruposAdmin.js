@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MenuHamburguesaAdmin from "../../components/layout/admin/MenuHamburguesaAdmin";
-import TableGrupos from "../../components/layout/admin/TableGrupos";
 import ModalCrearGrupo from "../../components/layout/admin/ModalCrearGrupo";
+import TableGrupos from "../../components/layout/admin/TableGrupos";
 
 const GruposAdmin = () => {
   const [modalAbierto, setModalAbierto] = useState(false);

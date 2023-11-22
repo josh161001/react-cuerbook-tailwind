@@ -3,32 +3,27 @@ import imagen1 from "../../../assets/img/Imagen_ejemplos (1).jpg";
 import imagen2 from "../../../assets/img/Imagen_ejemplos (2).jfif";
 import imagen3 from "../../../assets/img/Imagen_ejemplos (4).jpg";
 import imagen4 from "../../../assets/img/Imagen_ejemplos (6).jpg";
-import { useEffect } from "react";
 
 const GruposPaginaPrincipal = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <>
       <div className="grid lg:grid-cols-2 bg-azul">
         {/* galeria */}
-        <div className="">
+        <div>
           <div className="grid lg:grid-cols-2 lg:w-full lg:grid-cols-4 md:grid-cols-2 md:p-2 md:gap-2  sm:grid lg:gap-2 lg:m-4 lg:ml-48">
             <div className="grid lg:gap-2 md:gap-2">
               <div className="flex justify-center">
                 <img
                   className="lg:h-48 md:h-64 sm:h-16 w-full"
                   src={imagen1}
-                  alt=""
+                  alt="grupo de estudiantes"
                 />
               </div>
               <div className="flex justify-center">
                 <img
                   className="lg:h-36 md:h-64 sm:h-16 w-full"
                   src={imagen3}
-                  alt=""
+                  alt="grupo de estudiantes"
                 />
               </div>
             </div>
@@ -37,14 +32,14 @@ const GruposPaginaPrincipal = () => {
                 <img
                   className="lg:h-36 md:h-64 sm:h-16 w-full"
                   src={imagen2}
-                  alt=""
+                  alt="grupo de estudiantes"
                 />
               </div>
               <div className="flex justify-center">
                 <img
                   className="lg:h-48 md:h-64 sm:h-16 w-full"
                   src={imagen4}
-                  alt=""
+                  alt="grupo de estudiantes"
                 />
               </div>
             </div>

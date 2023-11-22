@@ -1,7 +1,5 @@
 import { useState } from "react";
 import MenuHamburguesaAdmin from "../../components/layout/admin/MenuHamburguesaAdmin";
-import TableGrupos from "../../components/layout/admin/TableGrupos";
-import ModalCrearGrupo from "../../components/layout/admin/ModalCrearGrupo";
 import TableCategorias from "../../components/layout/admin/TableCategorias";
 import ModalCrearCategoria from "../../components/layout/admin/ModalCrearCategoria";
 

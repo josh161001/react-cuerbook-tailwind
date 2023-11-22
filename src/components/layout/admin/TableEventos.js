@@ -6,6 +6,7 @@ import { CuerbookContext } from "../../../context/CuerbookContext";
 import Swal from "sweetalert2";
 import moment from "moment";
 import "moment/locale/es";
+import { saveAs } from "file-saver";
 
 const TableEventos = (props) => {
   const [eventos, guardarEventos] = useState([]);
@@ -42,6 +43,7 @@ const TableEventos = (props) => {
               Authorization: `Bearer ${token}`,
             },
           });
+
           // console.log(dataConsulta.data.data);
           guardarEventos(dataConsulta.data.data);
         } catch (error) {
@@ -54,7 +56,27 @@ const TableEventos = (props) => {
     getEvento();
   }, [navigate, eventos]);
 
-  // console.log(eventos);
+  const getPdf = async (eventoId) => {
+    const token = localStorage.getItem("access_token");
+
+    const pdfResponse = await urlAxios.get(`/pdf/generate-pdf/${eventoId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      responseType: "arraybuffer",
+    });
+
+    const fileName = `solicitud_evento_${eventoId}.pdf`;
+    const pdfBlob = new Blob([pdfResponse.data], {
+      type: "application/pdf",
+    });
+    pdfBlob.name = fileName;
+
+    saveAs(pdfBlob, fileName);
+
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    window.open(pdfUrl, "_blank");
+  };
 
   const eliminarEvento = async (id) => {
     Swal.fire({
@@ -96,7 +118,7 @@ const TableEventos = (props) => {
     return doc.body.innerHTML;
   };
 
-  if (!tokenCargando || !eventos.length) {
+  if (!tokenCargando || !eventos.length || !auth.auth) {
     return <Spinner />;
   }
 
@@ -124,6 +146,9 @@ const TableEventos = (props) => {
               </th>
               <th scope="col" className="px-6 py-3">
                 Descrippcion
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Detalles
               </th>
               <th scope="col" className="px-6 py-3">
                 Categoria
@@ -172,6 +197,11 @@ const TableEventos = (props) => {
                         : limpiarTrix(evento.description),
                   }}
                 ></td>
+                <td className="px-6 py-4  whitespace-nowrap ">
+                  {evento.detalles > 40
+                    ? evento.detalles.slice(0, 40) + "..."
+                    : evento.detalles}
+                </td>
                 <td className="px-6 py-4"> {evento.Categories.name}</td>
                 <td className="px-6 py-4  whitespace-nowrap ">
                   <span
@@ -184,25 +214,41 @@ const TableEventos = (props) => {
                 </td>
 
                 <td className=" items-center flex pt-9 px-4 py-4 space-x-3">
+                  {/* boton dee solicitud */}
+                  <button
+                    onClick={() => getPdf(evento.id)}
+                    className="inline-block px-1 py-1 rounded-lg bg-grayTec  font-medium text-white hover:underline"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                      <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                    </svg>
+                  </button>
                   {/* editar */}
                   <Link
-                    to={`/admin/editar-evento/${evento.id}`}
+                    to={`/admin/evento/${evento.id}`}
                     className="inline-block px-1 py-1 rounded-lg bg-blue-900  font-medium text-red-600 dark:text-blue-500 hover:underline"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
                       fill="currentColor"
-                      class="w-5 h-5"
+                      className="w-5 h-5"
                     >
                       <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   </Link>
+
                   {/* eliminar */}
                   <button
                     onClick={() => eliminarEvento(evento.id)}

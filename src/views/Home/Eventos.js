@@ -5,6 +5,7 @@ import Footer from "../../components/layout/home/Footer";
 import urlAxios from "../../config/axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import BotonFlotanteArriba from "../../components/common/BotonFlotanteArriba";
 
 const Eventos = () => {
   useEffect(() => {
@@ -13,14 +14,6 @@ const Eventos = () => {
   const [eventos, guardarEventos] = useState([]);
   const [filtroCategoria, setFiltroCategoria] = useState("");
   const [filtroNombre, setFiltroNombre] = useState("");
-
-  const limpiarTrix = (input) => {
-    let doc = new DOMParser().parseFromString(input, "text/html");
-    Array.from(doc.body.getElementsByTagName("strong")).forEach((strong) => {
-      strong.outerHTML = strong.innerHTML;
-    });
-    return doc.body.innerHTML;
-  };
 
   const consultarEventosProximos = async () => {
     const evento = await urlAxios.get("/events");
@@ -59,13 +52,24 @@ const Eventos = () => {
           filtroCategoria === "") &&
         (evento.name.includes(filtroNombre) || filtroNombre === "")
     );
+
+  const limpiarTrix = (input) => {
+    let doc = new DOMParser().parseFromString(input, "text/html");
+    Array.from(doc.body.getElementsByTagName("strong")).forEach((strong) => {
+      strong.outerHTML = strong.innerHTML;
+    });
+    return doc.body.innerHTML;
+  };
+
   return (
     <>
       <div className="bg-black">
         <HeaderPagina />
         <CabeceraPagina />
       </div>
-      <div className="flex flex-col justify-center sm:flex-row">
+      <BotonFlotanteArriba />
+
+      <div className="flex flex-col pt-4 justify-center sm:flex-row">
         <div className="p-2">
           <input
             className="p-2 w-full rounded border focus:ring-azul border-grayTec "
@@ -96,7 +100,7 @@ const Eventos = () => {
         ))}
       </div>
 
-      <div className="flex lg:grid lg:grid-cols-3 flex-col lg:gap-2 gap-4 p-4 sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
+      <div className="flex lg:grid lg:grid-cols-3 flex-col lg:gap-6 gap-4 p-4 sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
         {eventosFiltrados.map((evento, index) => (
           <div
             key={index}
@@ -114,11 +118,16 @@ const Eventos = () => {
                 {evento.Categories.name}
               </h6>
               <h2 className="text-white text-2xl font-bold mb-1">
-                {evento.name}
+                {evento.name.length > 40
+                  ? evento.name.slice(0, 50) + "..."
+                  : evento.name}
               </h2>
-              <p className="text-gray-400 text-sm italic mb-1">
-                Por {evento.user.name}
-              </p>
+              <Link to={`/tecnl/usuario-perfil/${evento.user.id}`}>
+                <p className="text-gray-400 hover:text-azul hover:font-semibold text-sm italic mb-1">
+                  Por {evento.user.department}
+                </p>
+              </Link>
+
               <p
                 className="text-white text-base mb-2"
                 dangerouslySetInnerHTML={{
@@ -131,7 +140,7 @@ const Eventos = () => {
 
               <div className="flex justify-between pt-1">
                 <Link
-                  to={`/itnl/evento/${evento.id}`}
+                  to={`/tecnl/evento/${evento.id}`}
                   className="hover:bg-blue-700 px-4 rounded rounded-md bg-azul px-3.5 py-2.5 text-sm font-semibold text-white"
                 >
                   Ver más

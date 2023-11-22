@@ -1,6 +1,5 @@
 import { useState } from "react";
 import MenuHamburguesaAdmin from "../../components/layout/admin/MenuHamburguesaAdmin";
-import ModalCrearUsuario from "../../components/layout/admin/ModalCrearUsuario";
 import TableNoticias from "../../components/layout/admin/TableNoticias";
 import ModalCrearNoticia from "../../components/layout/admin/ModalCrearNoticia";
 

@@ -1,27 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MenuFooter = () => {
   return (
     <ul className="list-none">
       <li className="mb-2">
-        <a href="/enlace-1" className="text-gray-300 hover:text-gray-500">
+        <Link
+          to="/tecnl/pagina-principal"
+          className="text-gray-300 hover:text-gray-500"
+        >
           Pagina principal
-        </a>
+        </Link>
       </li>
       <li className="mb-2">
-        <a href="/enlace-2" className="text-gray-300 hover:text-gray-500">
+        <Link to="/tecnl/eventos" className="text-gray-300 hover:text-gray-500">
           Eventos{" "}
-        </a>
+        </Link>
       </li>
       <li className="mb-2">
-        <a href="/enlace-3" className="text-gray-300 hover:text-gray-500">
+        <Link to="/tecnl/grupos" className="text-gray-300 hover:text-gray-500">
           Grupos{" "}
-        </a>
+        </Link>
       </li>
       <li className="mb-2">
-        <a href="/enlace-3" className="text-gray-300 hover:text-gray-500">
+        <Link
+          to="/tecnl/noticias"
+          className="text-gray-300 hover:text-gray-500"
+        >
           Noticias{" "}
-        </a>
+        </Link>
       </li>
     </ul>
   );

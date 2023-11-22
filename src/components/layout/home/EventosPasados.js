@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import urlAxios from "../../config/axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
-const EventosPasadosPagina = () => {
+import urlAxios from "../../../config/axios";
+
+const EventosPasados = () => {
   const [eventos, guardarEventos] = useState([]);
 
   const consultarEventosPasados = async () => {
@@ -11,8 +12,14 @@ const EventosPasadosPagina = () => {
     const eventosPasado = evento.data.data.filter(
       (evento) => evento.status === true
     );
+
+    // console.log(eventosPasado);
     guardarEventos(eventosPasado);
   };
+
+  useEffect(() => {
+    consultarEventosPasados();
+  }, [eventos]);
 
   const limpiarTrix = (input) => {
     let doc = new DOMParser().parseFromString(input, "text/html");
@@ -22,10 +29,6 @@ const EventosPasadosPagina = () => {
     return doc.body.innerHTML;
   };
 
-  useEffect(() => {
-    consultarEventosPasados();
-  }, [eventos]);
-
   if (!eventos.length) {
     return (
       <h1 className="text-center text-3xl pb-4">No hay eventos pasados</h1>
@@ -33,7 +36,7 @@ const EventosPasadosPagina = () => {
   }
 
   return (
-    <div className="flex lg:grid lg:grid-cols-3 flex-col lg:gap-4 gap-4 p-4  sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
+    <div className="flex grid lg:grid-cols-3 flex-col lg:gap-4 gap-4 p-4  sm:p-10 md:grid md:grid-cols-2 md:gap-6 sm:flex-row">
       {eventos.map((evento, index) => (
         <div
           key={index}
@@ -53,9 +56,12 @@ const EventosPasadosPagina = () => {
             <h2 className="text-white text-2xl font-bold mb-1">
               {evento.name}
             </h2>
-            <p className="text-gray-400 text-sm italic mb-1">
-              Por {evento.user.name}
-            </p>
+            <Link to={`/tecnl/usuario-perfil/${evento.user.id}`}>
+              <p className="text-gray-400 text-sm italic hover:text-azul hover:font-semibold mb-1">
+                Por {evento.user.department}
+              </p>
+            </Link>
+
             <p
               className="text-white text-base mb-2"
               dangerouslySetInnerHTML={{
@@ -68,7 +74,7 @@ const EventosPasadosPagina = () => {
 
             <div className="flex justify-between pt-1">
               <Link
-                to={`/itnl/evento/${evento.id}`}
+                to={`/tecnl/evento/${evento.id}`}
                 className="hover:bg-blue-700 px-4 rounded rounded-md bg-azul px-3.5 py-2.5 text-sm font-semibold text-white"
               >
                 Ver más
@@ -84,4 +90,4 @@ const EventosPasadosPagina = () => {
   );
 };
 
-export default EventosPasadosPagina;
+export default EventosPasados;

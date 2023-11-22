@@ -8,6 +8,7 @@ import tecnl from "../../assets/img/tecnologico.jpg";
 import { Link } from "react-router-dom";
 
 import ModalEditarUsuario from "../../components/layout/admin/ModalEditarUsuario";
+import BotonFlotanteAdmin from "../../components/common/BotonFlotanteAdmin";
 
 const EditarUsuarioAdmin = () => {
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -16,6 +17,8 @@ const EditarUsuarioAdmin = () => {
   const [usuario, datoUsuario] = useState({
     email: "",
     name: "",
+    description: "",
+    department: "",
     imagen: null,
     status: true,
     roles: [],
@@ -54,8 +57,18 @@ const EditarUsuarioAdmin = () => {
   const cerrarModal = () => {
     setModalAbierto(false);
   };
+
+  const limpiarTrix = (input) => {
+    let doc = new DOMParser().parseFromString(input, "text/html");
+    Array.from(doc.body.getElementsByTagName("strong")).forEach((strong) => {
+      strong.outerHTML = strong.innerHTML;
+    });
+    return doc.body.innerHTML;
+  };
+
   return (
     <div>
+      <BotonFlotanteAdmin />
       <section className="relative block h-96">
         <div
           className="absolute top-0 w-full h-full bg-center "
@@ -66,7 +79,7 @@ const EditarUsuarioAdmin = () => {
           <div className="w-full h-full absolute opacity-50 bg-black" />
         </div>
       </section>
-      <section className="relative lg:py-48 py-20">
+      <section className="relative lg:py-44 py-52 py-20">
         <div className="container mx-auto px-4">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
             <div className="rounded">
@@ -85,22 +98,15 @@ const EditarUsuarioAdmin = () => {
                 </div>
               </div>
               <div className="text-center mt-2">
-                <h3 className="text-3xl">{usuario.name}</h3>
+                <h3 className="text-2xl text-azul lg:text-3xl ">
+                  {usuario.department}
+                </h3>
 
                 <div className="mt-0 mb-2 text-gray-400">
                   <p className="mr-2 mt-2 text-gray-400"></p>
                   {usuario.email}
                 </div>
-                <div className="py-6 px-3  sm:mt-0">
-                  <button
-                    className="bg-azul active:bg-blue-600 uppercase text-white font-bold  text-xs px-4 py-2 rounded"
-                    type="button"
-                    onClick={abrirModal}
-                  >
-                    Editar perfil
-                  </button>
-                </div>
-                <div className="flex justify-center items-center gap-4 pt-4">
+                <div className="flex justify-center items-center gap-4 pt-2">
                   <div className="inline-block px-3 py-1 rounded-lg text-white bg-blue-500">
                     {usuario.roles}
                   </div>
@@ -114,12 +120,23 @@ const EditarUsuarioAdmin = () => {
                     </span>
                   </div>
                 </div>
+                <div className="py-8 px-3  sm:mt-0">
+                  <button
+                    className="bg-azul active:bg-blue-600 uppercase text-white font-bold  text-xs px-4 py-2 rounded"
+                    type="button"
+                    onClick={abrirModal}
+                  >
+                    Editar perfil
+                  </button>
+                </div>
               </div>
+              <div
+                className="pb-4 text-2xl pt-4 mb-2 text-black text-center mb-2"
+                dangerouslySetInnerHTML={{
+                  __html: limpiarTrix(usuario.description),
+                }}
+              ></div>
               <div className="mt-10 py-6 border-t border-gray-300 ">
-                <div
-                  className="pb-4 text-2xl mb-2 text-black text-center mb-2"
-                  dangerouslySetInnerHTML={{ __html: usuario.description }}
-                ></div>
                 <h2 className="pb-4 text-2xl mb-2 text-gray-700 text-center mb-2">
                   Grupos
                 </h2>{" "}
@@ -128,15 +145,16 @@ const EditarUsuarioAdmin = () => {
                   {usuario.groups &&
                     usuario.groups.map((grupo, index) => (
                       <Link to={`/admin/grupo/${grupo.id}`}>
-                        <div className="relative grid h-[25rem] bg-cover w-full max-w-[20rem] flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-center text-gray-700">
+                        <div
+                          key={index}
+                          className="relative grid h-[25rem]  w-full flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-center text-gray-700"
+                        >
                           <div
-                            key={index}
-                            className="absolute bg-cover inset-0 m-0 h-full w-full overflow-hidden rounded-none"
+                            className="absolute bg-cover bg-center inset-0 m-0 h-full w-full overflow-hidden rounded-none"
                             style={{
                               backgroundImage: `url(${grupo.imagen})`,
                             }}
                           >
-                            {" "}
                             <div className="absolute inset-0 w-full h-full to-bg-black-30 bg-gradient-to-t from-black/70 via-black/80"></div>
                           </div>
                           <div className="relative p-10 px-6 py-14 md:px-10">
@@ -145,7 +163,7 @@ const EditarUsuarioAdmin = () => {
                             </h2>
 
                             <h5 className="block mb-4 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-gray-400">
-                              {grupo.user.name}
+                              {grupo.user.department}
                             </h5>
                             <img
                               alt="Perfil de usuario"

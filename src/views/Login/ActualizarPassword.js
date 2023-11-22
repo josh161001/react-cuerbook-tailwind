@@ -4,10 +4,12 @@ import urlAxios from "../../config/axios";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 const ActualizarPassword = () => {
+  const [tokenValido, setTokenValido] = useState(null);
+  const [credencialesUsuario, setCredencialesUsuario] = useState({
+    password: "",
+  });
   const { token } = useParams();
   const navigate = useNavigate();
-
-  const [tokenValido, setTokenValido] = useState(null);
 
   useEffect(() => {
     const verificarToken = async () => {
@@ -27,10 +29,6 @@ const ActualizarPassword = () => {
       navigate("/itnl/pagina-principal");
     }
   }, [tokenValido, navigate]);
-
-  const [credencialesUsuario, setCredencialesUsuario] = useState({
-    password: "",
-  });
 
   const credencialesUsuarioState = (e) => {
     setCredencialesUsuario({

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CuerbookContext } from "../../../context/CuerbookContext";
 import urlAxios from "../../../config/axios";
 import { Spinner } from "flowbite-react";
@@ -44,6 +44,8 @@ const NavUser = () => {
             navigate("/itnl/iniciar-sesion");
           }
         }
+      } else {
+        navigate("/itnl/iniciar-sesion");
       }
     };
     getUsers();
@@ -60,7 +62,7 @@ const NavUser = () => {
     navigate("/itnl/iniciar-sesion");
   };
 
-  if (!tokenCargando) {
+  if (!tokenCargando || !auth.auth) {
     return <Spinner />;
   }
 
@@ -84,41 +86,44 @@ const NavUser = () => {
         <div
           className={`absolute z-50 ${
             isDropdownOpen ? "block" : "hidden"
-          } mt-60 mr-.5 right-0 bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`}
+          } mt-72  mr-.5 right-0 bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`}
           id="dropdown-user"
         >
-          <div className="px-4 py-3">
-            <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"></p>
-          </div>
+          <div className="px-4 py-3"></div>
           <ul className="py-1">
-            <li className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+            <li className="block px-4 py-2 text-sm font-semibold text-gray-300 hover:bg-gray-600 hover:text-white">
+              {usuario.name}
+            </li>
+            <li className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white">
+              {usuario.department}
+            </li>
+            <li className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white">
               {usuario.email}
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+              <Link
+                to={`/admin/configuracion-cuenta/${usuario.id}`}
+                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white"
               >
                 Configuracion de cuenta
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+              <Link
+                to={`/admin/actualizar-password/${usuario.id}`}
+                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white"
               >
                 Actualizar contraseña
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a
-                href="#"
+              <button
                 onClick={CerrarSesionNav}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white"
               >
                 Cerrar sesion{" "}
-              </a>
+              </button>
             </li>
           </ul>
         </div>

@@ -34,24 +34,23 @@ const ModalEditarGrupo = ({ isOpen, onClose }) => {
     status: false,
   });
 
-  const consultarGrupoEditar = async () => {
-    const token = localStorage.getItem("access_token");
-
-    if (token) {
-      const grupoConsultaEditar = await urlAxios.get(`/groups/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      datoGrupo(grupoConsultaEditar.data.data);
-    } else {
-      navigate("/itnl/iniciar-sesion");
-    }
-  };
-
   useEffect(() => {
+    const consultarGrupoEditar = async () => {
+      const token = localStorage.getItem("access_token");
+
+      if (token) {
+        const grupoConsultaEditar = await urlAxios.get(`/groups/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        datoGrupo(grupoConsultaEditar.data.data);
+      } else {
+        navigate("/itnl/iniciar-sesion");
+      }
+    };
     consultarGrupoEditar();
-  }, []);
+  }, [navigate, id]);
 
   const usuarioState = (e) => {
     if (e.target.name === "imagen") {
@@ -127,7 +126,7 @@ const ModalEditarGrupo = ({ isOpen, onClose }) => {
       status: !statusPrevio.status,
     }));
   };
-  if (!tokenCargando) {
+  if (!tokenCargando || !auth.auth) {
     return <Spinner />;
   }
 
@@ -138,7 +137,7 @@ const ModalEditarGrupo = ({ isOpen, onClose }) => {
           <div className="p-4 dark:bg-gray-800 rounded-lg">
             <div className="flex border-b dark:border-gray-700">
               <h2 className="text-2xl text-gray-900 dark:text-white mb-4">
-                Actualizar Grupo
+                Editar Grupo
               </h2>
               <button
                 onClick={onClose}
@@ -243,7 +242,7 @@ const ModalEditarGrupo = ({ isOpen, onClose }) => {
                 type="submit"
                 className="text-white bg-blue-700 mb-4 mt-6 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2 dark:bg-blue-600 dark:hover-bg-blue-700 dark:focus:ring-blue-800"
               >
-                Editar grupo
+                Actualizar Grupo
               </button>
             </form>
           </div>

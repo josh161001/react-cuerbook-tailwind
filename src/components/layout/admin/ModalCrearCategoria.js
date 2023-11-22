@@ -75,7 +75,7 @@ const ModalCrearCategoria = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!tokenCargando) {
+  if (!tokenCargando || !auth.auth) {
     return <Spinner />;
   }
 

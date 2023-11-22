@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import urlAxios from "../../config/axios";
 
@@ -7,8 +7,10 @@ import tecnl from "../../assets/img/tecnologico.jpg";
 
 import ModalEditarGrupo from "../../components/layout/admin/ModalEditarGrupo";
 import ModalCrearEvento from "../../components/layout/admin/ModalCrearEvento";
+import BotonFlotanteAdmin from "../../components/common/BotonFlotanteAdmin";
 
 import moment from "moment";
+
 const EditarGrupoAdmin = () => {
   const [modalAbiertoGrupo, setModalAbiertoGrupo] = useState(false);
 
@@ -23,30 +25,29 @@ const EditarGrupoAdmin = () => {
     status: true,
   });
 
-  const consultarGrupo = async () => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      try {
-        const grupoConsulta = await urlAxios.get(`/groups/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        // console.log(grupoConsulta.data.data);
-        datoGrupo(grupoConsulta.data.data);
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          navigate("/itnl/iniciar-sesion");
-        }
-      }
-    } else {
-      navigate("/itnl/iniciar-sesion");
-    }
-  };
-
   useEffect(() => {
+    const consultarGrupo = async () => {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        try {
+          const grupoConsulta = await urlAxios.get(`/groups/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          // console.log(grupoConsulta.data.data);
+          datoGrupo(grupoConsulta.data.data);
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            navigate("/itnl/iniciar-sesion");
+          }
+        }
+      } else {
+        navigate("/itnl/iniciar-sesion");
+      }
+    };
     consultarGrupo();
-  }, [grupo]);
+  }, [grupo, navigate, id]);
 
   const abrirModal = () => {
     setModalAbiertoGrupo(true);
@@ -72,6 +73,7 @@ const EditarGrupoAdmin = () => {
 
   return (
     <div>
+      <BotonFlotanteAdmin />
       <section className="relative block h-96">
         <div
           className="absolute top-0 w-full h-full bg-center "
@@ -82,10 +84,10 @@ const EditarGrupoAdmin = () => {
           <div className="w-full h-full absolute opacity-50 bg-black" />
         </div>
       </section>
-      <section className="relative lg:py-48 ">
-        <div className="container mx-auto px-4">
+      <section className="relative lg:py-52 py-52 py-20">
+        <div className="container mx-auto  ">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
-            <div className="px-6  rounded">
+            <div className="  rounded">
               <div className="flex flex-wrap  justify-center">
                 <div className="w-full  lg:w-3/12 px-4 lg:order-2 flex justify-center">
                   <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
@@ -132,13 +134,13 @@ const EditarGrupoAdmin = () => {
                     Agregar Evento{" "}
                   </button>
                 </div>
-              </div>
-              <div className="mt-10 py-10 border-t border-gray-300 ">
                 <div className="mt-0 mb-2 text-gray-400  ">
                   <p className="mr-2 mt-2 text-2xl text-center mb-2 text-gray-400 ">
                     {grupo.description}
                   </p>
                 </div>
+              </div>
+              <div className="mt-10 py-10 border-t border-gray-300 ">
                 <h2 className="pb-4 text-2xl pt-2 text-center mb-2 text-gray-700 mb-2">
                   Eventos
                 </h2>{" "}
@@ -163,9 +165,12 @@ const EditarGrupoAdmin = () => {
                           <h2 className="text-white text-2xl font-bold mb-1">
                             {evento.name}
                           </h2>
-                          <p className="text-gray-400 text-sm italic mb-1">
-                            Por {evento.user.name}
-                          </p>
+                          <Link
+                            to={`/admin/usuario/${evento.user.id}`}
+                            className="text-gray-400 hover:text-azul hover:font-semibold text-sm italic mb-1"
+                          >
+                            Por {evento.user.department}
+                          </Link>
                           <p
                             className="text-white text-base mb-2"
                             dangerouslySetInnerHTML={{
@@ -179,12 +184,12 @@ const EditarGrupoAdmin = () => {
                           ></p>
 
                           <div className="flex justify-between pt-1">
-                            <a
-                              href="#"
+                            <Link
+                              to={`/admin/evento/${evento.id}`}
                               className="hover:bg-blue-700 px-4 rounded rounded-md bg-azul px-3.5 py-2.5 text-sm font-semibold text-white"
                             >
                               Ver más
-                            </a>
+                            </Link>
                             <p className="text-white pt-4 text-sm">
                               {moment(evento.createdAt).fromNow()}
                             </p>

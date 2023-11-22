@@ -10,9 +10,9 @@ const CerrarSesion = () => {
 
   return (
     <li>
-      <a
+      <button
         onClick={cerrarSesion}
-        className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,10 +32,10 @@ const CerrarSesion = () => {
           />
         </svg>
 
-        <button className="flex-1 pr-20  whitespace-nowrap">
+        <button className="flex-1 pr-20 pl-2  whitespace-nowrap">
           Cerrar Sesion
         </button>
-      </a>
+      </button>
     </li>
   );
 };

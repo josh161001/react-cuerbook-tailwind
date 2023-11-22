@@ -87,7 +87,7 @@ const TableNoticias = (props) => {
     }
   };
 
-  if (!tokenCargando || !noticias.length) {
+  if (!tokenCargando || !noticias.length || !auth.auth) {
     return <Spinner />;
   }
   return (

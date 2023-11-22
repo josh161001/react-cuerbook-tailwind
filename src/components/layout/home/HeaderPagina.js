@@ -5,10 +5,10 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, NavLink } from "react-router-dom";
 
 const navegacion = [
-  { name: "Pagina principal", to: "/itnl/pagina-principal" },
-  { name: "Eventos", to: "/itnl/eventos" },
-  { name: "Grupos", to: "/itnl/grupos" },
-  { name: "Noticias", to: "/itnl/noticias" },
+  { name: "Pagina principal", to: "/tecnl/pagina-principal" },
+  { name: "Eventos", to: "/tecnl/eventos" },
+  { name: "Grupos", to: "/tecnl/grupos" },
+  { name: "Noticias", to: "/tecnl/noticias" },
 ];
 const HeaderPagina = () => {
   const [menuHamburguesa, setMenuHamburguesa] = useState(false);
@@ -16,16 +16,12 @@ const HeaderPagina = () => {
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav className="flex items-center justify-between p-6 lg:px-8">
-        <div className="flex lg:flex-1">
-          <NavLink to="/itnl/pagina-principal" className="-m-1.5 p-1">
-            <img
-              className="h-10 pl-4 w-auto rounded-full"
-              alt=""
-              src={logoNegro}
-            />
+        <div className="flex pl-2 lg:flex-1">
+          <NavLink to="/tecnl/pagina-principal" className="-m-1.5 p-1">
+            <img className="h-10  w-auto rounded-full" alt="" src={logoNegro} />
           </NavLink>
           <Link
-            to="/itnl/pagina-principal"
+            to="/tecnl/pagina-principal"
             className="pl-7 text-3xl font-bold text-stone-50 sm:text-3xl "
           >
             Cuerbook
@@ -57,7 +53,7 @@ const HeaderPagina = () => {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <NavLink
-            to="/itnl/iniciar-sesion"
+            to="/tecnl/iniciar-sesion"
             className="text-sm font-semibold pr-12 hover:text-azul leading-6 text-stone-50"
           >
             Iniciar Sesion
@@ -100,7 +96,7 @@ const HeaderPagina = () => {
               </div>
               <div className="py-6">
                 <NavLink
-                  to="/itnl/iniciar-sesion"
+                  to="/tecnl/iniciar-sesion"
                   className="-mx-3 block rounded-lg hover:text-azul px-3 py-2.5  font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Iniciar Sesión{" "}
