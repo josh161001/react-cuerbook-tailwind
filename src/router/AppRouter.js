@@ -11,10 +11,10 @@ import GrupoPagina from "../views/Home/GrupoPagina";
 import NoticiaPagina from "../views/Home/NoticiaPagina";
 import UsuarioPagina from "../views/Home/UsuarioPagina";
 
-//views login
-import IniciarSesion from "../views/login/IniciarSesion";
-import EnviarInstrucciones from "../views/login/EnviarInstrucciones";
-import ActualizarPassword from "../views/login/ActualizarPassword";
+//views Login
+import IniciarSesion from "../views/Login/IniciarSesion";
+import EnviarInstrucciones from "../views/Login/EnviarInstrucciones";
+import ActualizarPassword from "../views/Login/ActualizarPassword";
 import { CuerbookContext, CuerbookProvider } from "../context/CuerbookContext";
 
 //views admin
@@ -59,7 +59,7 @@ export const AppRouter = () => {
           {/* views itnl usuarios */}
           <Route path="/tecnl/usuario-perfil/:id" element={<UsuarioPagina />} />
 
-          {/* //views login */}
+          {/* //views Login */}
           <Route path="/tecnl/iniciar-sesion" element={<IniciarSesion />} />
           <Route
             path="/tecnl/enviar-instrucciones"
