@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import urlAxios from "../../config/axios";
 import moment from "moment";
 import Footer from "../../components/layout/home/Footer";
-import BotonFlotanteAdmin from "../../components/common/BotonFlotanteAdmin";
-import ModalEditarEvento from "../../components/layout/admin/ModalEditarEvento";
 import ModalEditarEventoUsuarios from "../../components/layout/user/ModalEditarEventoUsuarios";
+import BotonFlotanteUsuarios from "../../components/common/BotonFlotanteUsuarios";
 
 const EventoPaginaUsuario = () => {
   const [modalAbiertoEvento, setModalAbiertoGrupoEvento] = useState(false);
@@ -55,7 +54,7 @@ const EventoPaginaUsuario = () => {
     <>
       <div style={backgroundStyle}>
         <div style={overlayStyle}></div>
-        <BotonFlotanteAdmin />
+        <BotonFlotanteUsuarios />
         <div className="relative isolate px-6 pt-26 lg:pt-36 lg:px-8">
           <div className="mx-auto py-36 sm:py-42 lg:py-16">
             <div className="">
@@ -118,6 +117,12 @@ const EventoPaginaUsuario = () => {
               <div className="mt-40 flex items-center justify-center">
                 <a
                   href="#evento"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document
+                      .querySelector("#evento")
+                      .scrollIntoView({ behavior: "smooth" });
+                  }}
                   className="bg-transparent text-white border border-white py-2 px-4 rounded hover:bg-grayTec hover:text-white hover:border-stone-500 transition duration-300"
                 >
                   Ver mas

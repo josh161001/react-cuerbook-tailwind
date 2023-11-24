@@ -19,7 +19,7 @@ const CategoriasAdmin = () => {
       <div className="sm:ml-64">
         <div className="p-4 rounded-lg mt-12 sm:mt-14">
           <div className="flex  items-center mb-4">
-            <h2 className="text-2xl p-9  text-gray-900 dark:text-gray-900">
+            <h2 className="text-lg p-9  text-gray-900 dark:text-gray-900">
               Cuerbook | Categorias
             </h2>
             <button

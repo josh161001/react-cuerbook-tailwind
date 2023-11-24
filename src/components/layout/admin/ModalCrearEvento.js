@@ -195,7 +195,7 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
         <div className="fixed mt-0 top-0 right-0 bottom-0  left-0 flex justify-center items-center w-full bg-gray-800 bg-opacity-80  z-50">
           <div className="p-4 bg-gray-800 rounded-lg max-w-xs md:max-w-3xl lg:max-w-4xl">
             <div className="flex border-b border-gray-700">
-              <h2 className="text-sm text-white mb-3">Agregar Evento</h2>
+              <h2 className="text-xs text-white mb-3">Agregar Evento</h2>
 
               <button
                 onClick={onClose}
@@ -254,7 +254,7 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                     name="lugar"
                     type="text"
                     className="border text-xs rounded-lg  block w-full pl-2.5 p-1.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Evento de..."
+                    placeholder="lugar del evento..."
                   />
                 </div>
                 <div className="lg:mb-2">
@@ -266,7 +266,7 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                     name="cupo"
                     type="number"
                     className="border text-xs rounded-lg  block w-full pl-2.5 p-1.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Evento de..."
+                    placeholder="cupo ..."
                   />
                 </div>
                 <div className="lg:mb-2">
@@ -295,7 +295,7 @@ const ModalCrearEvento = ({ isOpen, onClose }) => {
                     Imagen del evento
                   </label>
                   <input
-                    className="w-full text-xs   rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
+                    className="w-full text-xs rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
                     type="file"
                     name="imagen"
                     onChange={eventoState}

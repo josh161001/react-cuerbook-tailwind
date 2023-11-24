@@ -19,7 +19,7 @@ const GruposAdmin = () => {
       <div className="sm:ml-64">
         <div className="p-3 rounded-lg mt-12 sm:mt-12">
           <div className="flex  items-center ">
-            <h2 className="text-2xl p-9  text-gray-900 dark:text-gray-900">
+            <h2 className="text-lg p-9  text-gray-900 dark:text-gray-900">
               Cuerbook | Grupos
             </h2>
             <button

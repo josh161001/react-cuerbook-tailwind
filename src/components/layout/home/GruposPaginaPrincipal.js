@@ -59,7 +59,7 @@ const GruposPaginaPrincipal = () => {
             <p className="pt-4">Diversidad de actividades</p>
             <p>Para todo estudiante</p>
             <Link
-              to="/itnl/grupos"
+              to="/tecnl/grupos"
               className="hover:bg-blue-700 rounded rounded-md bg-azul px-3.5 py-2.5 text-sm font-semibold text-white inline-block mt-4"
             >
               Saber más

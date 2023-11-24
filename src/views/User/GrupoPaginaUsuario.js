@@ -5,11 +5,10 @@ import urlAxios from "../../config/axios";
 
 import tecnl from "../../assets/img/tecnologico.jpg";
 
-import BotonFlotanteAdmin from "../../components/common/BotonFlotanteAdmin";
-
 import moment from "moment";
 import ModalEditarGrupoUsuario from "../../components/layout/user/ModalEditarGrupoUsuario";
 import ModalCrearEventoUsuarios from "../../components/layout/user/ModalCrearEventoUsuarios";
+import BotonFlotanteUsuarios from "../../components/common/BotonFlotanteUsuarios";
 
 const GrupoPaginaUsuario = () => {
   const [modalAbiertoGrupo, setModalAbiertoGrupo] = useState(false);
@@ -73,7 +72,7 @@ const GrupoPaginaUsuario = () => {
 
   return (
     <div>
-      <BotonFlotanteAdmin />
+      <BotonFlotanteUsuarios />
       <section className="relative block h-96">
         <div
           className="absolute top-0 w-full h-full bg-center "

@@ -215,7 +215,6 @@ const ModalEditarUsuario = ({ isOpen, onClose }) => {
                     name="email"
                     type="email"
                     className="border text-xs rounded-lg  block w-full pl-2.5 p-1.5 bg-gray-900 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                    disabled
                     value={usuario.email}
                   />
                 </div>

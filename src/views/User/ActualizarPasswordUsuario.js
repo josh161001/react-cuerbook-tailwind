@@ -3,9 +3,9 @@ import CuervoItnl from "../../assets/img/cuervo-ITNL.jpg";
 import urlAxios from "../../config/axios";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
-import BotonFlotanteAdmin from "../../components/common/BotonFlotanteAdmin";
 import { CuerbookContext } from "../../context/CuerbookContext";
 import Spinner from "../../components/layout/Spinner";
+import BotonFlotanteUsuarios from "../../components/common/BotonFlotanteUsuarios";
 
 const ActualizarPasswordUsuario = () => {
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ const ActualizarPasswordUsuario = () => {
 
   return (
     <div className="flex min-h-screen items-center p-4  sm:items-center justify-center bg-gray-200">
-      <BotonFlotanteAdmin />{" "}
+      <BotonFlotanteUsuarios />{" "}
       <div className="max-w-screen-lg w-full h-full bg-white rounded-md shadow-lg  flex flex-col lg:flex-row">
         <div className="w-full lg:w-1/2 flex justify-center items-center  lg:mb-0">
           <img src={CuervoItnl} alt="Login Banner" className="w-full h-full " />

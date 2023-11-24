@@ -105,6 +105,12 @@ const EventoPaginaHome = () => {
               <div className="mt-40 flex items-center justify-center">
                 <a
                   href="#evento"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document
+                      .querySelector("#evento")
+                      .scrollIntoView({ behavior: "smooth" });
+                  }}
                   className="bg-transparent text-white border border-white py-2 px-4 rounded hover:bg-grayTec hover:text-white hover:border-stone-500 transition duration-300"
                 >
                   Ver mas

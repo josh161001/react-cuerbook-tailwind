@@ -1,12 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import urlAxios from "../../config/axios";
-import BotonFlotanteAdmin from "../../components/common/BotonFlotanteAdmin";
 import tecnl from "../../assets/img/tecnologico.jpg";
-import { Link } from "react-router-dom";
-import ModalEditarUsuario from "../../components/layout/admin/ModalEditarUsuario";
 import { useNavigate } from "react-router-dom";
 import { CuerbookContext } from "../../context/CuerbookContext";
 import ModalEditarUsuarios from "../../components/layout/user/ModalEditarUsuarios";
+import BotonFlotanteUsuarios from "../../components/common/BotonFlotanteUsuarios";
 
 const UsuarioPerfilUsuarios = () => {
   const [auth, guardarAuth] = useContext(CuerbookContext);
@@ -52,7 +50,7 @@ const UsuarioPerfilUsuarios = () => {
           });
           guardarUsuario(usuarioConsulta.data.rest);
         } catch (error) {
-          if (error.response && error.response.status === 401) {
+          if (error.response || error.response.status === 401) {
             navigate("/itnl/iniciar-sesion");
           }
         }
@@ -85,7 +83,7 @@ const UsuarioPerfilUsuarios = () => {
 
   return (
     <div>
-      <BotonFlotanteAdmin />
+      <BotonFlotanteUsuarios />
       <section className="relative block h-96">
         <div
           className="absolute top-0 w-full h-full bg-center "
