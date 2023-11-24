@@ -45,7 +45,7 @@ export const AppRouter = () => {
   return (
     <>
       <CuerbookProvider value={[auth, guardarAuth]}>
-        <HashRouter>
+        <Routes>
           {/* {        //views home */}
           <Route path="/tecnl/pagina-principal" element={<PaginaPrincipal />} />
           <Route path="/tecnl/eventos" element={<Eventos />} />
@@ -118,7 +118,7 @@ export const AppRouter = () => {
           />
 
           <Route path="*" element={<Navigate to="/tecnl/pagina-principal" />} />
-        </HashRouter>
+        </Routes>
       </CuerbookProvider>
     </>
   );
