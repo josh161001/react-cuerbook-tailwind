@@ -165,13 +165,13 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
   return (
     <>
       {isOpen && (
-        <div className="fixed mt-12 top-0 right-0 bottom-0  left-0 flex justify-center items-center w-full bg-gray-800 bg-opacity-80  z-50">
-          <div className="p-4 bg-gray-800 rounded-lg max-w-sm md:max-w-2xl lg:max-w-4xl">
+        <div className="fixed mt-0 top-0 right-0 bottom-0  left-0 flex justify-center items-center w-full bg-gray-800 bg-opacity-80  z-50">
+          <div className="p-4 bg-gray-800 rounded-lg max-w-xs md:max-w-3xl lg:max-w-4xl">
             <div className="flex border-b border-gray-700">
-              <h2 className="text-2xl text-white mb-4">Agregar Usuario</h2>
+              <h2 className="text-sm text-white mb-3">Agregar Usuario</h2>
               <button
                 onClick={onClose}
-                className=" bg-transparent rounded-lg text-sm p-1.5 ml-auto text-white inline-flex items-center hover-bg-gray-600 hover-text-white"
+                className=" bg-transparent rounded-lg text-sm p-1 ml-auto text-white inline-flex items-center hover-bg-gray-600 hover-text-white"
               >
                 <svg
                   aria-hidden="true"
@@ -192,46 +192,46 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
             <form className="bg-gray-800 " onSubmit={guardarUsuario}>
               <div className="grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 gap-2 ">
                 <div className="lg:mb-2">
-                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-xs font-medium text-white">
                     Correo
                   </label>
                   <input
                     onChange={usuarioState}
                     name="email"
                     type="email"
-                    className="border text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                    className="border text-xs rounded-lg  block w-full pl-2.5 p-1.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="nombre@nuevoleon.tecnm.mx"
                     required
                   />
                 </div>
                 <div className="lg:mb-2">
-                  <label className="block mb-2 pt-1 lg:pt-4  text-sm font-medium text-white">
+                  <label className="block mb-2 pt-1 lg:pt-4  text-xs font-medium text-white">
                     Jefe de departamento
                   </label>
                   <input
                     onChange={usuarioState}
                     name="name"
                     type="text"
-                    className="border  text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                    className="border  text-xs rounded-lg  block w-full pl-2.5 p-1.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Jefe departamento..."
                     required
                   />
                 </div>
                 <div className="lg:mb-2">
-                  <label className="block mb-2 lg:pt-4 pt-1  text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="block mb-2 lg:pt-4 pt-1  text-xs font-medium text-gray-900 text-white">
                     Nombre departamento
                   </label>
                   <input
                     onChange={usuarioState}
                     name="department"
                     type="text"
-                    className="border text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                    className="border text-xs rounded-lg  block w-full pl-2.5 p-1.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="nombre del departamento..."
                     required
                   />
                 </div>
                 <div className="lg:mb-2">
-                  <label className="block mb-2 pt-1 lg:pt-4 text-sm font-medium text-white">
+                  <label className="block mb-2 pt-5 lg:pt-4 text-xs font-medium text-white">
                     Contraseña
                   </label>
                   <input
@@ -239,33 +239,33 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
                     name="password"
                     type="password"
                     placeholder="**********"
-                    className="border text-sm rounded-lg  block w-full pl-2.5 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                    className="border text-xs rounded-lg  block w-full pl-2.5 p-1.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     required
                   />
                 </div>
                 <div className="lg:mb-2">
-                  <label className="block mb-2 pt-1 lg:pt-4 text-sm font-medium text-white">
+                  <label className="block mb-2 pt-1 lg:pt-4 text-xs font-medium text-white">
                     Imagen de perfil
                   </label>
                   <input
-                    className="w-full text-sm  border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
+                    className="w-full text-xs   rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
                     type="file"
                     name="imagen"
                     onChange={usuarioState}
                   />
-                  <div className="mt-1 text-sm text-gray-300">
+                  <div className="mt-1 text-xs text-gray-300">
                     Solo se permiten imágenes tipo jpg, png, jpeg, gif
                   </div>
                 </div>
                 <div>
-                  <label className="block mb-2 pt-1 lg:pt-4 text-sm font-medium text-white">
+                  <label className="block mb-2 pt-1 lg:pt-4 text-xs font-medium text-white">
                     Rol del usuario
                   </label>
                   <select
                     name="roles"
                     id="roles"
                     value={seleccionarRol}
-                    className="border text-sm rounded-lg  block w-full p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                    className="border text-xs rounded-lg  block w-full p-1.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     onChange={handleRolChange}
                   >
                     <option disabled value="">
@@ -279,7 +279,7 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
                   </select>
                 </div>
                 <div>
-                  <label className="block ml-2  text-sm font-medium text-white">
+                  <label className="block ml-2  text-xs font-medium text-white">
                     Estatus del usuario
                   </label>
                   <input
@@ -306,7 +306,7 @@ const ModalCrearUsuario = ({ isOpen, onClose }) => {
                 </div>
               </div>
               <div>
-                <label className="block mb-4 pt-2 text-sm font-medium text-white">
+                <label className="block mb-4 pt-2 text-xs font-medium text-white">
                   Descripcion del usuario
                 </label>
 
