@@ -36,9 +36,9 @@ const MenuHamburguesaAdmin = () => {
               >
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
-              <div className="flex pl-3 sm:pl-8 md:mr-24">
+              <div className="flex pl-4 sm:pl-8 md:mr-24">
                 <img src={LogoItnl} className="h-8 mr-3" alt="TECNL LOGO" />
-                <span className="self-center text-sm pt-2  font-semibold sm:text-2xl lg:tex-4xl whitespace-nowrap text-white">
+                <span className="self-center text-1xl pt-2  font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                   Cuerbook | Admin
                 </span>
               </div>

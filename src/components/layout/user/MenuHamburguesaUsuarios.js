@@ -18,13 +18,13 @@ const MenuHamburguesaUsuarios = () => {
 
   return (
     <>
-      <nav className="fixed top-0 z-50 w-full bg-dark border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+      <nav className="fixed top-0 z-50 w-full  border-b border-gray-200 bg-gray-800 ">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
               <button
                 type="button"
-                className="-m-2.5 pl-6 inline-flex sm:hidden items-center justify-center rounded-md p-2.5 text-stone-50"
+                className="-m-2.5 pl-4 inline-flex sm:hidden items-center justify-center rounded-md p-2.5 text-stone-50"
                 aria-expanded={menuHamburguesa}
                 onClick={toggleMenuHamburguesa}
               >

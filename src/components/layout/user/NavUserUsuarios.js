@@ -68,7 +68,7 @@ const NavUserUsuarios = () => {
 
   return (
     <div className="flex items-center">
-      <div className="flex items-center pr-5 ml-3">
+      <div className="flex items-center pr-4 ml-3">
         <div>
           <button
             type="button"
@@ -86,7 +86,7 @@ const NavUserUsuarios = () => {
         <div
           className={`absolute z-50 ${
             isDropdownOpen ? "block" : "hidden"
-          } mt-72  mr-.5 right-0 bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`}
+          } mt-72  mr-.5 right-0  divide-y rounded shadow bg-gray-700 divide-gray-600`}
           id="dropdown-user"
         >
           <div className="px-4 py-3"></div>
@@ -118,12 +118,12 @@ const NavUserUsuarios = () => {
             </li>
 
             <li>
-              <button
+              <a
                 onClick={CerrarSesionNav}
                 className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white"
               >
                 Cerrar sesion{" "}
-              </button>
+              </a>
             </li>
           </ul>
         </div>
