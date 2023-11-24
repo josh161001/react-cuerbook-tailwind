@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Route, Navigate, Routes } from "react-router-dom";
+import { Route, Navigate, Routes, HashRouter } from "react-router-dom";
 
 //views home
 import PaginaPrincipal from "../views/Home/PaginaPrincipal";
@@ -44,9 +44,8 @@ export const AppRouter = () => {
 
   return (
     <>
-      {" "}
       <CuerbookProvider value={[auth, guardarAuth]}>
-        <Routes>
+        <HashRouter>
           {/* {        //views home */}
           <Route path="/tecnl/pagina-principal" element={<PaginaPrincipal />} />
           <Route path="/tecnl/eventos" element={<Eventos />} />
@@ -71,7 +70,6 @@ export const AppRouter = () => {
           />
 
           {/* //views user */}
-
           <Route path="/usuario/grupos" element={<GruposUsuario />} />
           <Route path="/usuario/grupo/:id" element={<GrupoPaginaUsuario />} />
           <Route path="/usuario/eventos" element={<EventosUsuario />} />
@@ -120,7 +118,7 @@ export const AppRouter = () => {
           />
 
           <Route path="*" element={<Navigate to="/tecnl/pagina-principal" />} />
-        </Routes>
+        </HashRouter>
       </CuerbookProvider>
     </>
   );
