@@ -90,7 +90,7 @@ const NoticiaPagina = () => {
             <h2 className="text-2xl  font-semibold border-b  pb-4">
               Noticias de tu interés
             </h2>
-            <CardNoticiasAsc noticiasSeleccionadaId={id} />
+            <CardNoticiasAsc noticiaSeleccionadaId={id} />
           </div>
         </div>
       </div>
