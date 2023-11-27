@@ -3,17 +3,21 @@ import urlAxios from "../../../config/axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-const CardNoticiasAsc = () => {
+const CardNoticiasAsc = ({ noticiaSeleccionadaId }) => {
   const [noticias, guardarNoticias] = useState([]);
 
   const consultarNoticias = async () => {
-    const noticiasConsulta = await urlAxios.get("/notice/noticiasasc");
-
-    const noticiasFiltradas = noticiasConsulta.data.data.filter((noticia) => {
-      return noticia.status === true;
-    });
-    guardarNoticias(noticiasFiltradas);
+    try {
+      const noticiasConsulta = await urlAxios.get("/notice/noticiasasc");
+      const noticiasFiltradas = noticiasConsulta.data.data.filter((noticia) => {
+        return noticia.status === true;
+      });
+      guardarNoticias(noticiasFiltradas);
+    } catch (error) {
+      console.error("Error al consultar las noticias:", error);
+    }
   };
+
   useEffect(() => {
     consultarNoticias();
   }, []);
@@ -21,10 +25,14 @@ const CardNoticiasAsc = () => {
   return (
     <>
       {noticias.map((noticia) => {
+        if (noticia.id === noticiaSeleccionadaId) {
+          return null; // No renderizar la noticia seleccionada
+        }
+
         const { id, name, user, createdAt, imagen } = noticia;
         return (
           <div
-            className="rounded overflow-hidden shadow-lg grid  lg:grid-cols-10"
+            className="rounded overflow-hidden shadow-lg grid lg:grid-cols-10"
             key={name}
           >
             <div className="md:col-span-5">

@@ -22,7 +22,6 @@ const NoticiaPagina = () => {
         const respuesta = await urlAxios.get(`/notice/${id}`);
         const noticiaConsulta = respuesta.data.data;
 
-        console.log(noticiaConsulta);
         guardarNoticia(noticiaConsulta);
       } catch (error) {
         console.error("Error al consultar la noticia:", error);
@@ -91,7 +90,7 @@ const NoticiaPagina = () => {
             <h2 className="text-2xl  font-semibold border-b  pb-4">
               Noticias de tu interés
             </h2>
-            <CardNoticiasAsc />
+            <CardNoticiasAsc noticiasSeleccionadaId={id} />
           </div>
         </div>
       </div>
