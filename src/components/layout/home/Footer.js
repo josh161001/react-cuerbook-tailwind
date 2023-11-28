@@ -20,7 +20,7 @@ const Footer = () => {
           </div>
           <div>
             <span className="text-white font-bold tracking-wide">
-              Redes sociales y sitio de interes
+              Redes sociales y sitios de interés
             </span>
             <section>
               <div className="grid pt-4 grid-cols-2 gap-4 lg:grid-cols-4 align-center text-center">
@@ -125,21 +125,34 @@ const Footer = () => {
                   </svg>
                   Moddle
                 </a>
+
+                <a
+                  href="http://www.itnl.edu.mx/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white font-semibold text-center transition-colors duration-300 hover:text-deep-purple-accent-400"
+                >
+                  <img
+                    className="rounded-full w-10 h-10 "
+                    src="https://bdelrio.tecnm.mx/conocenos/identidad/icon_tecnm.jpg"
+                  />
+                  TecNM | Campus Nuevo León
+                </a>
               </div>
             </section>
             <p className="mt-4 text-white text-sm">
               Si tienes alguna duda o sugerencia, puedes contactarnos a través
-              de nuestras redes sociales y tambien visitar otros sitios de
+              de nuestras redes sociales y también visitar otros sitios de
               intereses dentro de la institución.
             </p>
-            <p className="mt-4 text-2xl text-white pb-4 ">Menu </p>
+            <p className="mt-4 text-2xl text-white pb-4 ">Menú </p>
             <MenuFooter />
           </div>
         </div>
         <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
           <p className="text-sm text-white">
-            © Copyright {new Date().getFullYear()} Intituto Tecnologico de Nuevo
-            Leon, todos los derechos reservados.
+            © Copyright {new Date().getFullYear()} Intituto Tecnológico de Nuevo
+            León, todos los derechos reservados.
           </p>
         </div>
       </div>
