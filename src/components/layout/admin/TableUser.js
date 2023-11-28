@@ -99,6 +99,7 @@ const TableUser = (props) => {
     return doc.body.innerHTML;
   };
 
+  if (!tokenCargando || !auth.auth) return <Spinner />;
   return (
     <>
       <div>

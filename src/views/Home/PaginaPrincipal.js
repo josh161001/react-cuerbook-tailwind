@@ -67,7 +67,7 @@ const PaginaPrincipal = () => {
                 </p>
               </div>
               {/* inicia seccion grupo populares */}
-              <div className="grid text-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-4 sm:p-10">
+              <div>
                 <GruposPopulares />
               </div>
               {/* finaliza seccion grupo populares */}
