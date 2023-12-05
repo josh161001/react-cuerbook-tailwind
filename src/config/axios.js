@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const urlAxios = axios.create({
-  baseURL: "http://192.168.100.9",
+  baseURL: "https://cuerbook-backend.onrender.com",
 });
 
 export default urlAxios;
