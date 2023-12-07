@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, NavLink } from "react-router-dom";
 
 const navegacion = [
-  { name: "Pagina principal", to: "/tecnl/pagina-principal" },
+  { name: "Página principal", to: "/tecnl/pagina-principal" },
   { name: "Eventos", to: "/tecnl/eventos" },
   { name: "Grupos", to: "/tecnl/grupos" },
   { name: "Noticias", to: "/tecnl/noticias" },
@@ -56,7 +56,7 @@ const HeaderPagina = () => {
             to="/tecnl/iniciar-sesion"
             className="text-sm font-semibold pr-12 hover:text-azul leading-6 text-stone-50"
           >
-            Iniciar Sesion
+            Iniciar sesión
           </NavLink>
         </div>
       </nav>

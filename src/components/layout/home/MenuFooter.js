@@ -9,7 +9,7 @@ const MenuFooter = () => {
           to="/tecnl/pagina-principal"
           className="text-gray-300 hover:text-gray-500"
         >
-          Pagina principal
+          Página principal
         </Link>
       </li>
       <li className="mb-2">

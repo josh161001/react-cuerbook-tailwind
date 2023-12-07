@@ -44,7 +44,6 @@ const TableEventosUsuarios = (props) => {
             },
           });
 
-          // console.log(dataConsulta.data.data);
           guardarEventos(dataConsulta.data);
         } catch (error) {
           if (error.response && error.response.status === 401) {
@@ -94,6 +93,28 @@ const TableEventosUsuarios = (props) => {
       strong.outerHTML = strong.innerHTML;
     });
     return doc.body.innerHTML;
+  };
+
+  const getPdf = async (eventoId) => {
+    const token = localStorage.getItem("access_token");
+
+    const pdfResponse = await urlAxios.get(`/pdf/generate-pdf/${eventoId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      responseType: "arraybuffer",
+    });
+
+    const fileName = `solicitud_evento_${eventoId}.pdf`;
+    const pdfBlob = new Blob([pdfResponse.data], {
+      type: "application/pdf",
+    });
+    pdfBlob.name = fileName;
+
+    saveAs(pdfBlob, fileName);
+
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    window.open(pdfUrl, "_blank");
   };
 
   if (!tokenCargando || !eventos.length || !auth.auth) {
@@ -166,6 +187,7 @@ const TableEventosUsuarios = (props) => {
                 <td className="px-6 py-4  whitespace-nowrap ">
                   {evento.lugar}
                 </td>
+
                 <td
                   className="px-6 py-4  whitespace-nowrap"
                   dangerouslySetInnerHTML={{
@@ -193,6 +215,20 @@ const TableEventosUsuarios = (props) => {
 
                 <td className=" items-center flex pt-9 px-4 py-4 space-x-3">
                   {/* editar */}
+                  <button
+                    onClick={() => getPdf(evento.id)}
+                    className="inline-block px-1 py-1 rounded-lg bg-grayTec  font-medium text-white hover:underline"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                      <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                    </svg>
+                  </button>
                   <Link
                     to={`/usuario/evento/${evento.id}`}
                     className="inline-block px-1 py-1 rounded-lg bg-blue-900  font-medium text-red-600 dark:text-blue-500 hover:underline"

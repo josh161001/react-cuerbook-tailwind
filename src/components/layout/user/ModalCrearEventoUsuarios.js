@@ -7,9 +7,7 @@ import Spinner from "../../../components/layout/Spinner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
-import Trix from "trix";
 const ModalCrearEventoUsuarios = ({ isOpen, onClose }) => {
-  const trixEditor = useRef(null);
   const { id } = useParams();
 
   const [auth, guardarAuth] = useContext(CuerbookContext);
@@ -23,39 +21,10 @@ const ModalCrearEventoUsuarios = ({ isOpen, onClose }) => {
     fecha: new Date(), // Inicializa con la fecha actual
     lugar: "",
     detalles: "",
-    description: "",
     categoryId: "",
     status: false,
   });
 
-  const handleTrixChange = () => {
-    if (trixEditor.current) {
-      const value = trixEditor.current.innerHTML;
-      setEvento({
-        ...evento,
-        description: value,
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (trixEditor.current) {
-      trixEditor.current.addEventListener("trix-change", handleTrixChange);
-    }
-    return () => {
-      if (trixEditor.current) {
-        trixEditor.current.removeEventListener("trix-change", handleTrixChange);
-      }
-    };
-  }, [
-    evento.name,
-    evento.categoryId,
-    evento.cupo,
-    evento.fecha,
-    evento.lugar,
-    evento.status,
-    evento.imagen,
-  ]);
   useEffect(() => {
     const token = localStorage.getItem("access_token");
 
@@ -96,21 +65,11 @@ const ModalCrearEventoUsuarios = ({ isOpen, onClose }) => {
   };
 
   const validarEvento = () => {
-    const {
-      name,
-      imagen,
-      cupo,
-      fecha,
-      lugar,
-      categoryId,
-      description,
-      detalles,
-    } = evento;
+    const { name, imagen, cupo, fecha, lugar, categoryId, detalles } = evento;
 
     return (
       !name.length ||
       !imagen ||
-      !description ||
       !cupo ||
       !categoryId ||
       !fecha ||
@@ -133,7 +92,6 @@ const ModalCrearEventoUsuarios = ({ isOpen, onClose }) => {
       formData.append("fecha", formatoFecha);
       formData.append("lugar", evento.lugar);
       formData.append("categoryId", evento.categoryId);
-      formData.append("description", evento.description);
       formData.append("detalles", evento.detalles);
       formData.append("status", evento.status);
       urlAxios
@@ -233,19 +191,6 @@ const ModalCrearEventoUsuarios = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="lg:mb-2">
-                  <label className="block mb-2 pt-1 lg:pt-4  text-xs font-medium text-white">
-                    Detalles del evento
-                  </label>
-                  <input
-                    onChange={eventoState}
-                    name="detalles"
-                    type="text"
-                    className="border  text-xs rounded-lg  block w-full pl-2.5 p-1.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Agregar tambien servicios con (...)"
-                  />
-                </div>
-
-                <div className="lg:mb-2">
                   <label className="block mb-2 lg:pt-4 pt-1  text-xs font-medium text-gray-900 text-white">
                     Lugar del evento
                   </label>
@@ -270,7 +215,7 @@ const ModalCrearEventoUsuarios = ({ isOpen, onClose }) => {
                   />
                 </div>
                 <div className="lg:mb-2">
-                  <label className="block mb-2 pt-1 lg:pt-4 text-xs font-medium text-white">
+                  <label className="block mb-2 pt-5 lg:pt-4 text-xs font-medium text-white">
                     Categoria del evento
                   </label>
                   <select
@@ -306,7 +251,7 @@ const ModalCrearEventoUsuarios = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="lg:mb-2">
-                  <label className="block mb-2  text-xs font-medium text-white">
+                  <label className="block mb-2 pt-1 text-xs font-medium text-white">
                     Fecha del evento
                   </label>
                   <DatePicker
@@ -321,17 +266,18 @@ const ModalCrearEventoUsuarios = ({ isOpen, onClose }) => {
                   />
                 </div>
               </div>
-              <div>
-                <div>
-                  <label className="block mb-4 pt-2 text-xs font-medium text-white">
-                    Descripcion del evento
-                  </label>
-                  <trix-editor
-                    ref={trixEditor}
-                    value={evento.description}
-                    input="trix"
-                  />
-                </div>
+              <div className="lg:mb-2">
+                <label className="block mb-2 pt-2 lg:pt-4  text-xs font-medium text-white">
+                  Resumen del evento
+                </label>
+                <textarea
+                  onChange={eventoState}
+                  rows="4"
+                  className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  name="detalles"
+                  type="text"
+                  placeholder="Escribe el resumen del evento..."
+                />
               </div>
 
               <button

@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import eventosImagen from "../../../assets/img/eventos.png";
+import eventosImagen from "../../../assets/img/eventos_proximos.jpg";
 
 const VerMasEventosProximos = () => {
   return (
     <>
-      <div className="container mx-auto p-4">
-        <div className="grid grid-cols-2 bg-gradient-to-r from-blue-800  to-azul ">
-          <div className="p-6 flex flex-col justify-center items-center">
+      <div className="container mx-auto lg:p-4 sm:p-2 p-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 bg-gradient-to-r from-blue-800 to-azul">
+          <div className="p-6 flex flex-col justify-center items-center sm:flex-col">
             <h3 className="text-white">
               ¿Te gustaría ver más eventos próximos?
             </h3>
@@ -18,10 +18,10 @@ const VerMasEventosProximos = () => {
               Ver más
             </Link>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center sm:flex-row lg:p-6">
             <img
               src={eventosImagen}
-              className="object-cover w-full h-full"
+              className="object-cover object-center w-full h-full sm:w-auto sm:h-auto"
               alt="imagen de eventos proximos"
             />
           </div>
