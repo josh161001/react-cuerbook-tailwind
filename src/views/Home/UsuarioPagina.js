@@ -81,7 +81,9 @@ const UsuarioPagina = () => {
                           <div
                             className="absolute bg-cover bg-center inset-0 m-0 h-full w-full overflow-hidden rounded-none"
                             style={{
-                              backgroundImage: `url(${grupo.imagen})`,
+                              backgroundImage: grupo.imagen
+                                ? `url(${encodeURI(grupo.imagen)})`
+                                : "none",
                             }}
                           >
                             {" "}

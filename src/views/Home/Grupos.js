@@ -17,6 +17,8 @@ const Grupos = () => {
   const consultarGrupos = async () => {
     const gruposConsulta = await urlAxios.get(`/groups`);
 
+    console.log(gruposConsulta.data.data);
+
     const filtroGruposActivos = gruposConsulta.data.data.filter(
       (grupo) => grupo.status === true
     );
@@ -64,7 +66,9 @@ const Grupos = () => {
                 <div
                   className="absolute bg-center inset-0 m-0 h-full w-full bg-cover overflow-hidden rounded-none"
                   style={{
-                    backgroundImage: `url(${grupo.imagen})`,
+                    backgroundImage: grupo.imagen
+                      ? `url(${encodeURI(grupo.imagen)})`
+                      : "none",
                   }}
                 >
                   {" "}

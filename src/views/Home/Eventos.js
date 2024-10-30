@@ -17,6 +17,7 @@ const Eventos = () => {
 
   const consultarEventosProximos = async () => {
     const evento = await urlAxios.get("/events");
+    console.log(eventos);
     const eventosActivos = evento.data.data.filter(
       (evento) => evento.status === true
     );

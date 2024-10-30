@@ -17,14 +17,18 @@ const EventoPaginaHome = () => {
   useEffect(() => {
     const consultarEvento = async () => {
       const eventoConsulta = await urlAxios.get(`/events/${id}`);
+
+      console.log(eventoConsulta.data.data);
       guardarEvento(eventoConsulta.data.data);
     };
 
     consultarEvento();
   }, [id]);
 
+  console.log("prueba", evento.imagen);
   const backgroundStyle = {
-    backgroundImage: `url(${evento.imagen})`,
+    backgroundImage:
+      evento && evento.imagen ? `url(${encodeURI(evento.imagen)})` : "none",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",

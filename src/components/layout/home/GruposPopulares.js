@@ -32,8 +32,10 @@ const GruposPopulares = () => {
               <div
                 className="absolute inset-0 m-0 h-full w-full bg-cover overflow-hidden rounded-none"
                 style={{
-                  backgroundImage: `url(${grupo.imagen})`,
-                  backgroundPosition: "center",
+                  backgroundImage: grupo.imagen
+                    ? `url(${encodeURI(grupo.imagen)})`
+                    : "none",
+                  position: "center",
                 }}
               >
                 <div className="absolute inset-0 w-full h-full to-bg-black-30 bg-gradient-to-t from-black/70 via-black/80"></div>
